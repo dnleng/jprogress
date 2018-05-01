@@ -16,19 +16,16 @@ public class Atom extends Formula {
     }
 
     public Formula progress(Interpretation interpretation) {
-        switch(eval(interpretation)) {
-            case TRUE:
-                return new Top();
-            case FALSE:
-                return new Bottom();
-            default:
-                System.err.println("Missing Boolean truth value for proposition "+this.label+": Applying NAF");
-                return new Bottom();
-        }
+        return this;
     }
 
     public TruthValue eval(Interpretation interpretation) {
-        return interpretation.getTruthValue(this.label);
+        TruthValue truthValue = interpretation.getTruthValue(this.label);
+        if(truthValue == TruthValue.UNKNOWN) {
+            System.err.println("Warning: Proposition " + label + " has unknown truth value; applying NAF");
+            truthValue = TruthValue.FALSE;
+        }
+        return truthValue;
     }
 
     @Override

@@ -17,14 +17,14 @@ public class Always extends Until {
 
     @Override
     public Formula progress(Interpretation interpretation) {
-        if(this.endTime < 0) {
+        if(this.endTime == 0) {
             return new Top();
         }
         else if(this.startTime <= 0 && 0 <= this.endTime) {
-            return new Conjunction(this.lhs.progress(interpretation), new Always(this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs));
+            return new Conjunction(this.lhs.progress(interpretation), new Always(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs)).simplify(interpretation);
         }
         else {
-            return new Always(this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs);
+            return new Always(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs);
         }
     }
 

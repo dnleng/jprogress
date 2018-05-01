@@ -11,8 +11,8 @@ public class FormulaFactory {
         switch(template) {
             case APEQ:
                 return createAPEQ();
-            case TEST2:
-                return createTest2();
+            case BERNOULLI:
+                return createBernoulli();
             default:
                 throw new IllegalArgumentException("Unknown template");
         }
@@ -24,7 +24,7 @@ public class FormulaFactory {
         return new Always( new Disjunction( new Negation(p), new Eventually(0, 5, q) ) );
     }
 
-    private static Formula createTest2() {
-        return new Atom("p");
+    private static Formula createBernoulli() {
+        return new Eventually( new Atom("p") );
     }
 }

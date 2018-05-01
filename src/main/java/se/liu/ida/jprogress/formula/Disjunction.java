@@ -18,7 +18,7 @@ public class Disjunction extends Formula {
     }
 
     public Formula progress(Interpretation interpretation) {
-        return new Disjunction(lhs.progress(interpretation), rhs.progress(interpretation));
+        return new Disjunction(lhs.progress(interpretation), rhs.progress(interpretation)).simplify(interpretation);
     }
 
     public TruthValue eval(Interpretation interpretation) {
@@ -30,6 +30,25 @@ public class Disjunction extends Formula {
         }
         else {
             return TruthValue.UNKNOWN;
+        }
+    }
+
+    @Override
+    public Formula simplify(Interpretation interpretation) {
+        if(this.eval(interpretation) == TruthValue.FALSE) {
+            return new Bottom();
+        }
+        else if(this.eval(interpretation) == TruthValue.TRUE) {
+            return new Top();
+        }
+        else if(lhs.eval(interpretation) == TruthValue.FALSE && rhs.eval(interpretation) == TruthValue.UNKNOWN) {
+            return rhs;
+        }
+        else if(lhs.eval(interpretation) == TruthValue.UNKNOWN && rhs.eval(interpretation) == TruthValue.FALSE) {
+            return lhs;
+        }
+        else {
+            return this;
         }
     }
 

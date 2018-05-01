@@ -3,6 +3,9 @@ package se.liu.ida.jprogress;
 import se.liu.ida.jprogress.formula.TruthValue;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,7 +17,7 @@ public class Interpretation {
     private Map<String, TruthValue> truthFunc;
 
     public Interpretation() {
-        this.truthFunc = new HashMap<String, TruthValue>();
+        this.truthFunc = new HashMap<>();
     }
 
     public TruthValue getTruthValue(String label) {
@@ -25,7 +28,69 @@ public class Interpretation {
         this.truthFunc.put(label, value);
     }
 
-    public Set<Interpretation> reduce() {
-        return null;
+    public Set<Interpretation> getReductions() {
+        List<String> trueProps = new LinkedList<>();
+        List<String> falseProps = new LinkedList<>();
+        List<String> unknownProps = new LinkedList<>();
+
+        Set<Interpretation> result = new HashSet<>((int)Math.floor(Math.pow(2, unknownProps.size())));
+
+        for(String key : this.truthFunc.keySet()) {
+            switch (this.truthFunc.get(key)) {
+                case TRUE:
+                    trueProps.add(key);
+                    break;
+                case FALSE:
+                    falseProps.add(key);
+                    break;
+                default:
+                    unknownProps.add(key);
+            }
+        }
+
+        if(unknownProps.size() == 0) {
+            result.add(this);
+        }
+        else {
+            for (int mask = 0; mask < (int) Math.floor(Math.pow(2, unknownProps.size())); mask++) {
+                int bit = 1;
+                Interpretation interpretation = new Interpretation();
+                for (String trueProp : trueProps) {
+                    interpretation.setTruthValue(trueProp, TruthValue.TRUE);
+                }
+
+                for (String falseProp : falseProps) {
+                    interpretation.setTruthValue(falseProp, TruthValue.FALSE);
+                }
+
+                for (String s : unknownProps) {
+                    if ((mask & bit) == bit) {
+                        interpretation.setTruthValue(s, TruthValue.TRUE);
+                    } else {
+                        interpretation.setTruthValue(s, TruthValue.FALSE);
+                    }
+
+                    result.add(interpretation);
+                    bit *= 2;
+                }
+            }
+        }
+
+
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{ ");
+        for(String key : this.truthFunc.keySet()) {
+            sb.append( key );
+            sb.append( " => ");
+            sb.append( truthFunc.get(key));
+            sb.append(" ");
+        }
+        sb.append("}");
+        return sb.toString();
     }
 }

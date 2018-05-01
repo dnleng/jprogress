@@ -21,10 +21,10 @@ public class Eventually extends Until {
             return new Bottom();
         }
         else if(this.startTime <= 0 && 0 <= this.endTime) {
-            return new Disjunction(this.rhs.progress(interpretation), new Eventually(this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.rhs));
+            return new Disjunction(this.rhs.progress(interpretation), new Eventually(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.rhs)).simplify(interpretation);
         }
         else {
-            return new Eventually(this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.rhs);
+            return new Eventually(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.rhs);
         }
     }
 

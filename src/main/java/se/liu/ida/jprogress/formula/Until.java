@@ -32,15 +32,23 @@ public class Until extends Formula {
             return new Bottom();
         }
         else if(this.startTime <= 0 && 0 <= this.endTime) {
-            return new Disjunction(this.rhs.progress(interpretation), new Conjunction(this.lhs.progress(interpretation), new Until(this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs, this.rhs)));
+            return new Disjunction(this.rhs.progress(interpretation), new Conjunction(this.lhs.progress(interpretation), new Until(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs, this.rhs)).simplify(interpretation)).simplify(interpretation);
         }
         else {
-            return new Conjunction(this.lhs.progress(interpretation), new Until(this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs, this.rhs));
+            return new Conjunction(this.lhs.progress(interpretation), new Until(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs, this.rhs)).simplify(interpretation);
         }
     }
 
     public TruthValue eval(Interpretation interpretation) {
-        return TruthValue.UNKNOWN;
+        if(this.endTime < 0) {
+            return TruthValue.FALSE;
+        }
+        else if(this.endTime == 0) {
+            return this.rhs.eval(interpretation);
+        }
+        else {
+            return TruthValue.UNKNOWN;
+        }
     }
 
     @Override
