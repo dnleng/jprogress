@@ -58,5 +58,19 @@ public class Main {
         for(Interpretation i : i3.getReductions()) {
             System.out.println("Reduction: " + i);
         }
+
+        System.out.println();
+
+        Formula f4 = FormulaFactory.createFormula(FormulaTemplate.APEQ);
+        MProgressNaive progressor = new MProgressNaive(f4);
+        Interpretation i4 = new Interpretation();
+        i4.setTruthValue("p", TruthValue.UNKNOWN);
+        i4.setTruthValue("q", TruthValue.UNKNOWN);
+        System.out.println("Formula: " + f4);
+        for(int i = 0; i < 10; i++) {
+            progressor.progress(i4);
+        }
+        System.out.println("Histogram:");
+        System.out.println(progressor.get());
     }
 }
