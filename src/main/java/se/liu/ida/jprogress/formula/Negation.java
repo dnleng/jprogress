@@ -2,7 +2,9 @@ package se.liu.ida.jprogress.formula;
 
 import se.liu.ida.jprogress.Interpretation;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dnleng on 30/04/18.
@@ -11,6 +13,7 @@ public class Negation extends Formula {
     private Formula formula;
 
     public Negation(Formula formula) {
+        super();
         this.formula = formula;
     }
 
@@ -28,6 +31,10 @@ public class Negation extends Formula {
         else {
             return TruthValue.TRUE;
         }
+    }
+
+    public Set<String> getAtoms() {
+        return formula.getAtoms();
     }
 
     @Override

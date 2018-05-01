@@ -2,7 +2,9 @@ package se.liu.ida.jprogress.formula;
 
 import se.liu.ida.jprogress.Interpretation;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dnleng on 30/04/18.
@@ -12,6 +14,7 @@ public class Atom extends Formula {
     private String label;
 
     public Atom(String label) {
+        super();
         this.label = label;
     }
 
@@ -26,6 +29,12 @@ public class Atom extends Formula {
             truthValue = TruthValue.FALSE;
         }
         return truthValue;
+    }
+
+    public Set<String> getAtoms() {
+        Set<String> result = new HashSet<>();
+        result.add(this.label);
+        return result;
     }
 
     @Override

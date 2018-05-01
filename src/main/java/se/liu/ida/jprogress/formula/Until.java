@@ -2,7 +2,9 @@ package se.liu.ida.jprogress.formula;
 
 import se.liu.ida.jprogress.Interpretation;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dnleng on 30/04/18.
@@ -14,6 +16,7 @@ public class Until extends Formula {
     protected Formula rhs;
 
     public Until(int startTime, int endTime, Formula lhs, Formula rhs) {
+        super();
         this.startTime = startTime;
         this.endTime = endTime;
         this.lhs = lhs;
@@ -21,6 +24,7 @@ public class Until extends Formula {
     }
 
     public Until(Formula lhs, Formula rhs) {
+        super();
         this.startTime = 0;
         this.endTime = Integer.MAX_VALUE;
         this.lhs = lhs;
@@ -49,6 +53,13 @@ public class Until extends Formula {
         else {
             return TruthValue.UNKNOWN;
         }
+    }
+
+    public Set<String> getAtoms() {
+        Set<String> result = new HashSet<>();
+        result.addAll(lhs.getAtoms());
+        result.addAll(rhs.getAtoms());
+        return result;
     }
 
     @Override

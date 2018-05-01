@@ -2,6 +2,7 @@ package se.liu.ida.jprogress;
 
 import se.liu.ida.jprogress.formula.TruthValue;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -76,6 +77,22 @@ public class Interpretation {
             }
         }
 
+
+        return result;
+    }
+
+    public int compress() {
+        LinkedList<String> atoms = new LinkedList<>(this.truthFunc.keySet());
+        Collections.sort(atoms);
+        int result = 0;
+        for(int i = 0; i < atoms.size(); i++) {
+            if(this.truthFunc.get(atoms.get(i)) == TruthValue.TRUE) {
+                result += ((int)Math.pow(2.0, i));
+            }
+            else if(this.truthFunc.get(atoms.get(i)) == TruthValue.UNKNOWN) {
+                System.err.println("Warning: Proposition " + atoms.get(i) + " has unknown truth value; applying NAF");
+            }
+        }
 
         return result;
     }

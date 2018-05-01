@@ -1,11 +1,11 @@
-package se.liu.ida.jprogress;
+package se.liu.ida.jprogress.progressor;
 
+import se.liu.ida.jprogress.Interpretation;
 import se.liu.ida.jprogress.formula.Formula;
+import se.liu.ida.jprogress.Histogram;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -41,8 +41,8 @@ public class MProgressNaive implements Progressor {
 	this.frontier.add(input);
     }
 
-    public FormulaHistogram get() {
-        FormulaHistogram hist = new FormulaHistogram();
+    public Histogram get() {
+        Histogram hist = new Histogram();
 	for(Formula f : frontier) {
 	    hist.add(f.toString());
 	}

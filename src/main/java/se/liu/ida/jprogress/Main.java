@@ -4,6 +4,8 @@ import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.formula.FormulaFactory;
 import se.liu.ida.jprogress.formula.FormulaTemplate;
 import se.liu.ida.jprogress.formula.TruthValue;
+import se.liu.ida.jprogress.progressor.MProgressNaive;
+import se.liu.ida.jprogress.progressor.graph.ProgressionGraph;
 
 import java.util.Random;
 
@@ -72,5 +74,20 @@ public class Main {
         }
         System.out.println("Histogram:");
         System.out.println(progressor.get());
+
+        System.out.println();
+
+        Formula f5 = FormulaFactory.createFormula(FormulaTemplate.APEQ);
+        Interpretation i5 = new Interpretation();
+        i5.setTruthValue("p", TruthValue.UNKNOWN);
+        i5.setTruthValue("q", TruthValue.UNKNOWN);
+
+        ProgressionGraph graph = new ProgressionGraph(f5);
+        System.out.println(graph.getMassStatus());
+        for(int i = 0; i < 1000; i++) {
+            System.out.println("Progression iteration: "+(i+1));
+            graph.progress(i5);
+            System.out.println(graph.getMassStatus());
+        }
     }
 }

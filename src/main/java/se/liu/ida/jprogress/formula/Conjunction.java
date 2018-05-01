@@ -2,7 +2,9 @@ package se.liu.ida.jprogress.formula;
 
 import se.liu.ida.jprogress.Interpretation;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dnleng on 30/04/18.
@@ -12,6 +14,7 @@ public class Conjunction extends Formula {
     private Formula rhs;
 
     public Conjunction(Formula lhs, Formula rhs) {
+        super();
         this.lhs = lhs;
         this.rhs = rhs;
     }
@@ -49,6 +52,13 @@ public class Conjunction extends Formula {
         else {
             return this;
         }
+    }
+
+    public Set<String> getAtoms() {
+        Set<String> result = new HashSet<>();
+        result.addAll(lhs.getAtoms());
+        result.addAll(rhs.getAtoms());
+        return result;
     }
 
     @Override

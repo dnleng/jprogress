@@ -1,5 +1,6 @@
-package se.liu.ida.jprogress;
+package se.liu.ida.jprogress.progressor;
 
+import se.liu.ida.jprogress.Interpretation;
 import se.liu.ida.jprogress.formula.Formula;
 
 /**

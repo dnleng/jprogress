@@ -7,10 +7,13 @@ import java.util.HashMap;
 /**
  * Created by Squig on 01/05/2018.
  */
-public class FormulaHistogram extends HashMap<String, Integer> {
+public class Histogram extends HashMap<String, Integer> {
 
-    public FormulaHistogram() {
+    private int count;
+
+    public Histogram() {
         super();
+        this.count = 0;
     }
 
     public int add(String f) {
@@ -21,6 +24,7 @@ public class FormulaHistogram extends HashMap<String, Integer> {
             this.put(f, this.get(f)+1);
 	}
 
+	this.count++;
 	return this.get(f);
     }
 
@@ -28,11 +32,19 @@ public class FormulaHistogram extends HashMap<String, Integer> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for(String key : this.keySet()) {
-	    sb.append(this.get(key));
-	    sb.append("\t\t:\t");
+            int i = this.get(key);
+            double r = Math.floor(((double)i / (double)this.count) * 10000.0) / 10000.0;
+
+	    sb.append(i);
+	    sb.append("\t\t(");
+	    sb.append(r);
+	    sb.append("):\t");
 	    sb.append(key);
 	    sb.append("\n");
 	}
+	sb.append("--------\n");
+	sb.append(this.count);
+	sb.append("\n");
 
 	return sb.toString();
     }
