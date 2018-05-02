@@ -81,12 +81,25 @@ public class Main {
         Formula f5 = FormulaFactory.createFormula(FormulaTemplate.APEQ);
         Interpretation i5 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
 
-        ProgressionGraph graph = new ProgressionGraph(ProgressionStrategy.GRAPH, f5);
-        System.out.println(graph.getMassStatus(0.001));
-        for (int i = 0; i < 1000; i++) {
+        ProgressionGraph graph5 = new ProgressionGraph(ProgressionStrategy.GRAPH, f5);
+        System.out.println(graph5.getMassStatus(0.001));
+        for (int i = 0; i < 10; i++) {
             System.out.println("Progression iteration: " + (i + 1));
-            graph.progress(i5);
-            System.out.println(graph.getMassStatus(0.001));
+            graph5.progress(i5);
+            System.out.println(graph5.getMassStatus(0.001));
+        }
+
+        System.out.println();
+
+        Formula f6 = FormulaFactory.createFormula(FormulaTemplate.APEQ);
+        Interpretation i6 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
+
+        ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
+        System.out.println(graph6.getMassStatus(0.001));
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Progression iteration: " + (i + 1));
+            graph6.progress(i6);
+            System.out.println(graph6.getMassStatus(0.001));
         }
     }
 }

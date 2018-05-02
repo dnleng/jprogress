@@ -2,13 +2,7 @@ package se.liu.ida.jprogress;
 
 import se.liu.ida.jprogress.formula.TruthValue;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by dnleng on 30/04/18.
@@ -100,6 +94,12 @@ public class Interpretation {
             }
         }
 
+        return result;
+    }
+
+    public List<String> getAtoms() {
+        List<String> result = new ArrayList<>(this.truthFunc.keySet().size());
+        result.addAll(this.truthFunc.keySet());
         return result;
     }
 

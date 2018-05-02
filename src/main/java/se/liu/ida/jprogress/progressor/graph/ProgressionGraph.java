@@ -5,13 +5,7 @@ import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.formula.TruthValue;
 import se.liu.ida.jprogress.progressor.Progressor;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by Squig on 01/05/2018.
@@ -22,7 +16,9 @@ public class ProgressionGraph implements Progressor {
     private Map<UUID, Set<Transition>> transitionMap;
     private Map<UUID, Double> massMap;
     private Map<UUID, Boolean> expandedMap;
+    private Map<UUID, Integer> ttlMap;
     private Formula root;
+    private static final int MAX_TTL = 5;
 
     public ProgressionGraph(ProgressionStrategy strategy) {
         reset(strategy);
@@ -40,6 +36,7 @@ public class ProgressionGraph implements Progressor {
         }
 
         this.idMap.put(formula.getId(), formula);
+        this.ttlMap.put(formula.getId(), 0);
         this.expandedMap.put(formula.getId(), false);
         this.transitionMap.put(formula.getId(), new HashSet<>());
         this.massMap.put(formula.getId(), 1.0);
@@ -78,6 +75,7 @@ public class ProgressionGraph implements Progressor {
                 result.setId(UUID.randomUUID());
                 frontier.add(result);
                 this.idMap.put(result.getId(), result);
+                this.ttlMap.put(result.getId(), 0);
                 this.expandedMap.put(result.getId(), false);
                 this.massMap.put(result.getId(), 0.0);
                 this.transitionMap.put(result.getId(), new HashSet<>());
@@ -89,6 +87,10 @@ public class ProgressionGraph implements Progressor {
         }
         this.expandedMap.put(f.getId(), true);
         return frontier;
+    }
+
+    private void shrink(UUID id) {
+        //TODO: Find and reset all nodes with transitions to this node
     }
 
     private UUID getUUID(String strFormula) {
@@ -113,8 +115,16 @@ public class ProgressionGraph implements Progressor {
             nextMassMap.put(id, 0.0);
         }
 
-        for (UUID id : this.idMap.keySet()) {
+        // Specify job list (since idMap gets updated) and execute
+        List<UUID> jobList = new ArrayList<>(this.idMap.keySet().size());
+        jobList.addAll(this.idMap.keySet());
+        for (UUID id : jobList) {
             if (this.massMap.get(id) > 0.0) {
+                // Update graph if necessary
+                if(!this.expandedMap.get(id)) {
+                    expand(idMap.get(id), Interpretation.buildFullyUnknown(interpretation.getAtoms()).getReductions());
+                }
+
                 // Push mass
                 List<UUID> destinations = new LinkedList<>();
                 for (Transition t : this.transitionMap.get(id)) {
@@ -125,12 +135,25 @@ public class ProgressionGraph implements Progressor {
 
                 double massChunk = this.massMap.get(id) / (double) destinations.size();
                 for (UUID destId : destinations) {
-                    nextMassMap.put(destId, nextMassMap.get(destId) + massChunk);
+                    nextMassMap.put(destId, nextMassMap.getOrDefault(destId, 0.0) + massChunk);
+                    this.ttlMap.put(destId, 0);
                 }
             }
         }
 
         this.massMap = nextMassMap;
+        if(MAX_TTL < Integer.MAX_VALUE) {
+            for(UUID id : this.ttlMap.keySet()) {
+                int newAge = this.ttlMap.get(id) + 1;
+                if(newAge < MAX_TTL) {
+                    this.ttlMap.put(id, newAge);
+                }
+                else {
+                    shrink(id);
+                }
+
+            }
+        }
     }
 
     @Override
@@ -156,6 +179,7 @@ public class ProgressionGraph implements Progressor {
         this.transitionMap = new HashMap<>();
         this.massMap = new HashMap<>();
         this.expandedMap = new HashMap<>();
+        this.ttlMap = new HashMap<>();
         this.strategy = strategy;
         this.root = null;
     }
@@ -173,7 +197,9 @@ public class ProgressionGraph implements Progressor {
                 sb.append(mass);
                 sb.append("\t\t:\t");
                 sb.append(formula);
-                sb.append("\n");
+                sb.append("\t\t{Age: ");
+                sb.append(this.ttlMap.get(key));
+                sb.append("}\n");
             }
         }
 
