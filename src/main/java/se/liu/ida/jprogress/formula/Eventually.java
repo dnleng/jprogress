@@ -17,23 +17,20 @@ public class Eventually extends Until {
 
     @Override
     public Formula progress(Interpretation interpretation) {
-        if(this.endTime < 0) {
+        if (this.endTime < 0) {
             return new Bottom();
-        }
-        else if(this.startTime <= 0 && 0 <= this.endTime) {
+        } else if (this.startTime <= 0 && 0 <= this.endTime) {
             return new Disjunction(this.rhs.progress(interpretation), new Eventually(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.rhs)).simplify(interpretation);
-        }
-        else {
+        } else {
             return new Eventually(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.rhs);
         }
     }
 
     @Override
     public String toString() {
-        if(this.startTime == 0 && this.endTime == Integer.MAX_VALUE) {
+        if (this.startTime == 0 && this.endTime == Integer.MAX_VALUE) {
             return "Eventually (" + this.rhs + ")";
-        }
-        else {
+        } else {
             return "Eventually [" + this.startTime + " ; " + this.endTime + "] (" + this.rhs + ")";
         }
     }

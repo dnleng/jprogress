@@ -10,20 +10,23 @@ public class DefaultProgressor implements Progressor {
 
     private Formula input;
 
-    public DefaultProgressor() {}
+    public DefaultProgressor() {
+    }
 
     public DefaultProgressor(Formula input) {
         this.input = input;
     }
 
-    @Override public void progress(final Interpretation interpretation) {
-        if(this.input != null) {
-	    this.input = this.input.progress(interpretation);
-	}
+    @Override
+    public void progress(final Interpretation interpretation) {
+        if (this.input != null) {
+            this.input = this.input.progress(interpretation);
+        }
     }
 
-    @Override public void set(final Formula input) {
-	this.input = input;
+    @Override
+    public void set(final Formula input) {
+        this.input = input;
     }
 
     public Formula get() {

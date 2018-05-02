@@ -25,32 +25,26 @@ public class Disjunction extends Formula {
     }
 
     public TruthValue eval(Interpretation interpretation) {
-        if(lhs.eval(interpretation) == TruthValue.TRUE || rhs.eval(interpretation) == TruthValue.TRUE) {
+        if (lhs.eval(interpretation) == TruthValue.TRUE || rhs.eval(interpretation) == TruthValue.TRUE) {
             return TruthValue.TRUE;
-        }
-        else if(lhs.eval(interpretation) == TruthValue.FALSE && rhs.eval(interpretation) == TruthValue.FALSE) {
+        } else if (lhs.eval(interpretation) == TruthValue.FALSE && rhs.eval(interpretation) == TruthValue.FALSE) {
             return TruthValue.FALSE;
-        }
-        else {
+        } else {
             return TruthValue.UNKNOWN;
         }
     }
 
     @Override
     public Formula simplify(Interpretation interpretation) {
-        if(this.eval(interpretation) == TruthValue.FALSE) {
+        if (this.eval(interpretation) == TruthValue.FALSE) {
             return new Bottom();
-        }
-        else if(this.eval(interpretation) == TruthValue.TRUE) {
+        } else if (this.eval(interpretation) == TruthValue.TRUE) {
             return new Top();
-        }
-        else if(lhs.eval(interpretation) == TruthValue.FALSE && rhs.eval(interpretation) == TruthValue.UNKNOWN) {
+        } else if (lhs.eval(interpretation) == TruthValue.FALSE && rhs.eval(interpretation) == TruthValue.UNKNOWN) {
             return rhs;
-        }
-        else if(lhs.eval(interpretation) == TruthValue.UNKNOWN && rhs.eval(interpretation) == TruthValue.FALSE) {
+        } else if (lhs.eval(interpretation) == TruthValue.UNKNOWN && rhs.eval(interpretation) == TruthValue.FALSE) {
             return lhs;
-        }
-        else {
+        } else {
             return this;
         }
     }

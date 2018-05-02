@@ -12,7 +12,7 @@ public class Transition {
     public UUID destination;
 
     public Transition(Interpretation interpretation, UUID destination) {
-	this.interpretation = interpretation.compress();
-	this.destination = destination;
+        this.interpretation = interpretation.compress();
+        this.destination = destination;
     }
 }

@@ -17,23 +17,20 @@ public class Always extends Until {
 
     @Override
     public Formula progress(Interpretation interpretation) {
-        if(this.endTime == 0) {
+        if (this.endTime == 0) {
             return new Top();
-        }
-        else if(this.startTime <= 0 && 0 <= this.endTime) {
+        } else if (this.startTime <= 0 && 0 <= this.endTime) {
             return new Conjunction(this.lhs.progress(interpretation), new Always(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs)).simplify(interpretation);
-        }
-        else {
+        } else {
             return new Always(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs);
         }
     }
 
     @Override
     public String toString() {
-        if(this.startTime == 0 && this.endTime == Integer.MAX_VALUE) {
+        if (this.startTime == 0 && this.endTime == Integer.MAX_VALUE) {
             return "Always (" + this.lhs + ")";
-        }
-        else {
+        } else {
             return "Always [" + this.startTime + " ; " + this.endTime + "] (" + this.lhs + ")";
         }
     }

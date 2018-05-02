@@ -26,16 +26,15 @@ public abstract class Formula {
     }
 
     public abstract Formula progress(Interpretation interpretation);
+
     public abstract TruthValue eval(Interpretation interpretation);
 
     public Formula simplify(Interpretation interpretation) {
-        if(this.eval(interpretation) == TruthValue.TRUE) {
+        if (this.eval(interpretation) == TruthValue.TRUE) {
             return new Top();
-        }
-        else if(this.eval(interpretation) == TruthValue.FALSE) {
+        } else if (this.eval(interpretation) == TruthValue.FALSE) {
             return new Bottom();
-        }
-        else {
+        } else {
             return this;
         }
     }

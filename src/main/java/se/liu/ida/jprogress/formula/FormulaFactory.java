@@ -5,10 +5,11 @@ package se.liu.ida.jprogress.formula;
  */
 public class FormulaFactory {
 
-    private FormulaFactory() {}
+    private FormulaFactory() {
+    }
 
     public static Formula createFormula(FormulaTemplate template) {
-        switch(template) {
+        switch (template) {
             case APEQ:
                 return createAPEQ();
             case BERNOULLI:
@@ -21,10 +22,10 @@ public class FormulaFactory {
     private static Formula createAPEQ() {
         Atom p = new Atom("p");
         Atom q = new Atom("q");
-        return new Always( new Disjunction( new Negation(p), new Eventually(0, 5, q) ) );
+        return new Always(new Disjunction(new Negation(p), new Eventually(0, 5, q)));
     }
 
     private static Formula createBernoulli() {
-        return new Eventually( new Atom("p") );
+        return new Eventually(new Atom("p"));
     }
 }

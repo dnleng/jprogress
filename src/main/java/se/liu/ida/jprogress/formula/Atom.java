@@ -24,7 +24,7 @@ public class Atom extends Formula {
 
     public TruthValue eval(Interpretation interpretation) {
         TruthValue truthValue = interpretation.getTruthValue(this.label);
-        if(truthValue == TruthValue.UNKNOWN) {
+        if (truthValue == TruthValue.UNKNOWN) {
             System.err.println("Warning: Proposition " + label + " has unknown truth value; applying NAF");
             truthValue = TruthValue.FALSE;
         }

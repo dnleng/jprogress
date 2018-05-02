@@ -8,5 +8,6 @@ import se.liu.ida.jprogress.formula.Formula;
  */
 public interface Progressor {
     void progress(Interpretation interpretation);
+
     void set(Formula input);
 }

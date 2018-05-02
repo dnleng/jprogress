@@ -32,25 +32,21 @@ public class Until extends Formula {
     }
 
     public Formula progress(Interpretation interpretation) {
-        if(this.endTime < 0) {
+        if (this.endTime < 0) {
             return new Bottom();
-        }
-        else if(this.startTime <= 0 && 0 <= this.endTime) {
+        } else if (this.startTime <= 0 && 0 <= this.endTime) {
             return new Disjunction(this.rhs.progress(interpretation), new Conjunction(this.lhs.progress(interpretation), new Until(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs, this.rhs)).simplify(interpretation)).simplify(interpretation);
-        }
-        else {
+        } else {
             return new Conjunction(this.lhs.progress(interpretation), new Until(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs, this.rhs)).simplify(interpretation);
         }
     }
 
     public TruthValue eval(Interpretation interpretation) {
-        if(this.endTime < 0) {
+        if (this.endTime < 0) {
             return TruthValue.FALSE;
-        }
-        else if(this.endTime == 0) {
+        } else if (this.endTime == 0) {
             return this.rhs.eval(interpretation);
-        }
-        else {
+        } else {
             return TruthValue.UNKNOWN;
         }
     }
@@ -64,10 +60,9 @@ public class Until extends Formula {
 
     @Override
     public String toString() {
-        if(this.startTime == 0 && this.endTime == Integer.MAX_VALUE) {
+        if (this.startTime == 0 && this.endTime == Integer.MAX_VALUE) {
             return "(" + this.lhs + ") Until (" + this.rhs + ")";
-        }
-        else {
+        } else {
             return "(" + this.lhs + ") Until [" + this.startTime + " ; " + this.endTime + "] (" + this.rhs + ")";
         }
     }

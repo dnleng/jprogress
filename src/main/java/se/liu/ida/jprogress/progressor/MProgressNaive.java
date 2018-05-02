@@ -24,28 +24,30 @@ public class MProgressNaive implements Progressor {
         this.frontier.add(input);
     }
 
-    @Override public void progress(final Interpretation interpretation) {
-	Set<Interpretation> reductions = interpretation.getReductions();
+    @Override
+    public void progress(final Interpretation interpretation) {
+        Set<Interpretation> reductions = interpretation.getReductions();
         List<Formula> result = new LinkedList<>();
-        for(Formula f : frontier) {
-	    for (Interpretation i : reductions) {
-		result.add(f.progress(i));
-	    }
-	}
+        for (Formula f : frontier) {
+            for (Interpretation i : reductions) {
+                result.add(f.progress(i));
+            }
+        }
 
-	this.frontier = result;
+        this.frontier = result;
     }
 
-    @Override public void set(final Formula input) {
-	this.frontier = new LinkedList<>();
-	this.frontier.add(input);
+    @Override
+    public void set(final Formula input) {
+        this.frontier = new LinkedList<>();
+        this.frontier.add(input);
     }
 
     public Histogram get() {
         Histogram hist = new Histogram();
-	for(Formula f : frontier) {
-	    hist.add(f.toString());
-	}
+        for (Formula f : frontier) {
+            hist.add(f.toString());
+        }
         return hist;
     }
 

@@ -22,13 +22,11 @@ public class Negation extends Formula {
     }
 
     public TruthValue eval(Interpretation interpretation) {
-        if(this.formula.eval(interpretation) == TruthValue.UNKNOWN) {
+        if (this.formula.eval(interpretation) == TruthValue.UNKNOWN) {
             return TruthValue.UNKNOWN;
-        }
-        else if(this.formula.eval(interpretation) == TruthValue.TRUE) {
+        } else if (this.formula.eval(interpretation) == TruthValue.TRUE) {
             return TruthValue.FALSE;
-        }
-        else {
+        } else {
             return TruthValue.TRUE;
         }
     }
