@@ -17,6 +17,15 @@ import java.util.Random;
  */
 public class Main {
     public static void main(String[] args) {
+//        runExp1();
+//        runExp2();
+//        runExp3();
+//        runExp4();
+//        runExp5();
+        runExp6();
+    }
+
+    private static void runExp1() {
         Interpretation i1 = new Interpretation();
         i1.setTruthValue("p", TruthValue.TRUE);
         i1.setTruthValue("q", TruthValue.FALSE);
@@ -29,6 +38,12 @@ public class Main {
         }
 
         System.out.println();
+    }
+
+    private static void runExp2() {
+        Interpretation i1 = new Interpretation();
+        i1.setTruthValue("p", TruthValue.TRUE);
+        i1.setTruthValue("q", TruthValue.FALSE);
 
         Random rand = new Random();
         Formula f2 = FormulaFactory.createFormula(FormulaTemplate.BERNOULLI);
@@ -52,7 +67,9 @@ public class Main {
         }
 
         System.out.println();
+    }
 
+    private static void runExp3() {
         Interpretation i3 = new Interpretation();
         i3.setTruthValue("p", TruthValue.TRUE);
         i3.setTruthValue("q", TruthValue.UNKNOWN);
@@ -65,7 +82,9 @@ public class Main {
         }
 
         System.out.println();
+    }
 
+    private static void runExp4() {
         Formula f4 = FormulaFactory.createFormula(FormulaTemplate.APEQ);
         MProgressNaive progressor = new MProgressNaive(f4);
         Interpretation i4 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
@@ -77,29 +96,50 @@ public class Main {
         System.out.println(progressor.get());
 
         System.out.println();
+    }
 
-        Formula f5 = FormulaFactory.createFormula(FormulaTemplate.APEQ);
+    private static void runExp5() {
+        System.out.println("EXPERIMENT 5");
+        System.out.println("============");
+        Formula f5 = FormulaFactory.createFormula(FormulaTemplate.BIG_APEQ);
         Interpretation i5 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
 
+        long t1Start = System.currentTimeMillis();
         ProgressionGraph graph5 = new ProgressionGraph(ProgressionStrategy.GRAPH, f5);
-        System.out.println(graph5.getMassStatus(0.001));
+        long t1End = System.currentTimeMillis();
+        System.out.println("Setup time: " + (t1End-t1Start) + "ms");
+        System.out.println(graph5.getMassStatus());
         for (int i = 0; i < 10; i++) {
             System.out.println("Progression iteration: " + (i + 1));
+            long t2Start = System.currentTimeMillis();
             graph5.progress(i5);
-            System.out.println(graph5.getMassStatus(0.001));
+            long t2End = System.currentTimeMillis();
+            System.out.println(graph5.getMassStatus());
+            System.out.println(graph5.getGraphStatus());
+            System.out.println("Progression time: " + (t2End-t2Start) + "ms\n");
         }
+    }
 
-        System.out.println();
-
-        Formula f6 = FormulaFactory.createFormula(FormulaTemplate.APEQ);
+    private static void runExp6() {
+        System.out.println("EXPERIMENT 6");
+        System.out.println("============");
+        Formula f6 = FormulaFactory.createFormula(FormulaTemplate.BIG_APEQ);
         Interpretation i6 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
 
+        long t1Start = System.currentTimeMillis();
         ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
+        graph6.setTTL(2);
+        long t1End = System.currentTimeMillis();
+        System.out.println("Setup time: " + (t1End-t1Start) + "ms");
         System.out.println(graph6.getMassStatus(0.001));
         for (int i = 0; i < 10; i++) {
             System.out.println("Progression iteration: " + (i + 1));
+            long t2Start = System.currentTimeMillis();;
             graph6.progress(i6);
-            System.out.println(graph6.getMassStatus(0.001));
+            long t2End = System.currentTimeMillis();
+            System.out.println(graph6.getMassStatus());
+            System.out.println(graph6.getGraphStatus());
+            System.out.println("Progression time: " + (t2End-t2Start) + "ms\n");
         }
     }
 }

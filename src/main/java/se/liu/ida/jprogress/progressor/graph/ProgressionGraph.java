@@ -18,7 +18,7 @@ public class ProgressionGraph implements Progressor {
     private Map<UUID, Boolean> expandedMap;
     private Map<UUID, Integer> ttlMap;
     private Formula root;
-    private static final int MAX_TTL = 5;
+    private int maxTTL;
 
     public ProgressionGraph(ProgressionStrategy strategy) {
         reset(strategy);
@@ -89,8 +89,28 @@ public class ProgressionGraph implements Progressor {
         return frontier;
     }
 
-    private void shrink(UUID id) {
-        //TODO: Find and reset all nodes with transitions to this node
+    private void shrink(Set<UUID> destIds) {
+        Set<UUID> resetSet = new HashSet<>();
+        for(UUID srcId : transitionMap.keySet()) {
+            for(Transition trans : transitionMap.get(srcId)) {
+                if(destIds.contains(trans.destination)) {
+                    resetSet.add(srcId);
+                }
+            }
+        }
+
+        for(UUID id : resetSet) {
+            this.expandedMap.put(id, false);
+            this.transitionMap.put(id, new HashSet<>());
+        }
+
+        for(UUID id : destIds) {
+            this.idMap.remove(id);
+            this.transitionMap.remove(id);
+            this.expandedMap.remove(id);
+            this.massMap.remove(id);
+            this.ttlMap.remove(id);
+        }
     }
 
     private UUID getUUID(String strFormula) {
@@ -142,17 +162,18 @@ public class ProgressionGraph implements Progressor {
         }
 
         this.massMap = nextMassMap;
-        if(MAX_TTL < Integer.MAX_VALUE) {
+        if(maxTTL < Integer.MAX_VALUE) {
+            Set<UUID> removalSet = new HashSet<>();
             for(UUID id : this.ttlMap.keySet()) {
                 int newAge = this.ttlMap.get(id) + 1;
-                if(newAge < MAX_TTL) {
+                if(newAge < maxTTL) {
                     this.ttlMap.put(id, newAge);
                 }
                 else {
-                    shrink(id);
+                    removalSet.add(id);
                 }
-
             }
+            shrink(removalSet);
         }
     }
 
@@ -182,23 +203,28 @@ public class ProgressionGraph implements Progressor {
         this.ttlMap = new HashMap<>();
         this.strategy = strategy;
         this.root = null;
+        this.maxTTL = Integer.MAX_VALUE;
+    }
+
+    public void setTTL(int ttl) {
+        this.maxTTL = ttl;
     }
 
     public String getMassStatus(double threshold) {
         StringBuilder sb = new StringBuilder();
         sb.append("Probability mass distribution:\n");
         double totalMass = 0;
-        for (UUID key : this.idMap.keySet()) {
+        for (UUID key : sortByValue(this.massMap).keySet()) {
             Formula formula = this.idMap.get(key);
-            double mass = Math.floor(this.massMap.get(key) * 10000.0) / 10000.0;
+            double mass = Math.floor(this.massMap.get(key) * 100000.0) / 100000.0;
             totalMass += this.massMap.get(key);
 
             if (mass > threshold) {
                 sb.append(mass);
                 sb.append("\t\t:\t");
                 sb.append(formula);
-                sb.append("\t\t{Age: ");
-                sb.append(this.ttlMap.get(key));
+                sb.append("\t\t{TTL: ");
+                sb.append(this.maxTTL-this.ttlMap.get(key));
                 sb.append("}\n");
             }
         }
@@ -208,6 +234,43 @@ public class ProgressionGraph implements Progressor {
             sb.append(leakedMass);
             sb.append("\t\t:\t?\n");
         }
+
+        return sb.toString();
+    }
+
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+        // Source: https://stackoverflow.com/a/2581754/9623204 (modified to reverse)
+        List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+        Collections.reverse(list);
+
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Map.Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
+    }
+
+    public String getGraphStatus() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Graph properties:\n");
+        sb.append("Vertex count\t\t:\t");
+        sb.append(this.idMap.keySet().size());
+        sb.append("\n");
+
+        int edgeCount = 0;
+        for(UUID id : this.transitionMap.keySet()) {
+            edgeCount += this.transitionMap.get(id).size();
+        }
+
+        sb.append("Edge count  \t\t:\t");
+        sb.append(edgeCount);
+        sb.append("\n");
+
+        sb.append("Time-to-live\t\t:\t");
+        sb.append(this.maxTTL);
+        sb.append("\n");
 
         return sb.toString();
     }

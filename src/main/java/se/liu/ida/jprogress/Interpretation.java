@@ -23,6 +23,25 @@ public class Interpretation {
         return result;
     }
 
+    public static Interpretation buildRandom(List<String> props) {
+        Random rand = new Random();
+        Interpretation result = new Interpretation();
+        for(String prop : props) {
+            switch (rand.nextInt(2)) {
+                case 0:
+                    result.setTruthValue(prop, TruthValue.TRUE);
+                    break;
+                case 1:
+                    result.setTruthValue(prop, TruthValue.FALSE);
+                    break;
+                default:
+                    result.setTruthValue(prop, TruthValue.UNKNOWN);
+                    break;
+            }
+        }
+        return result;
+    }
+
     public TruthValue getTruthValue(String label) {
         return this.truthFunc.getOrDefault(label, TruthValue.UNKNOWN);
     }
