@@ -16,12 +16,15 @@ import java.util.Random;
  * Created by dnleng on 30/04/18.
  */
 public class Main {
+    private static final int ITERATIONS = 15;
+
+
     public static void main(String[] args) {
 //        runExp1();
 //        runExp2();
 //        runExp3();
 //        runExp4();
-//        runExp5();
+        runExp5();
         runExp6();
     }
 
@@ -109,7 +112,7 @@ public class Main {
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End-t1Start) + "ms");
         System.out.println(graph5.getMassStatus());
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < ITERATIONS; i++) {
             System.out.println("Progression iteration: " + (i + 1));
             long t2Start = System.currentTimeMillis();
             graph5.progress(i5);
@@ -128,11 +131,11 @@ public class Main {
 
         long t1Start = System.currentTimeMillis();
         ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
-        graph6.setTTL(2);
+        //graph6.setTTL(2);
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End-t1Start) + "ms");
         System.out.println(graph6.getMassStatus(0.001));
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < ITERATIONS; i++) {
             System.out.println("Progression iteration: " + (i + 1));
             long t2Start = System.currentTimeMillis();;
             graph6.progress(i6);

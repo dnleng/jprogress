@@ -19,6 +19,7 @@ public class ProgressionGraph implements Progressor {
     private Map<UUID, Integer> ttlMap;
     private Formula root;
     private int maxTTL;
+    private static final int MAX_ITER = 15; //FIXME: Add option to set this externally for debugging
 
     public ProgressionGraph(ProgressionStrategy strategy) {
         reset(strategy);
@@ -44,7 +45,7 @@ public class ProgressionGraph implements Progressor {
         this.root = formula;
     }
 
-    private void precompute(Formula formula) {
+    private void precompute(Formula formula, int timeout) {
         List<Formula> frontier = new LinkedList<>();
         frontier.add(formula);
 
@@ -58,9 +59,16 @@ public class ProgressionGraph implements Progressor {
             unknowns.setTruthValue(atom, TruthValue.UNKNOWN);
         }
         Set<Interpretation> hSet = unknowns.getReductions();
+        int iter = 0;
         while (!frontier.isEmpty()) {
             Formula f = frontier.remove(0);
             frontier.addAll(expand(f, hSet));
+            if(timeout < Integer.MAX_VALUE) {
+                iter++;
+                if(iter > timeout) {
+                    break;
+                }
+            }
         }
     }
 
@@ -183,7 +191,7 @@ public class ProgressionGraph implements Progressor {
         switch(this.strategy) {
             case GRAPH:
                 init(input);
-                precompute(input);
+                precompute(input, MAX_ITER);
                 break;
             default:
                 init(input);
