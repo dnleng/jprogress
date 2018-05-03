@@ -1,9 +1,6 @@
 package se.liu.ida.jprogress;
 
-import se.liu.ida.jprogress.formula.Formula;
-import se.liu.ida.jprogress.formula.FormulaFactory;
-import se.liu.ida.jprogress.formula.FormulaTemplate;
-import se.liu.ida.jprogress.formula.TruthValue;
+import se.liu.ida.jprogress.formula.*;
 import se.liu.ida.jprogress.progressor.MProgressNaive;
 import se.liu.ida.jprogress.progressor.graph.ProgressionGraph;
 import se.liu.ida.jprogress.progressor.graph.ProgressionStrategy;
@@ -16,7 +13,7 @@ import java.util.Random;
  * Created by dnleng on 30/04/18.
  */
 public class Main {
-    private static final int ITERATIONS = 10;
+    private static final int ITERATIONS = 10000;
 
 
     public static void main(String[] args) {
@@ -24,8 +21,9 @@ public class Main {
 //        runExp2();
 //        runExp3();
 //        runExp4();
-        runExp5();
+//        runExp5();
         runExp6();
+//        runExp7();
     }
 
     private static void runExp1() {
@@ -104,6 +102,7 @@ public class Main {
     private static void runExp5() {
         System.out.println("EXPERIMENT 5");
         System.out.println("============");
+        long tStart = System.currentTimeMillis();
         Formula f5 = FormulaFactory.createFormula(FormulaTemplate.BIG_APEQ);
         Interpretation i5 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
 
@@ -111,30 +110,64 @@ public class Main {
         ProgressionGraph graph5 = new ProgressionGraph(ProgressionStrategy.GRAPH, f5);
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End-t1Start) + "ms");
-        System.out.println(graph5.getMassStatus());
+//        System.out.println(graph5.getMassStatus());
         for (int i = 0; i < ITERATIONS; i++) {
-            System.out.println("Progression iteration: " + (i + 1));
+//            System.out.println("Progression iteration: " + (i + 1));
             long t2Start = System.currentTimeMillis();
             graph5.progress(i5);
             long t2End = System.currentTimeMillis();
-            System.out.println(graph5.getMassStatus());
-            System.out.println(graph5.getGraphStatus());
-            System.out.println("Progression time: " + (t2End-t2Start) + "ms\n");
+//            System.out.println(graph5.getMassStatus());
+//            System.out.println(graph5.getGraphStatus());
+//            System.out.println("Progression time: " + (t2End-t2Start) + "ms\n");
         }
+        long tEnd = System.currentTimeMillis();
+
+        System.out.println(graph5.getMassStatus());
+        System.out.println(graph5.getGraphStatus());
+        System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
     }
 
     private static void runExp6() {
         System.out.println("EXPERIMENT 6");
         System.out.println("============");
+        long tStart = System.currentTimeMillis();
         Formula f6 = FormulaFactory.createFormula(FormulaTemplate.BIG_APEQ);
         Interpretation i6 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
 
         long t1Start = System.currentTimeMillis();
         ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
-        //graph6.setTTL(2);
+        graph6.setTTL(2);
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End-t1Start) + "ms");
-        System.out.println(graph6.getMassStatus(0.001));
+//        System.out.println(graph6.getMassStatus(0.001));
+        for (int i = 0; i < ITERATIONS; i++) {
+//            System.out.println("Progression iteration: " + (i + 1));
+            long t2Start = System.currentTimeMillis();;
+            graph6.progress(i6);
+            long t2End = System.currentTimeMillis();
+//            System.out.println(graph6.getMassStatus());
+//            System.out.println(graph6.getGraphStatus());
+//            System.out.println("Progression time: " + (t2End-t2Start) + "ms\n");
+        }
+        long tEnd = System.currentTimeMillis();
+
+        System.out.println(graph6.getMassStatus());
+        System.out.println(graph6.getGraphStatus());
+        System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
+    }
+
+    private static void runExp7() {
+        System.out.println("EXPERIMENT 7");
+        System.out.println("============");
+        long tStart = System.currentTimeMillis();
+        Formula f6 = FormulaFactory.createFormula(FormulaTemplate.BIG_APEQ);
+        Interpretation i6 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
+
+        long t1Start = System.currentTimeMillis();
+        ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
+        graph6.setTTL(2);
+        long t1End = System.currentTimeMillis();
+        System.out.println("Setup time: " + (t1End-t1Start) + "ms");
         for (int i = 0; i < ITERATIONS; i++) {
             System.out.println("Progression iteration: " + (i + 1));
             long t2Start = System.currentTimeMillis();;
@@ -142,7 +175,9 @@ public class Main {
             long t2End = System.currentTimeMillis();
             System.out.println(graph6.getMassStatus());
             System.out.println(graph6.getGraphStatus());
-            System.out.println("Progression time: " + (t2End-t2Start) + "ms\n");
         }
+        long tEnd = System.currentTimeMillis();
+
+        System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
     }
 }

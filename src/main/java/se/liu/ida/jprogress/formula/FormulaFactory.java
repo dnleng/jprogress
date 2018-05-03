@@ -11,20 +11,24 @@ public class FormulaFactory {
     public static Formula createFormula(FormulaTemplate template) {
         switch (template) {
             case APEQ:
-                return createAPEQ(5);
+                return createAPEQ(Integer.MAX_VALUE, 5);
             case BERNOULLI:
                 return createBernoulli();
             case BIG_APEQ:
-                return createAPEQ(50);
+                return createAPEQ(10000, 4000);
             default:
                 throw new IllegalArgumentException("Unknown template");
         }
     }
 
-    private static Formula createAPEQ(int end) {
+    public static Formula implies(Formula p, Formula q) {
+        return new Disjunction(new Negation(p), q);
+    }
+
+    private static Formula createAPEQ(int outer, int inner) {
         Atom p = new Atom("p");
         Atom q = new Atom("q");
-        return new Always(new Disjunction(new Negation(p), new Eventually(0, end, q)));
+        return new Always(outer, new Disjunction(new Negation(p), new Eventually(inner, q)));
     }
 
     private static Formula createBernoulli() {

@@ -18,6 +18,12 @@ public class Always extends Formula {
         this.formula = formula;
     }
 
+    public Always(int endTime, Formula formula) {
+        this.startTime = 0;
+        this.endTime = endTime;
+        this.formula = formula;
+    }
+
     public Always(Formula formula) {
         this.startTime = 0;
         this.endTime = Integer.MAX_VALUE;

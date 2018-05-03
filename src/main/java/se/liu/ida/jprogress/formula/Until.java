@@ -23,6 +23,14 @@ public class Until extends Formula {
         this.rhs = rhs;
     }
 
+    public Until(int endTime, Formula lhs, Formula rhs) {
+        super();
+        this.startTime = 0;
+        this.endTime = endTime;
+        this.lhs = lhs;
+        this.rhs = rhs;
+    }
+
     public Until(Formula lhs, Formula rhs) {
         super();
         this.startTime = 0;

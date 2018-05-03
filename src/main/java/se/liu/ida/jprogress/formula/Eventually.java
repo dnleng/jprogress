@@ -11,6 +11,10 @@ public class Eventually extends Until {
         super(startTime, endTime, new Top(), formula);
     }
 
+    public Eventually(int endTime, Formula formula) {
+        super(endTime, new Top(), formula);
+    }
+
     public Eventually(Formula formula) {
         super(new Top(), formula);
     }

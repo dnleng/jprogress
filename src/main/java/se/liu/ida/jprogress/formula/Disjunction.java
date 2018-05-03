@@ -113,13 +113,16 @@ public class Disjunction extends Formula {
                 ((Disjunction)this.lhs).subsumption(this, this.rhs, 1, 1);
             }
         }
-        else if(this.rhs instanceof Conjunction) {
+
+        if(this.rhs instanceof Disjunction) {
             if(this.lhs instanceof Always || this.lhs instanceof Eventually || this.lhs instanceof Until) {
                 ((Disjunction)this.rhs).subsumption(this, this.lhs, -1, -1);
                 ((Disjunction)this.rhs).subsumption(this, this.lhs, -1, 1);
             }
         }
 
+        this.lhs.subsumption(interpretation);
+        this.rhs.subsumption(interpretation);
         return this.simplify(interpretation);
     }
 
@@ -136,43 +139,9 @@ public class Disjunction extends Formula {
             return rhs;
         } else if (lhs.eval(interpretation) == TruthValue.UNKNOWN && rhs.eval(interpretation) == TruthValue.FALSE) {
             return lhs;
+        } else if(lhs.equals(rhs)) {
+            return lhs;
         }
-
-//        // Fairly ugly way of checking for subsumption
-//        if((this.lhs instanceof Always) && (this.rhs instanceof Always)) {
-//            Always left = (Always)this.lhs;
-//            Always right = (Always)this.rhs;
-//            if(left.startTime == right.startTime) {
-//                if(left.endTime > right.endTime) {
-//                    return right.simplify(interpretation);
-//                }
-//                else {
-//                    return left.simplify(interpretation);
-//                }
-//            }
-//        } else if((this.lhs instanceof Eventually) && (this.rhs instanceof Eventually)) {
-//            Eventually left = (Eventually)this.lhs;
-//            Eventually right = (Eventually)this.rhs;
-//            if(left.startTime == right.startTime) {
-//                if(left.endTime > right.endTime) {
-//                    return left.simplify(interpretation);
-//                }
-//                else {
-//                    return right.simplify(interpretation);
-//                }
-//            }
-//        }  else if((this.lhs instanceof Until) && (this.rhs instanceof Until)) {
-//            Until left = (Until)this.lhs;
-//            Until right = (Until)this.rhs;
-//            if(left.startTime == right.startTime) {
-//                if(left.endTime > right.endTime) {
-//                    return left.simplify(interpretation);
-//                }
-//                else {
-//                    return right.simplify(interpretation);
-//                }
-//            }
-//        }
 
         return this;
     }

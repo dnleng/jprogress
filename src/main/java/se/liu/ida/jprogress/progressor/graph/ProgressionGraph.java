@@ -243,7 +243,7 @@ public class ProgressionGraph implements Progressor {
             double mass = Math.floor(this.massMap.get(key) * 100000.0) / 100000.0;
             totalMass += this.massMap.get(key);
 
-            if (mass > threshold) {
+            if (mass >= threshold) {
                 sb.append(mass);
                 sb.append("\t\t:\t");
                 sb.append(formula);
@@ -254,8 +254,8 @@ public class ProgressionGraph implements Progressor {
         }
 
         double leakedMass = 1.0 - totalMass;
-        if(leakedMass > threshold) {
-            sb.append(leakedMass);
+        if(leakedMass >= threshold) {
+            sb.append(Math.floor(leakedMass * 100000.0) / 100000.0);
             sb.append("\t\t:\t?\n");
         }
 
