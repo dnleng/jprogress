@@ -16,7 +16,7 @@ import java.util.Random;
  * Created by dnleng on 30/04/18.
  */
 public class Main {
-    private static final int ITERATIONS = 15;
+    private static final int ITERATIONS = 10;
 
 
     public static void main(String[] args) {
@@ -36,7 +36,7 @@ public class Main {
         Formula f1 = FormulaFactory.createFormula(FormulaTemplate.APEQ);
         System.out.println("Formula: " + f1);
         while (f1.eval(i1) == TruthValue.UNKNOWN) {
-            f1 = f1.progress(i1);
+            f1 = f1.progress(i1).simplify(i1).subsumption(i1);
             System.out.println("Progressed (" + i1 + "): " + f1);
         }
 
@@ -65,7 +65,7 @@ public class Main {
                     break;
             }
 
-            f2 = f2.progress(i2);
+            f2 = f2.progress(i2).simplify(i2).subsumption(i2);;
             System.out.println("Progressed (" + i2 + "): " + f2);
         }
 
@@ -92,7 +92,7 @@ public class Main {
         MProgressNaive progressor = new MProgressNaive(f4);
         Interpretation i4 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
         System.out.println("Formula: " + f4);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < ITERATIONS; i++) {
             progressor.progress(i4);
         }
         System.out.println("Histogram:");

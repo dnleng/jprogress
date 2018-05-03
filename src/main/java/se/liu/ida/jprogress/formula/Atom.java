@@ -31,6 +31,18 @@ public class Atom extends Formula {
         return truthValue;
     }
 
+    @Override
+    public Formula simplify(Interpretation interpretation) {
+        if (this.eval(interpretation) == TruthValue.TRUE) {
+            return new Top();
+        } else if (this.eval(interpretation) == TruthValue.FALSE) {
+            return new Bottom();
+        }
+        else {
+            return this;
+        }
+    }
+
     public Set<String> getAtoms() {
         Set<String> result = new HashSet<>();
         result.add(this.label);
@@ -40,5 +52,20 @@ public class Atom extends Formula {
     @Override
     public String toString() {
         return this.label;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Atom atom = (Atom) o;
+
+        return label.equals(atom.label);
+    }
+
+    @Override
+    public int hashCode() {
+        return label.hashCode();
     }
 }

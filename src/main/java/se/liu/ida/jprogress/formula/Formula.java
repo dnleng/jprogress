@@ -29,15 +29,26 @@ public abstract class Formula {
 
     public abstract TruthValue eval(Interpretation interpretation);
 
-    public Formula simplify(Interpretation interpretation) {
-        if (this.eval(interpretation) == TruthValue.TRUE) {
-            return new Top();
-        } else if (this.eval(interpretation) == TruthValue.FALSE) {
-            return new Bottom();
-        } else {
-            return this;
-        }
+    public abstract Formula simplify(Interpretation interpretation);
+
+
+
+    public Formula subsumption(Interpretation interpretation) {
+        // Handle temporal subsumptions
+        return this;
     }
+//    {
+//        if (this.eval(interpretation) == TruthValue.TRUE) {
+//            return new Top();
+//        } else if (this.eval(interpretation) == TruthValue.FALSE) {
+//            return new Bottom();
+//        } else {
+//            return this;
+//        }
+//    }
 
     public abstract Set<String> getAtoms();
+
+    @Override
+    public abstract boolean equals(Object o);
 }

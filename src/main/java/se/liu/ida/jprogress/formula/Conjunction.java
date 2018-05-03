@@ -3,6 +3,7 @@ package se.liu.ida.jprogress.formula;
 import se.liu.ida.jprogress.Interpretation;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class Conjunction extends Formula {
     }
 
     public Formula progress(Interpretation interpretation) {
-        return new Conjunction(lhs.progress(interpretation), rhs.progress(interpretation)).simplify(interpretation);
+        return new Conjunction(lhs.progress(interpretation), rhs.progress(interpretation));
     }
 
     public TruthValue eval(Interpretation interpretation) {
@@ -33,19 +34,148 @@ public class Conjunction extends Formula {
         }
     }
 
+
+    public void subsumption(Conjunction prevConjunction, Formula prevTemporalOp, int prevDir, int thisDir) {
+        Formula f;
+        if(thisDir < 0) {
+            f = this.lhs;
+        }
+        else {
+            f = this.rhs;
+        }
+
+        if(prevTemporalOp instanceof Always && f instanceof Always) {
+            if(((Always)prevTemporalOp).startTime == ((Always)f).startTime) {
+                if(((Always)prevTemporalOp).endTime < ((Always)f).endTime) {
+                    if(prevDir < 0) {
+                        prevConjunction.lhs = new Top();
+                    }
+                    else {
+                        prevConjunction.rhs = new Top();
+                    }
+                }
+                else {
+                    if(thisDir < 0) {
+                        this.lhs = new Top();
+                    }
+                    else {
+                        this.rhs = new Top();
+                    }
+                }
+            }
+        }
+        else if(prevTemporalOp instanceof Eventually && f instanceof Eventually) {
+            if(((Eventually)prevTemporalOp).startTime == ((Eventually)f).startTime) {
+                if(((Eventually)prevTemporalOp).endTime < ((Eventually)f).endTime) {
+                    if(thisDir < 0) {
+                        this.lhs = new Top();
+                    }
+                    else {
+                        this.rhs = new Top();
+                    }
+                }
+                else {
+                    if(prevDir < 0) {
+                        prevConjunction.lhs = new Top();
+                    }
+                    else {
+                        prevConjunction.rhs = new Top();
+                    }
+                }
+            }
+        }
+        else if(prevTemporalOp instanceof Until && f instanceof Until) {
+            if(((Until)prevTemporalOp).startTime == ((Until)f).startTime) {
+                if(((Until)prevTemporalOp).endTime < ((Until)f).endTime) {
+                    if(thisDir < 0) {
+                        this.lhs = new Top();
+                    }
+                    else {
+                        this.rhs = new Top();
+                    }
+                }
+                else {
+                    if(prevDir < 0) {
+                        prevConjunction.lhs = new Top();
+                    }
+                    else {
+                        prevConjunction.rhs = new Top();
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public Formula subsumption(Interpretation interpretation) {
+        if(this.lhs instanceof Conjunction) {
+            if(this.rhs instanceof Always || this.rhs instanceof Eventually || this.rhs instanceof Until) {
+                ((Conjunction)this.lhs).subsumption(this, this.rhs, 1, -1);
+                ((Conjunction)this.lhs).subsumption(this, this.rhs, 1, 1);
+            }
+        }
+        else if(this.rhs instanceof Conjunction) {
+            if(this.lhs instanceof Always || this.lhs instanceof Eventually || this.lhs instanceof Until) {
+                ((Conjunction)this.rhs).subsumption(this, this.lhs, -1, -1);
+                ((Conjunction)this.rhs).subsumption(this, this.lhs, -1, 1);
+            }
+        }
+
+        return this.simplify(interpretation);
+    }
+
     @Override
     public Formula simplify(Interpretation interpretation) {
+        this.lhs = this.lhs.simplify(interpretation);
+        this.rhs = this.rhs.simplify(interpretation);
+
         if (this.eval(interpretation) == TruthValue.FALSE) {
             return new Bottom();
         } else if (this.eval(interpretation) == TruthValue.TRUE) {
             return new Top();
         } else if (lhs.eval(interpretation) == TruthValue.TRUE && rhs.eval(interpretation) == TruthValue.UNKNOWN) {
-            return rhs;
+            return rhs.simplify(interpretation);
         } else if (lhs.eval(interpretation) == TruthValue.UNKNOWN && rhs.eval(interpretation) == TruthValue.TRUE) {
-            return lhs;
-        } else {
-            return this;
+            return lhs.simplify(interpretation);
         }
+
+//        // Fairly ugly way of checking for subsumption
+//        if((this.lhs instanceof Always) && (this.rhs instanceof Always)) {
+//            Always left = (Always)this.lhs;
+//            Always right = (Always)this.rhs;
+//            if(left.startTime == right.startTime) {
+//                if(left.endTime > right.endTime) {
+//                    return left.simplify(interpretation);
+//                }
+//                else {
+//                    return right.simplify(interpretation);
+//                }
+//            }
+//        } else if((this.lhs instanceof Eventually) && (this.rhs instanceof Eventually)) {
+//            Eventually left = (Eventually)this.lhs;
+//            Eventually right = (Eventually)this.rhs;
+//            if(left.startTime == right.startTime) {
+//                if(left.endTime > right.endTime) {
+//                    return right.simplify(interpretation);
+//                }
+//                else {
+//                    return left.simplify(interpretation);
+//                }
+//            }
+//        }  else if((this.lhs instanceof Until) && (this.rhs instanceof Until)) {
+//            Until left = (Until)this.lhs;
+//            Until right = (Until)this.rhs;
+//            if(left.startTime == right.startTime) {
+//                if(left.endTime > right.endTime) {
+//                    return right.simplify(interpretation);
+//                }
+//                else {
+//                    return left.simplify(interpretation);
+//                }
+//            }
+//        }
+
+        return this;
     }
 
     public Set<String> getAtoms() {
@@ -59,4 +189,39 @@ public class Conjunction extends Formula {
     public String toString() {
         return "(" + this.lhs + ") ∧ (" + this.rhs + ")";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Conjunction that = (Conjunction) o;
+
+        if (!lhs.equals(that.lhs)) return false;
+        return rhs.equals(that.rhs);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = lhs.hashCode();
+        result = 31 * result + rhs.hashCode();
+        return result;
+    }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        Conjunction that = (Conjunction) o;
+//
+//        return ((lhs.equals(that.lhs) && rhs.equals(that.rhs)) || (lhs.equals(that.rhs) && rhs.equals(that.lhs)));
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int result = lhs.hashCode();
+//        result = 31 * result + rhs.hashCode();
+//        return result;
+//    }
 }

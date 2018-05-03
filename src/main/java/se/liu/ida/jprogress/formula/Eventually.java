@@ -20,7 +20,7 @@ public class Eventually extends Until {
         if (this.endTime < 0) {
             return new Bottom();
         } else if (this.startTime <= 0 && 0 <= this.endTime) {
-            return new Disjunction(this.rhs.progress(interpretation), new Eventually(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.rhs)).simplify(interpretation);
+            return new Disjunction(this.rhs.progress(interpretation), new Eventually(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.rhs));
         } else {
             return new Eventually(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.rhs);
         }

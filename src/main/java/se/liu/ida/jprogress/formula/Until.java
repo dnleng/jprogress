@@ -35,9 +35,9 @@ public class Until extends Formula {
         if (this.endTime < 0) {
             return new Bottom();
         } else if (this.startTime <= 0 && 0 <= this.endTime) {
-            return new Disjunction(this.rhs.progress(interpretation), new Conjunction(this.lhs.progress(interpretation), new Until(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs, this.rhs)).simplify(interpretation)).simplify(interpretation);
+            return new Disjunction(this.rhs.progress(interpretation), new Conjunction(this.lhs.progress(interpretation), new Until(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs, this.rhs)));
         } else {
-            return new Conjunction(this.lhs.progress(interpretation), new Until(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs, this.rhs)).simplify(interpretation);
+            return new Conjunction(this.lhs.progress(interpretation), new Until(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs, this.rhs));
         }
     }
 
@@ -49,6 +49,17 @@ public class Until extends Formula {
         } else {
             return TruthValue.UNKNOWN;
         }
+    }
+
+    @Override
+    public Formula simplify(Interpretation interpretation) {
+        if (this.eval(interpretation) == TruthValue.TRUE) {
+            return new Top();
+        } else if (this.eval(interpretation) == TruthValue.FALSE) {
+            return new Bottom();
+        }
+
+        return this;
     }
 
     public Set<String> getAtoms() {
@@ -65,5 +76,27 @@ public class Until extends Formula {
         } else {
             return "(" + this.lhs + ") Until [" + this.startTime + " ; " + this.endTime + "] (" + this.rhs + ")";
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Until until = (Until) o;
+
+        if (startTime != until.startTime) return false;
+        if (endTime != until.endTime) return false;
+        if (!lhs.equals(until.lhs)) return false;
+        return rhs.equals(until.rhs);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = startTime;
+        result = 31 * result + endTime;
+        result = 31 * result + lhs.hashCode();
+        result = 31 * result + rhs.hashCode();
+        return result;
     }
 }

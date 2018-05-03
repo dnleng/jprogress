@@ -19,7 +19,7 @@ public class ProgressionGraph implements Progressor {
     private Map<UUID, Integer> ttlMap;
     private Formula root;
     private int maxTTL;
-    private static final int MAX_ITER = 15; //FIXME: Add option to set this externally for debugging
+    private static final int MAX_ITER = Integer.MAX_VALUE; //FIXME: Add option to set this externally for debugging
 
     public ProgressionGraph(ProgressionStrategy strategy) {
         reset(strategy);
@@ -76,8 +76,9 @@ public class ProgressionGraph implements Progressor {
         List<Formula> frontier = new LinkedList<>();
 
         for (Interpretation i : hSet) {
-            Formula result = f.progress(i);
-            UUID id = getUUID(result.toString());
+            Formula result = f.progress(i).simplify(i).subsumption(i);
+            //UUID id = getUUID(result.toString());
+            UUID id = getUUID(result);
             if (id == null) {
                 // New formula encountered; create a new UUID
                 result.setId(UUID.randomUUID());
@@ -125,6 +126,21 @@ public class ProgressionGraph implements Progressor {
         for(UUID id : this.idMap.keySet()) {
             if(this.idMap.get(id).toString().equals(strFormula)) {
                 return id;
+            }
+        }
+
+        return null;
+    }
+
+    private UUID getUUID(Formula formula) {
+        if(formula.getId() != null) {
+            return formula.getId();
+        }
+        else {
+            for (UUID id : this.idMap.keySet()) {
+                if (this.idMap.get(id).equals(formula)) {
+                    return id;
+                }
             }
         }
 
