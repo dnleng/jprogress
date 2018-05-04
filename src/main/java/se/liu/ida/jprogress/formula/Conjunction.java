@@ -49,18 +49,18 @@ public class Conjunction extends Formula {
                     && ((Always)prevTemporalOp).startTime == ((Always)f).startTime) {
                 if(((Always)prevTemporalOp).endTime < ((Always)f).endTime) {
                     if(prevDir < 0) {
-                        prevConjunction.lhs = new Top();
+                        prevConjunction.lhs = Top.getInstance();
                     }
                     else {
-                        prevConjunction.rhs = new Top();
+                        prevConjunction.rhs = Top.getInstance();
                     }
                 }
                 else {
                     if(thisDir < 0) {
-                        this.lhs = new Top();
+                        this.lhs = Top.getInstance();
                     }
                     else {
-                        this.rhs = new Top();
+                        this.rhs = Top.getInstance();
                     }
                 }
             }
@@ -71,18 +71,18 @@ public class Conjunction extends Formula {
                     && ((Until)prevTemporalOp).startTime == ((Until)f).startTime) {
                 if(((Until)prevTemporalOp).endTime < ((Until)f).endTime) {
                     if(thisDir < 0) {
-                        this.lhs = new Top();
+                        this.lhs = Top.getInstance();
                     }
                     else {
-                        this.rhs = new Top();
+                        this.rhs = Top.getInstance();
                     }
                 }
                 else {
                     if(prevDir < 0) {
-                        prevConjunction.lhs = new Top();
+                        prevConjunction.lhs = Top.getInstance();
                     }
                     else {
-                        prevConjunction.rhs = new Top();
+                        prevConjunction.rhs = Top.getInstance();
                     }
                 }
             }
@@ -96,10 +96,10 @@ public class Conjunction extends Formula {
                 && ((Always)this.lhs).startTime == ((Always)this.rhs).startTime)
         {
             if(((Always)this.lhs).endTime > ((Always)this.rhs).endTime) {
-                this.rhs = new Top();
+                this.rhs = Top.getInstance();
             }
             else {
-                this.lhs = new Top();
+                this.lhs = Top.getInstance();
             }
         } else if(this.lhs instanceof Until && this.rhs instanceof Until
                 && ((Until)this.lhs).lhs.equals(((Until)this.rhs).lhs)
@@ -107,10 +107,10 @@ public class Conjunction extends Formula {
                 && ((Until)this.lhs).startTime == ((Until)this.rhs).startTime)
         {
             if(((Until)this.lhs).endTime > ((Until)this.rhs).endTime) {
-                this.lhs = new Top();
+                this.lhs = Top.getInstance();
             }
             else {
-                this.rhs = new Top();
+                this.rhs = Top.getInstance();
             }
         }
 
@@ -138,28 +138,14 @@ public class Conjunction extends Formula {
         this.lhs = this.lhs.simplify();
         this.rhs = this.rhs.simplify();
 
-//        if (this.eval(interpretation) == TruthValue.FALSE) {
-//            return new Bottom();
-//        } else if (this.eval(interpretation) == TruthValue.TRUE) {
-//            return new Top();
-//        } else
-
-//        if (lhs.eval() == TruthValue.TRUE && rhs.eval() == TruthValue.UNKNOWN) {
-//            return rhs.simplify();
-//        } else if (lhs.eval() == TruthValue.UNKNOWN && rhs.eval() == TruthValue.TRUE) {
-//            return lhs.simplify();
-////        } else if(lhs.eval(interpretation) == TruthValue.FALSE || rhs.eval(interpretation) == TruthValue.FALSE) {
-////            return new Bottom();
-//        } else
-
         if(this.lhs.equals(this.rhs)) {
             return lhs;
         }
         else if(this.lhs instanceof Bottom) {
-            return new Bottom();
+            return Bottom.getInstance();
         }
         else if(this.rhs instanceof Bottom) {
-            return new Bottom();
+            return Bottom.getInstance();
         }
         else if(this.lhs instanceof Top) {
             return this.rhs;

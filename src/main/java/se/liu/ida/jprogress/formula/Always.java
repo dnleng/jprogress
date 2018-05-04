@@ -33,7 +33,7 @@ public class Always extends Formula {
     @Override
     public Formula progress(Interpretation interpretation) {
         if (this.endTime == 0) {
-            return new Top();
+            return Top.getInstance();
         } else if (this.startTime <= 0 && 0 <= this.endTime) {
             return new Conjunction(this.formula.progress(interpretation), new Always(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.formula));
         } else {

@@ -13,7 +13,7 @@ import java.util.Random;
  * Created by dnleng on 30/04/18.
  */
 public class Main {
-    private static final int ITERATIONS = 10000;
+    private static final int ITERATIONS = 10;
 
 
     public static void main(String[] args) {
@@ -22,8 +22,8 @@ public class Main {
 //        runExp3();
 //        runExp4();
 //        runExp5();
-        runExp6();
-//        runExp7();
+//        runExp6();
+        runExp7();
     }
 
     private static void runExp1() {

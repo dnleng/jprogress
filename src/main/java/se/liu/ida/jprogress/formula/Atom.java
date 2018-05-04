@@ -19,12 +19,10 @@ public class Atom extends Formula {
     }
 
     public Formula progress(Interpretation interpretation) {
-//        return this;
-
         if (this.eval(interpretation) == TruthValue.TRUE) {
-            return new Top();
+            return Top.getInstance();
         } else if (this.eval(interpretation) == TruthValue.FALSE) {
-            return new Bottom();
+            return Bottom.getInstance();
         }
         else {
             return this;
@@ -42,15 +40,6 @@ public class Atom extends Formula {
 
     @Override
     public Formula simplify() {
-//        if (this.eval(interpretation) == TruthValue.TRUE) {
-//            return new Top();
-//        } else if (this.eval(interpretation) == TruthValue.FALSE) {
-//            return new Bottom();
-//        }
-//        else {
-//            return this;
-//        }
-
         return this;
     }
 

@@ -10,8 +10,18 @@ import java.util.Set;
  */
 public class Top extends Atom {
 
-    public Top() {
+    private static Top INSTANCE;
+
+    private Top() {
         super("⊤");
+    }
+
+    public static Top getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new Top();
+        }
+
+        return INSTANCE;
     }
 
     @Override

@@ -13,8 +13,9 @@ import java.util.*;
 public class ProgressionGraph implements Progressor {
     private ProgressionStrategy strategy;
     private int maxTTL;
+    private int maxNodes;
     private static final int MAX_ITER = Integer.MAX_VALUE; //FIXME: Add option to set this externally for debugging
-    private Map<UUID, Node> map;
+    private List<Node> nodeList;
 
 
 
@@ -34,13 +35,13 @@ public class ProgressionGraph implements Progressor {
         }
 
         Node root = new Node(formula, new HashSet<>(), 1.0, false, 0);
-        this.map = new HashMap<>();
-        this.map.put(formula.getId(), root);
+        this.nodeList = new LinkedList<>();
+        this.nodeList.add(root);
     }
 
     private void precompute(Formula formula, int timeout) {
-        List<Formula> frontier = new LinkedList<>();
-        frontier.add(formula);
+        List<Node> frontier = new LinkedList<>();
+        frontier.addAll(this.nodeList);
 
         if (formula.getId() == null) {
             formula.setId(UUID.randomUUID());
@@ -54,7 +55,7 @@ public class ProgressionGraph implements Progressor {
         Set<Interpretation> hSet = unknowns.getReductions();
         int iter = 0;
         while (!frontier.isEmpty()) {
-            Formula f = frontier.remove(0);
+            Node f = frontier.remove(0);
             frontier.addAll(expand(f, hSet));
             if(timeout < Integer.MAX_VALUE) {
                 iter++;
@@ -65,75 +66,51 @@ public class ProgressionGraph implements Progressor {
         }
     }
 
-    private List<Formula> expand(Formula f, Set<Interpretation> hSet) {
-        List<Formula> frontier = new LinkedList<>();
+    private List<Node> expand(Node src, Set<Interpretation> hSet) {
+        List<Node> frontier = new LinkedList<>();
 
         for (Interpretation i : hSet) {
-            Node src = this.map.get(f.getId());
-            Formula result = f.progressOnce(i);
-            UUID id = getUUID(result);
-            if (id == null) {
-                // New formula encountered; create a new UUID
-                result.setId(UUID.randomUUID());
-                frontier.add(result);
+            Formula result = src.formula.progressOnce(i);
 
-                Node dest = new Node(result, new HashSet<>(), 0.0, false, 0);
-                this.map.put(result.getId(), dest);
-                src.transitions.add(new Transition(i, result.getId()));
+            Node dest = null;
+            for(Node n : nodeList) {
+                if(n.formula.equals(result)) {
+                    dest = n;
+                    break;
+                }
+            }
+
+            if (dest == null) {
+                dest = new Node(result, new HashSet<>(), 0.0, false, 0);
+                this.nodeList.add(dest);
+                src.transitions.add(new Transition(i, null, dest));
+                frontier.add(dest);
             } else {
                 // Pre-existing formula encountered; use the pre-existing UUID
-                src.transitions.add(new Transition(i, id));
+                src.transitions.add(new Transition(i, null, dest));
             }
         }
 
-        this.map.get(f.getId()).expanded = true;
-
+        src.expanded = true;
         return frontier;
     }
 
-    private void shrink(Set<UUID> destIds) {
-        Set<UUID> resetSet = new HashSet<>();
-        for(UUID srcId : this.map.keySet()) {
-            for(Transition trans : this.map.get(srcId).transitions) {
-                if(destIds.contains(trans.destination)) {
+    private void shrink(Set<Node> destIds) {
+        Set<Node> resetSet = new HashSet<>();
+        for(Node srcId : this.nodeList) {
+            for(Transition trans : srcId.transitions) {
+                if(destIds.contains(trans.destNode)) {
                     resetSet.add(srcId);
                 }
             }
         }
 
-        for(UUID id : resetSet) {
-            this.map.get(id).expanded = false;
-            this.map.get(id).transitions = new HashSet<>();
+        for(Node id : resetSet) {
+            id.expanded = false;
+            id.transitions = new HashSet<>();
         }
 
-        for(UUID id : destIds) {
-            this.map.remove(id);
-        }
-    }
-
-    private UUID getUUID(String strFormula) {
-        for(UUID id : this.map.keySet()) {
-            if(this.map.get(id).toString().equals(strFormula)) {
-                return id;
-            }
-        }
-
-        return null;
-    }
-
-    private UUID getUUID(Formula formula) {
-        if(formula.getId() != null) {
-            return formula.getId();
-        }
-        else {
-            for (UUID id : this.map.keySet()) {
-                if (this.map.get(id).formula.equals(formula)) {
-                    return id;
-                }
-            }
-        }
-
-        return null;
+        this.nodeList.removeAll(destIds);
     }
 
     @Override
@@ -143,54 +120,64 @@ public class ProgressionGraph implements Progressor {
             redSet.add(i.compress());
         }
 
-        Map<UUID, Double> nextMassMap = new HashMap<>();
-        for (UUID id : this.map.keySet()) {
-            nextMassMap.put(id, 0.0);
+        Map<Node, Double> nextMassMap = new HashMap<>();
+        for (Node n : this.nodeList) {
+            nextMassMap.put(n, 0.0);
         }
 
-        // Specify job list (since idMap gets updated) and execute
-        List<UUID> jobList = new ArrayList<>(this.map.keySet().size());
-        jobList.addAll(this.map.keySet());
-        for (UUID id : jobList) {
-            if (this.map.get(id).mass > 0.0) {
+        // Specify job list and execute
+        List<Node> jobList = new LinkedList<>();
+        jobList.addAll(this.nodeList);
+
+        for (Node id : jobList) {
+            if (id.mass > 0.0) {
                 // Update graph if necessary
-                if(!this.map.get(id).expanded) {
-                    expand(this.map.get(id).formula, Interpretation.buildFullyUnknown(interpretation.getAtoms()).getReductions());
+                if(!id.expanded) {
+                    expand(id, Interpretation.buildFullyUnknown(interpretation.getAtoms()).getReductions());
                 }
 
                 // Push mass
-                List<UUID> destinations = new LinkedList<>();
-                for (Transition t : this.map.get(id).transitions) {
+                List<Node> destinations = new LinkedList<>();
+                for (Transition t : id.transitions) {
                     if (redSet.contains(t.interpretation)) {
-                        destinations.add(t.destination);
+                        destinations.add(t.destNode);
                     }
                 }
 
-                double massChunk = this.map.get(id).mass / (double) destinations.size();
-                for (UUID destId : destinations) {
-                    nextMassMap.put(destId, nextMassMap.getOrDefault(destId, 0.0) + massChunk);
-                    this.map.get(destId).age = 0;
+                double massChunk = id.mass / (double) destinations.size();
+                for (Node dest : destinations) {
+                    nextMassMap.put(dest, nextMassMap.getOrDefault(dest, 0.0) + massChunk);
+                    dest.age = 0;
                 }
+            }
+            else {
+                // List is sorted by mass, so we can break
+                break;
             }
         }
 
-        for(UUID id : nextMassMap.keySet()) {
-            this.map.get(id).mass = nextMassMap.get(id);
+        // Check whether we need to destroy some of these old nodes
+        Set<Node> removalSet = new HashSet<>();
+        for(Node id : nextMassMap.keySet()) {
+            // Update nodes
+            id.mass = nextMassMap.get(id);
+            id.age++;
+
+            if(id.age > maxTTL) {
+                removalSet.add(id);
+            }
+        }
+        shrink(removalSet);
+
+
+        // Leak mass where needed
+        while(this.nodeList.size() - maxNodes > 0) {
+            Node removed = this.nodeList.remove(this.nodeList.size()-1);
+            System.out.println("Leaking " + removed.mass + " mass");
         }
 
-        if(maxTTL < Integer.MAX_VALUE) {
-            Set<UUID> removalSet = new HashSet<>();
-            for(UUID id : this.map.keySet()) {
-                int newAge = this.map.get(id).age + 1;
-                if(newAge < maxTTL) {
-                    this.map.get(id).age = newAge;
-                }
-                else {
-                    removalSet.add(id);
-                }
-            }
-            shrink(removalSet);
-        }
+        // Sort by mass
+        Collections.sort(this.nodeList);
     }
 
     @Override
@@ -212,9 +199,10 @@ public class ProgressionGraph implements Progressor {
     }
 
     public void reset(ProgressionStrategy strategy) {
-        this.map = new HashMap<>();
+        this.nodeList = new LinkedList<>();
         this.strategy = strategy;
         this.maxTTL = Integer.MAX_VALUE;
+        this.maxNodes = Integer.MAX_VALUE;
     }
 
     public void setTTL(int ttl) {
@@ -225,17 +213,17 @@ public class ProgressionGraph implements Progressor {
         StringBuilder sb = new StringBuilder();
         sb.append("Probability mass distribution:\n");
         double totalMass = 0;
-        for (UUID key : sortByValue(this.map).keySet()) {
-            Formula formula = this.map.get(key).formula;
-            double mass = Math.floor(this.map.get(key).mass * 100000.0) / 100000.0;
-            totalMass += this.map.get(key).mass;
+        for (Node key : this.nodeList) {
+            Formula formula = key.formula;
+            double mass = Math.floor(key.mass * 100000.0) / 100000.0;
+            totalMass += key.mass;
 
             if (mass >= threshold) {
                 sb.append(mass);
                 sb.append("\t\t:\t");
                 sb.append(formula);
                 sb.append("\t\t{TTL: ");
-                sb.append(this.maxTTL-this.map.get(key).age);
+                sb.append(this.maxTTL-key.age);
                 sb.append("}\n");
             }
         }
@@ -249,30 +237,21 @@ public class ProgressionGraph implements Progressor {
         return sb.toString();
     }
 
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-        // Source: https://stackoverflow.com/a/2581754/9623204 (modified to reverse)
-        List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
-        list.sort(Map.Entry.comparingByValue());
-        Collections.reverse(list);
-
-        Map<K, V> result = new LinkedHashMap<>();
-        for (Map.Entry<K, V> entry : list) {
-            result.put(entry.getKey(), entry.getValue());
-        }
-
-        return result;
-    }
-
     public String getGraphStatus() {
         StringBuilder sb = new StringBuilder();
         sb.append("Graph properties:\n");
+
+        sb.append("Component count\t\t:\t");
+        sb.append(Formula.getCount());
+        sb.append("\n");
+
         sb.append("Vertex count\t\t:\t");
-        sb.append(this.map.keySet().size());
+        sb.append(this.nodeList.size());
         sb.append("\n");
 
         int edgeCount = 0;
-        for(UUID id : this.map.keySet()) {
-            edgeCount += this.map.get(id).transitions.size();
+        for(Node id : this.nodeList) {
+            edgeCount += id.transitions.size();
         }
 
         sb.append("Edge count  \t\t:\t");
@@ -280,6 +259,10 @@ public class ProgressionGraph implements Progressor {
         sb.append("\n");
 
         sb.append("Time-to-live\t\t:\t");
+        sb.append(this.maxTTL);
+        sb.append("\n");
+
+        sb.append("Max node bound\t\t:\t");
         sb.append(this.maxTTL);
         sb.append("\n");
 
@@ -294,17 +277,17 @@ public class ProgressionGraph implements Progressor {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Vertex count\t: ");
-        sb.append(this.map.keySet().size());
+        sb.append(this.nodeList.size());
         sb.append("\n");
         sb.append("Transitions:\n");
-        for (UUID id : this.map.keySet()) {
-            sb.append(this.map.get(id).formula);
+        for (Node id : this.nodeList) {
+            sb.append(id.formula);
             sb.append("\n");
-            for (Transition transition : this.map.get(id).transitions) {
+            for (Transition transition : id.transitions) {
                 sb.append("\t { ");
                 sb.append(transition.interpretation);
                 sb.append(" } ");
-                sb.append(this.map.get(transition.destination).formula.toString());
+                sb.append(transition.destNode.formula.toString());
                 sb.append("\n");
             }
         }

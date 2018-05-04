@@ -36,9 +36,9 @@ public class Negation extends Formula {
         this.formula = this.formula.simplify();
 
         if (formula instanceof Bottom) {
-            return new Top();
+            return Top.getInstance();
         } else if (formula instanceof Top) {
-            return new Bottom();
+            return Bottom.getInstance();
         }
 
         // Eliminate double negations

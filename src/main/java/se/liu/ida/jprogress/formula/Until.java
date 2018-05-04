@@ -41,7 +41,7 @@ public class Until extends Formula {
 
     public Formula progress(Interpretation interpretation) {
         if (this.endTime < 0) {
-            return new Bottom();
+            return Bottom.getInstance();
         } else if (this.startTime <= 0 && 0 <= this.endTime) {
             return new Disjunction(this.rhs.progress(interpretation), new Conjunction(this.lhs.progress(interpretation), new Until(this.startTime == 0 ? 0 : this.startTime - 1, this.endTime == Integer.MAX_VALUE ? this.endTime : this.endTime - 1, this.lhs, this.rhs)));
         } else {
@@ -63,12 +63,6 @@ public class Until extends Formula {
     public Formula simplify() {
         this.lhs = this.lhs.simplify();
         this.rhs = this.rhs.simplify();
-
-//        if (this.eval(interpretation) == TruthValue.TRUE) {
-//            return new Top();
-//        } else if (this.eval(interpretation) == TruthValue.FALSE) {
-//            return new Bottom();
-//        } else
 
         if(this.startTime == 0 && this.endTime == 0) {
             return this.rhs;

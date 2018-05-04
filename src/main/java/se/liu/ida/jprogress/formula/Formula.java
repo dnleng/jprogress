@@ -12,9 +12,14 @@ import java.util.UUID;
 public abstract class Formula {
 
     private UUID id;
+    private static int count = 0;
 
     public Formula() {
-//        this.setId(UUID.randomUUID());
+        count++;
+    }
+
+    public static int getCount() {
+        return count;
     }
 
     public UUID getId() {

@@ -10,9 +10,20 @@ import java.util.Set;
  */
 public class Bottom extends Atom {
 
-    public Bottom() {
+    private static Bottom INSTANCE;
+
+    private Bottom() {
         super("⊥");
     }
+
+    public static Bottom getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new Bottom();
+        }
+
+        return INSTANCE;
+    }
+
 
     @Override
     public Formula progress(Interpretation interpretation) {

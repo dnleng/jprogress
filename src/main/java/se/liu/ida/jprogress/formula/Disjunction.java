@@ -49,18 +49,18 @@ public class Disjunction extends Formula {
             {
                 if(((Always)prevTemporalOp).endTime < ((Always)f).endTime) {
                     if(thisDir < 0) {
-                        this.lhs = new Bottom();
+                        this.lhs = Bottom.getInstance();
                     }
                     else {
-                        this.rhs = new Bottom();
+                        this.rhs = Bottom.getInstance();
                     }
                 }
                 else {
                     if(prevDir < 0) {
-                        prevDisjunction.lhs = new Bottom();
+                        prevDisjunction.lhs = Bottom.getInstance();
                     }
                     else {
-                        prevDisjunction.rhs = new Bottom();
+                        prevDisjunction.rhs = Bottom.getInstance();
                     }
                 }
             }
@@ -71,18 +71,18 @@ public class Disjunction extends Formula {
                     && ((Until)prevTemporalOp).startTime == ((Until)f).startTime) {
                 if(((Until)prevTemporalOp).endTime < ((Until)f).endTime) {
                     if(prevDir < 0) {
-                        prevDisjunction.lhs = new Bottom();
+                        prevDisjunction.lhs = Bottom.getInstance();
                     }
                     else {
-                        prevDisjunction.rhs = new Bottom();
+                        prevDisjunction.rhs = Bottom.getInstance();
                     }
                 }
                 else {
                     if(thisDir < 0) {
-                        this.lhs = new Bottom();
+                        this.lhs = Bottom.getInstance();
                     }
                     else {
-                        this.rhs = new Bottom();
+                        this.rhs = Bottom.getInstance();
                     }
                 }
             }
@@ -96,10 +96,10 @@ public class Disjunction extends Formula {
                 && ((Always)this.lhs).startTime == ((Always)this.rhs).startTime)
         {
             if(((Always)this.lhs).endTime > ((Always)this.rhs).endTime) {
-                this.lhs = new Bottom();
+                this.lhs = Bottom.getInstance();
             }
             else {
-                this.rhs = new Bottom();
+                this.rhs = Bottom.getInstance();
             }
         } else if(this.lhs instanceof Until && this.rhs instanceof Until
                 && ((Until)this.lhs).lhs.equals(((Until)this.rhs).lhs)
@@ -107,10 +107,10 @@ public class Disjunction extends Formula {
                 && ((Until)this.lhs).startTime == ((Until)this.rhs).startTime)
         {
             if(((Until)this.lhs).endTime > ((Until)this.rhs).endTime) {
-                this.rhs = new Bottom();
+                this.rhs = Bottom.getInstance();
             }
             else {
-                this.lhs = new Bottom();
+                this.lhs = Bottom.getInstance();
             }
         }
 
@@ -138,28 +138,14 @@ public class Disjunction extends Formula {
         this.lhs = this.lhs.simplify();
         this.rhs = this.rhs.simplify();
 
-//        if (this.eval(interpretation) == TruthValue.FALSE) {
-//            return new Bottom();
-//        } else if (this.eval(interpretation) == TruthValue.TRUE) {
-//            return new Top();
-//        } else
-
-//        if (lhs.eval(interpretation) == TruthValue.FALSE && rhs.eval(interpretation) == TruthValue.UNKNOWN) {
-//            return rhs;
-//        } else if (lhs.eval(interpretation) == TruthValue.UNKNOWN && rhs.eval(interpretation) == TruthValue.FALSE) {
-//            return lhs;
-////        } else if(lhs.eval(interpretation) == TruthValue.TRUE || rhs.eval(interpretation) == TruthValue.TRUE) {
-////            return new Top();
-//        } else
-
         if(this.lhs.equals(this.rhs)) {
             return lhs;
         }
         else if(this.lhs instanceof Top) {
-            return new Top();
+            return Top.getInstance();
         }
         else if(this.rhs instanceof Top) {
-            return new Top();
+            return Top.getInstance();
         }
         else if(this.lhs instanceof Bottom) {
             return this.rhs;
@@ -201,21 +187,4 @@ public class Disjunction extends Formula {
         result = 31 * result + rhs.hashCode();
         return result;
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        Disjunction that = (Disjunction) o;
-//
-//        return ((lhs.equals(that.lhs) && rhs.equals(that.rhs)) || (lhs.equals(that.rhs) && rhs.equals(that.lhs)));
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int result = lhs.hashCode();
-//        result = 31 * result + rhs.hashCode();
-//        return result;
-//    }
 }
