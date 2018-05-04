@@ -12,7 +12,7 @@ import java.util.Random;
  * Created by dnleng on 30/04/18.
  */
 public class Main {
-    private static final int ITERATIONS = 100;
+    private static final int ITERATIONS = 10000;
 
 
     public static void main(String[] args) {
@@ -20,9 +20,9 @@ public class Main {
 //        runExp2();
 //        runExp3();
 //        runExp4();
-        runExp5();
-        runExp6();
-//        runExp7();
+//        runExp5();
+//        runExp6();
+        runExp7();
     }
 
     private static void runExp1() {
@@ -114,7 +114,7 @@ public class Main {
         }
         long tEnd = System.currentTimeMillis();
 
-        System.out.println(graph5.getMassStatus());
+        System.out.println(graph5.getMassStatus(0.0001));
         System.out.println(graph5.getGraphStatus());
         System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
     }
@@ -137,7 +137,7 @@ public class Main {
         }
         long tEnd = System.currentTimeMillis();
 
-        System.out.println(graph6.getMassStatus());
+        System.out.println(graph6.getMassStatus(0.0001));
         System.out.println(graph6.getGraphStatus());
         System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
     }
@@ -152,19 +152,17 @@ public class Main {
 
         long t1Start = System.currentTimeMillis();
         ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
-//        graph6.setTTL(2);
+        graph6.setTTL(1);
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End-t1Start) + "ms");
         for (int i = 0; i < ITERATIONS; i++) {
             System.out.println("Progression iteration: " + (i + 1));
-            long t2Start = System.currentTimeMillis();;
             graph6.progress(i6);
-            long t2End = System.currentTimeMillis();
-            System.out.println(graph6.getMassStatus());
-            System.out.println(graph6.getGraphStatus());
         }
         long tEnd = System.currentTimeMillis();
 
+        System.out.println(graph6.getMassStatus(0.0001));
+        System.out.println(graph6.getGraphStatus());
         System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
     }
 }

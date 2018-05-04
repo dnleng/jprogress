@@ -16,8 +16,6 @@ public class ProgressionGraph implements Progressor {
     private int maxNodes;
     private List<Node> nodeList;
 
-
-
     public ProgressionGraph(ProgressionStrategy strategy) {
         reset(strategy);
     }
@@ -161,15 +159,13 @@ public class ProgressionGraph implements Progressor {
         }
         shrink(removalSet);
 
+        // Sort by mass
+        Collections.sort(this.nodeList);
 
         // Leak mass where needed
         while(this.nodeList.size() - maxNodes > 0) {
-            Node removed = this.nodeList.remove(this.nodeList.size()-1);
-//            System.out.println("Leaking " + removed.mass + " mass");
+            this.nodeList.remove(this.nodeList.size()-1);
         }
-
-        // Sort by mass
-        Collections.sort(this.nodeList);
     }
 
     @Override
@@ -198,7 +194,9 @@ public class ProgressionGraph implements Progressor {
     }
 
     public void setTTL(int ttl) {
-        this.maxTTL = ttl;
+        if(ttl > 0) {
+            this.maxTTL = ttl;
+        }
     }
 
     public void setMaxNodes(int maxNodes) {
