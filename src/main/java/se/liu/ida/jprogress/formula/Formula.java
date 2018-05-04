@@ -29,23 +29,18 @@ public abstract class Formula {
 
     public abstract TruthValue eval(Interpretation interpretation);
 
-    public abstract Formula simplify(Interpretation interpretation);
+    public abstract Formula simplify();
 
 
 
-    public Formula subsumption(Interpretation interpretation) {
+    public Formula subsumption() {
         // Handle temporal subsumptions
         return this;
     }
-//    {
-//        if (this.eval(interpretation) == TruthValue.TRUE) {
-//            return new Top();
-//        } else if (this.eval(interpretation) == TruthValue.FALSE) {
-//            return new Bottom();
-//        } else {
-//            return this;
-//        }
-//    }
+
+    public Formula progressOnce(Interpretation i) {
+        return progress(i).simplify().subsumption();
+    }
 
     public abstract Set<String> getAtoms();
 

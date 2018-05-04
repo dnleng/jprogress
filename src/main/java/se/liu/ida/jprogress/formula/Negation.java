@@ -32,19 +32,19 @@ public class Negation extends Formula {
     }
 
     @Override
-    public Formula simplify(Interpretation interpretation) {
-        this.formula = this.formula.simplify(interpretation);
+    public Formula simplify() {
+        this.formula = this.formula.simplify();
 
-        if (this.eval(interpretation) == TruthValue.TRUE) {
+        if (formula instanceof Bottom) {
             return new Top();
-        } else if (this.eval(interpretation) == TruthValue.FALSE) {
+        } else if (formula instanceof Top) {
             return new Bottom();
         }
 
         // Eliminate double negations
         if(this.formula instanceof Negation) {
             Negation child = (Negation)this.formula;
-            return child.formula.simplify(interpretation);
+            return child.formula;
         }
 
         return this;

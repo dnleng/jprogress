@@ -47,19 +47,25 @@ public class Always extends Formula {
             return TruthValue.FALSE;
         } else if (this.endTime == 0) {
             return this.formula.eval(interpretation);
+        } else if(this.formula instanceof Top) {
+            return TruthValue.TRUE;
         } else {
             return TruthValue.UNKNOWN;
         }
     }
 
     @Override
-    public Formula simplify(Interpretation interpretation) {
-        if (this.eval(interpretation) == TruthValue.TRUE) {
-            return new Top();
-        } else if (this.eval(interpretation) == TruthValue.FALSE) {
-            return new Bottom();
-        } else if(this.startTime == 0 && this.endTime == 0) {
-            return this.formula.simplify(interpretation);
+    public Formula simplify() {
+        this.formula = this.formula.simplify();
+
+//        if (this.eval(interpretation) == TruthValue.TRUE) {
+//            return new Top();
+//        } else if (this.eval(interpretation) == TruthValue.FALSE) {
+//            return new Bottom();
+//        } else
+
+        if(this.startTime == 0 && this.endTime == 0) {
+            return this.formula;
         }
 
         return this;

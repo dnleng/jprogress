@@ -60,13 +60,18 @@ public class Until extends Formula {
     }
 
     @Override
-    public Formula simplify(Interpretation interpretation) {
-        if (this.eval(interpretation) == TruthValue.TRUE) {
-            return new Top();
-        } else if (this.eval(interpretation) == TruthValue.FALSE) {
-            return new Bottom();
-        } else if(this.startTime == 0 && this.endTime == 0) {
-            return this.rhs.simplify(interpretation);
+    public Formula simplify() {
+        this.lhs = this.lhs.simplify();
+        this.rhs = this.rhs.simplify();
+
+//        if (this.eval(interpretation) == TruthValue.TRUE) {
+//            return new Top();
+//        } else if (this.eval(interpretation) == TruthValue.FALSE) {
+//            return new Bottom();
+//        } else
+
+        if(this.startTime == 0 && this.endTime == 0) {
+            return this.rhs;
         }
 
         return this;

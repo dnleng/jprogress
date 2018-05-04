@@ -13,7 +13,7 @@ import java.util.Random;
  * Created by dnleng on 30/04/18.
  */
 public class Main {
-    private static final int ITERATIONS = 15;
+    private static final int ITERATIONS = 10000;
 
 
     public static void main(String[] args) {
@@ -22,8 +22,8 @@ public class Main {
 //        runExp3();
 //        runExp4();
 //        runExp5();
-//        runExp6();
-        runExp7();
+        runExp6();
+//        runExp7();
     }
 
     private static void runExp1() {
@@ -34,7 +34,7 @@ public class Main {
         Formula f1 = FormulaFactory.createFormula(FormulaTemplate.APEQ);
         System.out.println("Formula: " + f1);
         while (f1.eval(i1) == TruthValue.UNKNOWN) {
-            f1 = f1.progress(i1).simplify(i1).subsumption(i1);
+            f1 = f1.progress(i1).simplify().subsumption();
             System.out.println("Progressed (" + i1 + "): " + f1);
         }
 
@@ -63,7 +63,7 @@ public class Main {
                     break;
             }
 
-            f2 = f2.progress(i2).simplify(i2).subsumption(i2);;
+            f2 = f2.progress(i2).simplify().subsumption();;
             System.out.println("Progressed (" + i2 + "): " + f2);
         }
 
@@ -136,7 +136,7 @@ public class Main {
 
         long t1Start = System.currentTimeMillis();
         ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
-        graph6.setTTL(2);
+//        graph6.setTTL(2);
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End-t1Start) + "ms");
 //        System.out.println(graph6.getMassStatus(0.001));
@@ -162,10 +162,11 @@ public class Main {
         long tStart = System.currentTimeMillis();
         Formula f6 = FormulaFactory.createFormula(FormulaTemplate.BIG_APEQ);
         Interpretation i6 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
+        System.out.println("Progressing "+f6);
 
         long t1Start = System.currentTimeMillis();
         ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
-        graph6.setTTL(2);
+//        graph6.setTTL(2);
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End-t1Start) + "ms");
         for (int i = 0; i < ITERATIONS; i++) {

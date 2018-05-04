@@ -30,7 +30,7 @@ public class MProgressNaive implements Progressor {
         List<Formula> result = new LinkedList<>();
         for (Formula f : frontier) {
             for (Interpretation i : reductions) {
-                result.add(f.progress(i).simplify(i).subsumption(i));
+                result.add(f.progress(i).simplify().subsumption());
             }
         }
 

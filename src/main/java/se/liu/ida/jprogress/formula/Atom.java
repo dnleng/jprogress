@@ -19,7 +19,16 @@ public class Atom extends Formula {
     }
 
     public Formula progress(Interpretation interpretation) {
-        return this;
+//        return this;
+
+        if (this.eval(interpretation) == TruthValue.TRUE) {
+            return new Top();
+        } else if (this.eval(interpretation) == TruthValue.FALSE) {
+            return new Bottom();
+        }
+        else {
+            return this;
+        }
     }
 
     public TruthValue eval(Interpretation interpretation) {
@@ -32,15 +41,17 @@ public class Atom extends Formula {
     }
 
     @Override
-    public Formula simplify(Interpretation interpretation) {
-        if (this.eval(interpretation) == TruthValue.TRUE) {
-            return new Top();
-        } else if (this.eval(interpretation) == TruthValue.FALSE) {
-            return new Bottom();
-        }
-        else {
-            return this;
-        }
+    public Formula simplify() {
+//        if (this.eval(interpretation) == TruthValue.TRUE) {
+//            return new Top();
+//        } else if (this.eval(interpretation) == TruthValue.FALSE) {
+//            return new Bottom();
+//        }
+//        else {
+//            return this;
+//        }
+
+        return this;
     }
 
     public Set<String> getAtoms() {

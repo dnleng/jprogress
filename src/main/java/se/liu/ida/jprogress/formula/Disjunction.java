@@ -90,7 +90,7 @@ public class Disjunction extends Formula {
     }
 
     @Override
-    public Formula subsumption(Interpretation interpretation) {
+    public Formula subsumption() {
         if(this.lhs instanceof Always && this.rhs instanceof Always
                 && ((Always)this.lhs).formula.equals(((Always)this.rhs).formula)
                 && ((Always)this.lhs).startTime == ((Always)this.rhs).startTime)
@@ -128,26 +128,44 @@ public class Disjunction extends Formula {
             }
         }
 
-        this.lhs.subsumption(interpretation);
-        this.rhs.subsumption(interpretation);
-        return this.simplify(interpretation);
+        this.lhs.subsumption();
+        this.rhs.subsumption();
+        return this.simplify();
     }
 
     @Override
-    public Formula simplify(Interpretation interpretation) {
-        this.lhs = this.lhs.simplify(interpretation);
-        this.rhs = this.rhs.simplify(interpretation);
+    public Formula simplify() {
+        this.lhs = this.lhs.simplify();
+        this.rhs = this.rhs.simplify();
 
-        if (this.eval(interpretation) == TruthValue.FALSE) {
-            return new Bottom();
-        } else if (this.eval(interpretation) == TruthValue.TRUE) {
+//        if (this.eval(interpretation) == TruthValue.FALSE) {
+//            return new Bottom();
+//        } else if (this.eval(interpretation) == TruthValue.TRUE) {
+//            return new Top();
+//        } else
+
+//        if (lhs.eval(interpretation) == TruthValue.FALSE && rhs.eval(interpretation) == TruthValue.UNKNOWN) {
+//            return rhs;
+//        } else if (lhs.eval(interpretation) == TruthValue.UNKNOWN && rhs.eval(interpretation) == TruthValue.FALSE) {
+//            return lhs;
+////        } else if(lhs.eval(interpretation) == TruthValue.TRUE || rhs.eval(interpretation) == TruthValue.TRUE) {
+////            return new Top();
+//        } else
+
+        if(this.lhs.equals(this.rhs)) {
+            return lhs;
+        }
+        else if(this.lhs instanceof Top) {
             return new Top();
-        } else if (lhs.eval(interpretation) == TruthValue.FALSE && rhs.eval(interpretation) == TruthValue.UNKNOWN) {
-            return rhs;
-        } else if (lhs.eval(interpretation) == TruthValue.UNKNOWN && rhs.eval(interpretation) == TruthValue.FALSE) {
-            return lhs;
-        } else if(lhs.equals(rhs)) {
-            return lhs;
+        }
+        else if(this.rhs instanceof Top) {
+            return new Top();
+        }
+        else if(this.lhs instanceof Bottom) {
+            return this.rhs;
+        }
+        else if(this.rhs instanceof Bottom) {
+            return this.lhs;
         }
 
         return this;
