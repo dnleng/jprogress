@@ -15,7 +15,7 @@ public class FormulaFactory {
             case BERNOULLI:
                 return createBernoulli();
             case BIG_APEQ:
-                return createAPEQ(10, 4);
+                return createAPEQ(100, 40);
             default:
                 throw new IllegalArgumentException("Unknown template");
         }

@@ -4,20 +4,9 @@
     <list default="true" id="43841279-98ad-479b-a33d-8f954138b831" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Always.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Always.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Atom.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Atom.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Bottom.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Bottom.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Conjunction.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Conjunction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Disjunction.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Disjunction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Eventually.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Eventually.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Formula.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Formula.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/FormulaFactory.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/FormulaFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Negation.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Negation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Top.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Top.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Until.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Until.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Node.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Node.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionGraph.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionGraph.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Transition.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Transition.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionStrategy.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionStrategy.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -31,13 +20,13 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-253">
-              <caret line="15" column="44" lean-forward="false" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
+            <state relative-caret-position="-694">
+              <caret line="110" column="68" lean-forward="false" selection-start-line="110" selection-start-column="68" selection-end-line="110" selection-end-column="68" />
               <folding>
-                <marker date="1525444545487" expanded="true" signature="5322:5983" ph="{...}" />
+                <marker date="1525447351593" expanded="true" signature="4832:5115" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -66,12 +55,49 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="FormulaFactory.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/FormulaFactory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="350">
+              <caret line="17" column="41" lean-forward="false" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="ProgressionGraph.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionGraph.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="557">
-              <caret line="264" column="24" lean-forward="false" selection-start-line="264" selection-start-column="24" selection-end-line="264" selection-end-column="24" />
+            <state relative-caret-position="-692">
+              <caret line="168" column="9" lean-forward="true" selection-start-line="168" selection-start-column="9" selection-end-line="168" selection-end-column="9" />
+              <folding>
+                <element signature="e#5915#5916#0" expanded="true" />
+                <element signature="e#5948#5949#0" expanded="true" />
+                <element signature="e#5993#5994#0" expanded="true" />
+                <element signature="e#6033#6034#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProgressionStrategy.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionStrategy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="6" column="11" lean-forward="false" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Node.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Node.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="617">
+              <caret line="31" column="9" lean-forward="false" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,41 +132,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Negation.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Negation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-161">
-              <caret line="33" column="13" lean-forward="true" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Disjunction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Disjunction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4186">
-              <caret line="188" column="5" lean-forward="false" selection-start-line="188" selection-start-column="5" selection-end-line="188" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Atom.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Atom.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Atom.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="184">
               <caret line="15" column="13" lean-forward="true" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Eventually.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Eventually.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="10" column="51" lean-forward="false" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -188,14 +184,10 @@
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/GraphGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/FormulaHistogram.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Histogram.java" />
-        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionStrategy.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Interpretation.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/FormulaTemplate.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/MProgressNaive.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Transition.java" />
-        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/FormulaFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Node.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Always.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Atom.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Conjunction.java" />
@@ -204,9 +196,13 @@
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Negation.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Until.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Formula.java" />
-        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionGraph.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Bottom.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Top.java" />
+        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/FormulaFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Node.java" />
+        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionStrategy.java" />
+        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionGraph.java" />
+        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java" />
       </list>
     </option>
   </component>
@@ -6386,7 +6382,14 @@
       <option name="project" value="LOCAL" />
       <updated>1525441519510</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Optimisations">
+      <created>1525446208965</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1525446208965</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -6403,7 +6406,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952815" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -6454,7 +6457,8 @@
     <MESSAGE value="Added top-level temporal subsumption" />
     <MESSAGE value="Subsumption fix: Disjunctions now correctly apply erasure with bottom instead of top" />
     <MESSAGE value="Simplified Nodes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Simplified Nodes" />
+    <MESSAGE value="Optimisations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimisations" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -6578,7 +6582,7 @@
         <state relative-caret-position="345">
           <caret line="17" column="38" lean-forward="false" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
           <folding>
-            <marker date="1525444545487" expanded="true" signature="5322:5983" ph="{...}" />
+            <marker date="1525447351593" expanded="true" signature="4832:5115" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -6661,7 +6665,7 @@
         <state relative-caret-position="289">
           <caret line="17" column="38" lean-forward="false" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
           <folding>
-            <marker date="1525444545487" expanded="true" signature="5322:5983" ph="{...}" />
+            <marker date="1525447351593" expanded="true" signature="4832:5115" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -6763,14 +6767,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionStrategy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="6" column="24" lean-forward="false" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Interpretation.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1398">
@@ -6800,24 +6796,6 @@
         <state relative-caret-position="138">
           <caret line="6" column="21" lean-forward="false" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/FormulaFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="17" column="39" lean-forward="false" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="28" column="9" lean-forward="true" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -6871,16 +6849,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-253">
-          <caret line="15" column="44" lean-forward="false" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
-          <folding>
-            <marker date="1525444545487" expanded="true" signature="5322:5983" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Formula.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -6893,14 +6861,6 @@
             <element signature="e#844#845#0" expanded="true" />
             <element signature="e#903#904#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionGraph.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="557">
-          <caret line="264" column="24" lean-forward="false" selection-start-line="264" selection-start-column="24" selection-end-line="264" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -6931,6 +6891,55 @@
         <state relative-caret-position="184">
           <caret line="15" column="13" lean-forward="true" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/FormulaFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="17" column="41" lean-forward="false" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="617">
+          <caret line="31" column="9" lean-forward="false" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionStrategy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="11" lean-forward="false" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionGraph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-692">
+          <caret line="168" column="9" lean-forward="true" selection-start-line="168" selection-start-column="9" selection-end-line="168" selection-end-column="9" />
+          <folding>
+            <element signature="e#5915#5916#0" expanded="true" />
+            <element signature="e#5948#5949#0" expanded="true" />
+            <element signature="e#5993#5994#0" expanded="true" />
+            <element signature="e#6033#6034#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-694">
+          <caret line="110" column="68" lean-forward="false" selection-start-line="110" selection-start-column="68" selection-end-line="110" selection-end-column="68" />
+          <folding>
+            <marker date="1525447351593" expanded="true" signature="4832:5115" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>

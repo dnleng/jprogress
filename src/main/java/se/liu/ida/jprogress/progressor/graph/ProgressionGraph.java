@@ -14,7 +14,6 @@ public class ProgressionGraph implements Progressor {
     private ProgressionStrategy strategy;
     private int maxTTL;
     private int maxNodes;
-    private static final int MAX_ITER = Integer.MAX_VALUE; //FIXME: Add option to set this externally for debugging
     private List<Node> nodeList;
 
 
@@ -39,7 +38,7 @@ public class ProgressionGraph implements Progressor {
         this.nodeList.add(root);
     }
 
-    private void precompute(Formula formula, int timeout) {
+    private void precompute(Formula formula) {
         List<Node> frontier = new LinkedList<>();
         frontier.addAll(this.nodeList);
 
@@ -53,16 +52,9 @@ public class ProgressionGraph implements Progressor {
             unknowns.setTruthValue(atom, TruthValue.UNKNOWN);
         }
         Set<Interpretation> hSet = unknowns.getReductions();
-        int iter = 0;
         while (!frontier.isEmpty()) {
             Node f = frontier.remove(0);
             frontier.addAll(expand(f, hSet));
-            if(timeout < Integer.MAX_VALUE) {
-                iter++;
-                if(iter > timeout) {
-                    break;
-                }
-            }
         }
     }
 
@@ -173,7 +165,7 @@ public class ProgressionGraph implements Progressor {
         // Leak mass where needed
         while(this.nodeList.size() - maxNodes > 0) {
             Node removed = this.nodeList.remove(this.nodeList.size()-1);
-            System.out.println("Leaking " + removed.mass + " mass");
+//            System.out.println("Leaking " + removed.mass + " mass");
         }
 
         // Sort by mass
@@ -184,9 +176,9 @@ public class ProgressionGraph implements Progressor {
     public void set(Formula input) {
         reset();
         switch(this.strategy) {
-            case GRAPH:
+            case OFFLINE:
                 init(input);
-                precompute(input, MAX_ITER);
+                precompute(input);
                 break;
             default:
                 init(input);
@@ -208,6 +200,11 @@ public class ProgressionGraph implements Progressor {
     public void setTTL(int ttl) {
         this.maxTTL = ttl;
     }
+
+    public void setMaxNodes(int maxNodes) {
+        this.maxNodes = maxNodes;
+    }
+
 
     public String getMassStatus(double threshold) {
         StringBuilder sb = new StringBuilder();
@@ -241,6 +238,10 @@ public class ProgressionGraph implements Progressor {
         StringBuilder sb = new StringBuilder();
         sb.append("Graph properties:\n");
 
+        sb.append("Graph strategy\t\t:\t");
+        sb.append(this.strategy);
+        sb.append("\n");
+
         sb.append("Component count\t\t:\t");
         sb.append(Formula.getCount());
         sb.append("\n");
@@ -263,7 +264,7 @@ public class ProgressionGraph implements Progressor {
         sb.append("\n");
 
         sb.append("Max node bound\t\t:\t");
-        sb.append(this.maxTTL);
+        sb.append(this.maxNodes);
         sb.append("\n");
 
         return sb.toString();

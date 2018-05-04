@@ -6,14 +6,13 @@ import se.liu.ida.jprogress.progressor.graph.ProgressionGraph;
 import se.liu.ida.jprogress.progressor.graph.ProgressionStrategy;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Random;
 
 /**
  * Created by dnleng on 30/04/18.
  */
 public class Main {
-    private static final int ITERATIONS = 10;
+    private static final int ITERATIONS = 100;
 
 
     public static void main(String[] args) {
@@ -21,9 +20,9 @@ public class Main {
 //        runExp2();
 //        runExp3();
 //        runExp4();
-//        runExp5();
-//        runExp6();
-        runExp7();
+        runExp5();
+        runExp6();
+//        runExp7();
     }
 
     private static void runExp1() {
@@ -107,18 +106,11 @@ public class Main {
         Interpretation i5 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
 
         long t1Start = System.currentTimeMillis();
-        ProgressionGraph graph5 = new ProgressionGraph(ProgressionStrategy.GRAPH, f5);
+        ProgressionGraph graph5 = new ProgressionGraph(ProgressionStrategy.OFFLINE, f5);
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End-t1Start) + "ms");
-//        System.out.println(graph5.getMassStatus());
         for (int i = 0; i < ITERATIONS; i++) {
-//            System.out.println("Progression iteration: " + (i + 1));
-            long t2Start = System.currentTimeMillis();
             graph5.progress(i5);
-            long t2End = System.currentTimeMillis();
-//            System.out.println(graph5.getMassStatus());
-//            System.out.println(graph5.getGraphStatus());
-//            System.out.println("Progression time: " + (t2End-t2Start) + "ms\n");
         }
         long tEnd = System.currentTimeMillis();
 
@@ -136,18 +128,12 @@ public class Main {
 
         long t1Start = System.currentTimeMillis();
         ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
-//        graph6.setTTL(2);
+        graph6.setTTL(1);
+        graph6.setMaxNodes(25);
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End-t1Start) + "ms");
-//        System.out.println(graph6.getMassStatus(0.001));
         for (int i = 0; i < ITERATIONS; i++) {
-            System.out.println("Progression iteration: " + (i + 1));
-            long t2Start = System.currentTimeMillis();;
             graph6.progress(i6);
-            long t2End = System.currentTimeMillis();
-//            System.out.println(graph6.getMassStatus());
-//            System.out.println(graph6.getGraphStatus());
-//            System.out.println("Progression time: " + (t2End-t2Start) + "ms\n");
         }
         long tEnd = System.currentTimeMillis();
 
