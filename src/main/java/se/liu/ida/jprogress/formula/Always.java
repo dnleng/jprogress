@@ -58,6 +58,8 @@ public class Always extends Formula {
             return new Top();
         } else if (this.eval(interpretation) == TruthValue.FALSE) {
             return new Bottom();
+        } else if(this.startTime == 0 && this.endTime == 0) {
+            return this.formula.simplify(interpretation);
         }
 
         return this;

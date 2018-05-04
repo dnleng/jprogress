@@ -45,7 +45,8 @@ public class Conjunction extends Formula {
         }
 
         if(prevTemporalOp instanceof Always && f instanceof Always) {
-            if(((Always)prevTemporalOp).startTime == ((Always)f).startTime) {
+            if(((Always)prevTemporalOp).formula.equals(((Always)f).formula)
+                    && ((Always)prevTemporalOp).startTime == ((Always)f).startTime) {
                 if(((Always)prevTemporalOp).endTime < ((Always)f).endTime) {
                     if(prevDir < 0) {
                         prevConjunction.lhs = new Top();
@@ -64,28 +65,10 @@ public class Conjunction extends Formula {
                 }
             }
         }
-        else if(prevTemporalOp instanceof Eventually && f instanceof Eventually) {
-            if(((Eventually)prevTemporalOp).startTime == ((Eventually)f).startTime) {
-                if(((Eventually)prevTemporalOp).endTime < ((Eventually)f).endTime) {
-                    if(thisDir < 0) {
-                        this.lhs = new Top();
-                    }
-                    else {
-                        this.rhs = new Top();
-                    }
-                }
-                else {
-                    if(prevDir < 0) {
-                        prevConjunction.lhs = new Top();
-                    }
-                    else {
-                        prevConjunction.rhs = new Top();
-                    }
-                }
-            }
-        }
         else if(prevTemporalOp instanceof Until && f instanceof Until) {
-            if(((Until)prevTemporalOp).startTime == ((Until)f).startTime) {
+            if(((Until)prevTemporalOp).lhs.equals(((Until)f).lhs)
+                    && ((Until)prevTemporalOp).rhs.equals(((Until)f).rhs)
+                    && ((Until)prevTemporalOp).startTime == ((Until)f).startTime) {
                 if(((Until)prevTemporalOp).endTime < ((Until)f).endTime) {
                     if(thisDir < 0) {
                         this.lhs = new Top();
@@ -108,6 +91,29 @@ public class Conjunction extends Formula {
 
     @Override
     public Formula subsumption(Interpretation interpretation) {
+        if(this.lhs instanceof Always && this.rhs instanceof Always
+                && ((Always)this.lhs).formula.equals(((Always)this.rhs).formula)
+                && ((Always)this.lhs).startTime == ((Always)this.rhs).startTime)
+        {
+            if(((Always)this.lhs).endTime > ((Always)this.rhs).endTime) {
+                this.rhs = new Top();
+            }
+            else {
+                this.lhs = new Top();
+            }
+        } else if(this.lhs instanceof Until && this.rhs instanceof Until
+                && ((Until)this.lhs).lhs.equals(((Until)this.rhs).lhs)
+                && ((Until)this.lhs).rhs.equals(((Until)this.rhs).rhs)
+                && ((Until)this.lhs).startTime == ((Until)this.rhs).startTime)
+        {
+            if(((Until)this.lhs).endTime > ((Until)this.rhs).endTime) {
+                this.lhs = new Top();
+            }
+            else {
+                this.rhs = new Top();
+            }
+        }
+
         if(this.lhs instanceof Conjunction) {
             if(this.rhs instanceof Always || this.rhs instanceof Eventually || this.rhs instanceof Until) {
                 ((Conjunction)this.lhs).subsumption(this, this.rhs, 1, -1);

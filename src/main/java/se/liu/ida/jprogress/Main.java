@@ -13,7 +13,7 @@ import java.util.Random;
  * Created by dnleng on 30/04/18.
  */
 public class Main {
-    private static final int ITERATIONS = 10000;
+    private static final int ITERATIONS = 15;
 
 
     public static void main(String[] args) {
@@ -22,8 +22,8 @@ public class Main {
 //        runExp3();
 //        runExp4();
 //        runExp5();
-        runExp6();
-//        runExp7();
+//        runExp6();
+        runExp7();
     }
 
     private static void runExp1() {
@@ -141,7 +141,7 @@ public class Main {
         System.out.println("Setup time: " + (t1End-t1Start) + "ms");
 //        System.out.println(graph6.getMassStatus(0.001));
         for (int i = 0; i < ITERATIONS; i++) {
-//            System.out.println("Progression iteration: " + (i + 1));
+            System.out.println("Progression iteration: " + (i + 1));
             long t2Start = System.currentTimeMillis();;
             graph6.progress(i6);
             long t2End = System.currentTimeMillis();
