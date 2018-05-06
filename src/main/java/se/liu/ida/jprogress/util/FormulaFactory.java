@@ -32,13 +32,21 @@ public class FormulaFactory {
         return new Disjunction(new Negation(p), q);
     }
 
-    private static Formula createAPEQ(int outer, int inner) {
+    public static Formula createAPEQ(int outer, int inner) {
         Atom p = new Atom("p");
         Atom q = new Atom("q");
         return new Always(outer, new Disjunction(new Negation(p), new Eventually(inner, q)));
     }
 
-    private static Formula createBernoulli() {
+    public static Formula createBernoulli() {
         return new Eventually(new Atom("p"));
+    }
+
+    public static Formula createAEP(int endTime) {
+        return new Always(new Eventually(0,endTime, new Atom("p")));
+    }
+
+    public static Formula createAPEAI(int endTime) {
+        return new Always(new Disjunction(new Atom("p"), new Eventually(0, endTime, new Always(0, endTime-1, new Atom("p")))));
     }
 }

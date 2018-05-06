@@ -52,11 +52,11 @@ public class ProgressorProperties
 	sb.append("\n");
 
 	sb.append("Time-to-live\t\t:\t");
-	sb.append(this.ttl);
+	sb.append(this.ttl == Integer.MAX_VALUE ? "Inf" : this.ttl);
 	sb.append("\n");
 
 	sb.append("Max node bound\t\t:\t");
-	sb.append(this.maxNodes);
+	sb.append(this.maxNodes == Integer.MAX_VALUE ? "Inf" : this.maxNodes);
 	sb.append("\n");
 
 	return sb.toString();

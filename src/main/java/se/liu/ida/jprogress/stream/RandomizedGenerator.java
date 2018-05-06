@@ -6,17 +6,17 @@ import java.util.Random;
 /**
  * Created by Squig on 06/05/2018.
  */
-public abstract class RandomizedStreamGenerator implements StreamGenerator {
+public abstract class RandomizedGenerator implements StreamGenerator {
 
     protected Random rnd;
     protected List<String> props;
 
-    public RandomizedStreamGenerator(List<String> props) {
+    public RandomizedGenerator(List<String> props) {
         this.props = props;
         this.rnd = new Random(System.currentTimeMillis());
     }
 
-    public RandomizedStreamGenerator(List<String> props, long seed) {
+    public RandomizedGenerator(List<String> props, long seed) {
         this.props = props;
         this.rnd = new Random(seed);
     }

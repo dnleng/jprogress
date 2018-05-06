@@ -8,13 +8,14 @@ import java.util.List;
 /**
  * Created by Squig on 06/05/2018.
  */
-public class RandomStreamGenerator extends RandomizedStreamGenerator {
+public class RandomGenerator extends RandomizedGenerator
+{
 
-    public RandomStreamGenerator(List<String> props) {
+    public RandomGenerator(List<String> props) {
         super(props);
     }
 
-    public RandomStreamGenerator(List<String> props, long seed) {
+    public RandomGenerator(List<String> props, long seed) {
 	super(props, seed);
     }
 

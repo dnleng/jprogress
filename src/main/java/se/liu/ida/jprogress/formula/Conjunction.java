@@ -176,9 +176,6 @@ public class Conjunction extends Formula {
 
         Conjunction that = (Conjunction) o;
 
-//        if (!lhs.equals(that.lhs)) return false;
-//        return rhs.equals(that.rhs);
-
         return ((lhs.equals(that.lhs) && rhs.equals(that.rhs)) || (lhs.equals(that.rhs) && rhs.equals(that.lhs)));
     }
 
@@ -188,21 +185,4 @@ public class Conjunction extends Formula {
         result = 31 * result + rhs.hashCode();
         return result;
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        Conjunction that = (Conjunction) o;
-//
-//        return ((lhs.equals(that.lhs) && rhs.equals(that.rhs)) || (lhs.equals(that.rhs) && rhs.equals(that.lhs)));
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int result = lhs.hashCode();
-//        result = 31 * result + rhs.hashCode();
-//        return result;
-//    }
 }

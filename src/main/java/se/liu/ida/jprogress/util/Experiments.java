@@ -6,7 +6,10 @@ import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.formula.TruthValue;
 import se.liu.ida.jprogress.progressor.NaiveProgressor;
 import se.liu.ida.jprogress.progressor.ProgressionStrategy;
+import se.liu.ida.jprogress.progressor.Progressor;
+import se.liu.ida.jprogress.progressor.ProgressorFactory;
 import se.liu.ida.jprogress.progressor.graph.ProgressionGraph;
+import se.liu.ida.jprogress.stream.StreamGenerator;
 import se.liu.ida.jprogress.stream.UnknownGenerator;
 
 import java.util.Arrays;
@@ -189,5 +192,55 @@ public class Experiments {
         System.out.println(graph6.getProperties());
         System.out.println("Total iterations: " + executor.getIteration());
         System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
+    }
+
+    public static void runFaultyAEP(int maxRepeats, double faultRatio, boolean verbose) {
+        long t1Start = System.currentTimeMillis();
+        ProgressorFactory pf = new ProgressorFactory();
+        Progressor progressor = pf.create(FormulaFactory.createAEP(10), ProgressionStrategy.ONLINE);
+        StreamGenerator generator = StreamPatterns.createAlteratingFalseTrue("p", 10, 1, maxRepeats, faultRatio);
+        long t1End = System.currentTimeMillis();
+        System.out.println("Formula: " + FormulaFactory.createAEP(10).toString());
+        System.out.println("Setup time: " + (t1End-t1Start) + "ms\n");
+        Executor executor = new Executor(progressor, generator, 0.99, verbose);
+        executor.start();
+
+        try {
+            executor.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        long tEnd = System.currentTimeMillis();
+
+        System.out.println("RESULT");
+        System.out.println(progressor.getStatus());
+        System.out.println(progressor.getProperties());
+        System.out.println("Total iterations: " + executor.getIteration());
+        System.out.println("Total runtime: " + (tEnd-t1Start) + "ms\n");
+    }
+
+    public static void runFaultyBernoulli(int maxRepeats, double faultRatio, boolean verbose) {
+        long t1Start = System.currentTimeMillis();
+        ProgressorFactory pf = new ProgressorFactory();
+        Progressor progressor = pf.create(FormulaFactory.createBernoulli(), ProgressionStrategy.ONLINE);
+        StreamGenerator generator = StreamPatterns.createConstant("p", false, maxRepeats, faultRatio);
+        long t1End = System.currentTimeMillis();
+        System.out.println("Formula: " + FormulaFactory.createAEP(10).toString());
+        System.out.println("Setup time: " + (t1End-t1Start) + "ms\n");
+        Executor executor = new Executor(progressor, generator, 0.99, verbose);
+        executor.start();
+
+        try {
+            executor.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        long tEnd = System.currentTimeMillis();
+
+        System.out.println("RESULT");
+        System.out.println(progressor.getStatus());
+        System.out.println(progressor.getProperties());
+        System.out.println("Total iterations: " + executor.getIteration());
+        System.out.println("Total runtime: " + (tEnd-t1Start) + "ms\n");
     }
 }

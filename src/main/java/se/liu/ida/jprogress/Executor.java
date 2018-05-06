@@ -20,6 +20,17 @@ public class Executor extends Thread {
     private boolean running;
     private List<ProgressionStatus> statusList;
     private List<ProgressorProperties> propertiesList;
+    private boolean verbose;
+
+    public Executor(Progressor progressor, StreamGenerator generator, double terminator, boolean verbose) {
+	this.progressor = progressor;
+	this.generator = generator;
+	this.terminator = terminator;
+	this.running = false;
+	this.statusList = new LinkedList<>();
+	this.propertiesList = new LinkedList<>();
+	this.verbose = verbose;
+    }
 
     public Executor(Progressor progressor, StreamGenerator generator, double terminator) {
         this.progressor = progressor;
@@ -28,6 +39,7 @@ public class Executor extends Thread {
         this.running = false;
         this.statusList = new LinkedList<>();
 	this.propertiesList = new LinkedList<>();
+	this.verbose = false;
     }
 
     public Executor(Progressor progressor, StreamGenerator generator) {
@@ -37,6 +49,7 @@ public class Executor extends Thread {
 	this.running = false;
 	this.statusList = new LinkedList<>();
 	this.propertiesList = new LinkedList<>();
+	this.verbose = false;
     }
 
 
@@ -44,10 +57,21 @@ public class Executor extends Thread {
     public void run() {
         this.running = true;
         while(generator.hasNext()) {
+            if(verbose) {
+                System.out.println("Iteration " + this.statusList.size());
+	    }
+
             progressor.progress(generator.next());
 
             ProgressionStatus status = progressor.getStatus();
 	    addStatus(status);
+	    addProperties(progressor.getProperties());
+
+	    if(verbose) {
+	        System.out.println(status);
+	        System.out.println(progressor.getProperties());
+	    }
+
 	    if(status.getTrueVerdict() >= terminator || status.getFalseVerdict() >= terminator || status.getUnknownVerdict() >= terminator) {
 	        break;
 	    }
