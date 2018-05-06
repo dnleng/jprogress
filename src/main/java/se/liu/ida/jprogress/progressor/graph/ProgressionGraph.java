@@ -312,6 +312,12 @@ public class ProgressionGraph implements Progressor {
         return getMassStatus(0.0);
     }
 
+    @Override
+    public ProgressionStatus getStatus() {
+        return getMassStatus();
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 

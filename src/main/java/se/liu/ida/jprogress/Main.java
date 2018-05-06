@@ -4,9 +4,11 @@ import se.liu.ida.jprogress.formula.*;
 import se.liu.ida.jprogress.progressor.MProgressNaive;
 import se.liu.ida.jprogress.progressor.graph.ProgressionGraph;
 import se.liu.ida.jprogress.progressor.graph.ProgressionStrategy;
+import se.liu.ida.jprogress.progressor.stream.UnknownGenerator;
 
 import java.util.Arrays;
 import java.util.Random;
+
 
 /**
  * Created by dnleng on 30/04/18.
@@ -23,7 +25,8 @@ public class Main {
 //        runExp4();
 //        runExp5();
 //        runExp6();
-        runExp7();
+//        runExp7();
+        runExp8();
     }
 
     private static void runExp1() {
@@ -160,6 +163,34 @@ public class Main {
         for (int i = 0; i < ITERATIONS; i++) {
             System.out.println("Progression iteration: " + (i + 1));
             graph6.progress(i6);
+        }
+        long tEnd = System.currentTimeMillis();
+
+        System.out.println(graph6.getMassStatus(0.0001));
+        System.out.println(graph6.getGraphStatus());
+        System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
+    }
+
+    private static void runExp8() {
+        System.out.println("EXPERIMENT 8");
+        System.out.println("============");
+        long tStart = System.currentTimeMillis();
+        Formula f6 = FormulaFactory.createFormula(FormulaTemplate.BIG_APEQ);
+        System.out.println("Progressing "+f6);
+
+        long t1Start = System.currentTimeMillis();
+        ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
+        graph6.setTTL(5);
+        graph6.setMaxNodes(100);
+        long t1End = System.currentTimeMillis();
+        System.out.println("Setup time: " + (t1End-t1Start) + "ms");
+        Executor executor = new Executor(graph6, new UnknownGenerator(Arrays.asList("p", "q")), 0.99);
+        executor.start();
+
+        try {
+            executor.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         long tEnd = System.currentTimeMillis();
 

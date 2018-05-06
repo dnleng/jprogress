@@ -2,6 +2,7 @@ package se.liu.ida.jprogress.progressor;
 
 import se.liu.ida.jprogress.Interpretation;
 import se.liu.ida.jprogress.formula.Formula;
+import se.liu.ida.jprogress.progressor.graph.ProgressionStatus;
 
 /**
  * Created by Squig on 01/05/2018.
@@ -27,6 +28,10 @@ public class DefaultProgressor implements Progressor {
     @Override
     public void set(final Formula input) {
         this.input = input;
+    }
+
+    @Override public ProgressionStatus getStatus() {
+        return null;
     }
 
     public Formula get() {

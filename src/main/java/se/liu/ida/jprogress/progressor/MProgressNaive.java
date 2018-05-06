@@ -3,6 +3,7 @@ package se.liu.ida.jprogress.progressor;
 import se.liu.ida.jprogress.Interpretation;
 import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.Histogram;
+import se.liu.ida.jprogress.progressor.graph.ProgressionStatus;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -41,6 +42,11 @@ public class MProgressNaive implements Progressor {
     public void set(final Formula input) {
         this.frontier = new LinkedList<>();
         this.frontier.add(input);
+    }
+
+    @Override public ProgressionStatus getStatus() {
+        //TODO: Use get() to obtain histogram and calculate status
+        return null;
     }
 
     public Histogram get() {

@@ -1,8 +1,11 @@
 package se.liu.ida.jprogress.progressor.graph;
 
+import se.liu.ida.jprogress.formula.Bottom;
 import se.liu.ida.jprogress.formula.Formula;
+import se.liu.ida.jprogress.formula.Top;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +18,7 @@ public class ProgressionStatus {
     private double threshold;
 
     public ProgressionStatus(List<Node> nodeList, double threshold) {
-        this.massMap = new HashMap<>();
+        this.massMap = new LinkedHashMap<>();
         this.threshold = threshold;
 	for (Node key : nodeList) {
 	    massMap.put(key.formula, key.mass);
@@ -24,6 +27,22 @@ public class ProgressionStatus {
 
     public Map<Formula, Double> getMassMap() {
         return this.massMap;
+    }
+
+    public double getTrueVerdict() {
+        return massMap.getOrDefault(Top.getInstance(), 0.0);
+    }
+
+    public double getFalseVerdict() {
+	return massMap.getOrDefault(Bottom.getInstance(), 0.0);
+    }
+
+    public double getUnknownVerdict() {
+        double totalMass = 0.0;
+	for (Formula formula : massMap.keySet()) {
+	    totalMass += massMap.get(formula);
+	}
+	return 1.0-totalMass;
     }
 
     @Override
