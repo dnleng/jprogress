@@ -22,14 +22,6 @@ public class ProgressionStatus {
 	}
     }
 
-    public ProgressionStatus(List<Node> nodeList) {
-	this.massMap = new HashMap<>();
-	this.threshold = 0.0;
-	for (Node key : nodeList) {
-	    massMap.put(key.formula, key.mass);
-	}
-    }
-
     public Map<Formula, Double> getMassMap() {
         return this.massMap;
     }

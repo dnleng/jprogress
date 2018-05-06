@@ -294,52 +294,21 @@ public class ProgressionGraph implements Progressor {
     }
 
 
-    public String getMassStatus(double threshold) {
+    public ProgressionStatus getMassStatus(double threshold) {
         ProgressionStatus status = new ProgressionStatus(this.nodeList, threshold);
-        return status.toString();
+        return status;
     }
 
-    public String getGraphStatus() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Graph properties:\n");
-
-        sb.append("Graph strategy\t\t:\t");
-        sb.append(this.strategy);
-        sb.append("\n");
-
-        sb.append("Component count\t\t:\t");
-        sb.append(Formula.getCount());
-        sb.append("\n");
-
-        sb.append("Vertex count\t\t:\t");
-        sb.append(this.nodeList.size());
-        sb.append("\n");
-
+    public GraphStatus getGraphStatus() {
         int edgeCount = 0;
         for(Node id : this.nodeList) {
             edgeCount += id.transitions.size();
         }
 
-        sb.append("Edge count  \t\t:\t");
-        sb.append(edgeCount);
-        sb.append("\n");
-
-        sb.append("Thread count  \t\t:\t");
-        sb.append(Main.MAX_THREADS);
-        sb.append("\n");
-
-        sb.append("Time-to-live\t\t:\t");
-        sb.append(this.maxTTL);
-        sb.append("\n");
-
-        sb.append("Max node bound\t\t:\t");
-        sb.append(this.maxNodes);
-        sb.append("\n");
-
-        return sb.toString();
+        return new GraphStatus(this.strategy, edgeCount, this.nodeList.size(), this.maxTTL, this.maxNodes);
     }
 
-    public String getMassStatus() {
+    public ProgressionStatus getMassStatus() {
         return getMassStatus(0.0);
     }
 
