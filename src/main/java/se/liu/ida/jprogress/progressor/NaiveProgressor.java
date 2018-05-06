@@ -59,6 +59,10 @@ public class NaiveProgressor implements Progressor {
         return new ProgressionStatus(nodeList, 0.0);
     }
 
+    @Override public ProgressorProperties getProperties() {
+        return new ProgressorProperties(ProgressionStrategy.NAIVE, 0, this.frontier.size(), Formula.getCount(), 1, Integer.MAX_VALUE);
+    }
+
     public Histogram get() {
         Histogram hist = new Histogram();
         for (Formula f : frontier) {

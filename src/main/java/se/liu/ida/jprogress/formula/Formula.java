@@ -22,6 +22,10 @@ public abstract class Formula {
         return count;
     }
 
+    public static void resetCount() {
+        count = 0;
+    }
+
     public UUID getId() {
         return id;
     }

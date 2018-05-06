@@ -1,7 +1,9 @@
 package se.liu.ida.jprogress;
 
+import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.progressor.Progressor;
 import se.liu.ida.jprogress.progressor.ProgressionStatus;
+import se.liu.ida.jprogress.progressor.ProgressorProperties;
 import se.liu.ida.jprogress.stream.StreamGenerator;
 
 import java.util.LinkedList;
@@ -17,7 +19,7 @@ public class Executor extends Thread {
     private double terminator;
     private boolean running;
     private List<ProgressionStatus> statusList;
-    private int iteration;
+    private List<ProgressorProperties> propertiesList;
 
     public Executor(Progressor progressor, StreamGenerator generator, double terminator) {
         this.progressor = progressor;
@@ -25,7 +27,7 @@ public class Executor extends Thread {
         this.terminator = terminator;
         this.running = false;
         this.statusList = new LinkedList<>();
-        this.iteration = 0;
+	this.propertiesList = new LinkedList<>();
     }
 
     public Executor(Progressor progressor, StreamGenerator generator) {
@@ -34,7 +36,7 @@ public class Executor extends Thread {
 	this.terminator = 1.0;
 	this.running = false;
 	this.statusList = new LinkedList<>();
-	this.iteration = 0;
+	this.propertiesList = new LinkedList<>();
     }
 
 
@@ -49,7 +51,6 @@ public class Executor extends Thread {
 	    if(status.getTrueVerdict() >= terminator || status.getFalseVerdict() >= terminator || status.getUnknownVerdict() >= terminator) {
 	        break;
 	    }
-	    iteration++;
 	}
 	this.running = false;
     }
@@ -59,7 +60,7 @@ public class Executor extends Thread {
     }
 
     public int getIteration() {
-        return this.iteration;
+        return this.statusList.size();
     }
 
     public synchronized List<ProgressionStatus> getStatus() {
@@ -70,5 +71,15 @@ public class Executor extends Thread {
 
     private synchronized void addStatus(ProgressionStatus status) {
         this.statusList.add(status);
+    }
+
+    public synchronized List<ProgressorProperties> getProperties() {
+	List<ProgressorProperties> result = new LinkedList<>();
+	result.addAll(this.propertiesList);
+	return result;
+    }
+
+    private synchronized void addProperties(ProgressorProperties properties) {
+	this.propertiesList.add(properties);
     }
 }

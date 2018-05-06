@@ -1,4 +1,4 @@
-package se.liu.ida.jprogress.formula;
+package se.liu.ida.jprogress.util;
 
 /**
  * Created by dnleng on 30/04/18.

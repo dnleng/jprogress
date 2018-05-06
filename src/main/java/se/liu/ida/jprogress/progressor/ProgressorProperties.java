@@ -1,4 +1,4 @@
-package se.liu.ida.jprogress.progressor.graph;
+package se.liu.ida.jprogress.progressor;
 
 import se.liu.ida.jprogress.Main;
 import se.liu.ida.jprogress.formula.Formula;
@@ -7,18 +7,21 @@ import se.liu.ida.jprogress.progressor.ProgressionStrategy;
 /**
  * Created by Squig on 06/05/2018.
  */
-public class GraphStatus {
+public class ProgressorProperties
+{
 
     private ProgressionStrategy strategy;
     private int edgeCount;
     private int vertexCount;
+    private int componentCount;
     private int ttl;
     private int maxNodes;
 
-    public GraphStatus(ProgressionStrategy strategy, int edgeCount, int vertexCount, int ttl, int maxNodes) {
+    public ProgressorProperties(ProgressionStrategy strategy, int edgeCount, int vertexCount, int componentCount, int ttl, int maxNodes) {
         this.strategy = strategy;
         this.edgeCount = edgeCount;
         this.vertexCount = vertexCount;
+        this.componentCount = componentCount;
         this.ttl = ttl;
         this.maxNodes = maxNodes;
     }
@@ -26,14 +29,14 @@ public class GraphStatus {
     @Override
     public String toString() {
 	StringBuilder sb = new StringBuilder();
-	sb.append("Graph properties:\n");
+	sb.append("Progressor properties:\n");
 
-	sb.append("Graph strategy\t\t:\t");
+	sb.append("Strategy\t\t:\t");
 	sb.append(this.strategy);
 	sb.append("\n");
 
 	sb.append("Component count\t\t:\t");
-	sb.append(Formula.getCount());
+	sb.append(this.componentCount);
 	sb.append("\n");
 
 	sb.append("Vertex count\t\t:\t");

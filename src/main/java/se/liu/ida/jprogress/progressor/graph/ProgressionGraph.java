@@ -7,6 +7,7 @@ import se.liu.ida.jprogress.formula.TruthValue;
 import se.liu.ida.jprogress.progressor.ProgressionStatus;
 import se.liu.ida.jprogress.progressor.ProgressionStrategy;
 import se.liu.ida.jprogress.progressor.Progressor;
+import se.liu.ida.jprogress.progressor.ProgressorProperties;
 
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -301,13 +302,14 @@ public class ProgressionGraph implements Progressor {
         return status;
     }
 
-    public GraphStatus getGraphStatus() {
+    @Override
+    public ProgressorProperties getProperties() {
         int edgeCount = 0;
         for(Node id : this.nodeList) {
             edgeCount += id.transitions.size();
         }
 
-        return new GraphStatus(this.strategy, edgeCount, this.nodeList.size(), this.maxTTL, this.maxNodes);
+        return new ProgressorProperties(this.strategy, edgeCount, this.nodeList.size(), Formula.getCount(), this.maxTTL, this.maxNodes);
     }
 
     public ProgressionStatus getMassStatus() {

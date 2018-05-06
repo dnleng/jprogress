@@ -12,4 +12,5 @@ public interface Progressor {
     void set(Formula input);
 
     ProgressionStatus getStatus();
+    ProgressorProperties getProperties();
 }

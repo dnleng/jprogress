@@ -1,4 +1,11 @@
-package se.liu.ida.jprogress.formula;
+package se.liu.ida.jprogress.util;
+
+import se.liu.ida.jprogress.formula.Always;
+import se.liu.ida.jprogress.formula.Atom;
+import se.liu.ida.jprogress.formula.Disjunction;
+import se.liu.ida.jprogress.formula.Eventually;
+import se.liu.ida.jprogress.formula.Formula;
+import se.liu.ida.jprogress.formula.Negation;
 
 /**
  * Created by dnleng on 30/04/18.

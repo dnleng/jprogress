@@ -1,18 +1,46 @@
 package se.liu.ida.jprogress.stream;
 
+import se.liu.ida.jprogress.Interpretation;
+import se.liu.ida.jprogress.formula.TruthValue;
+
+import java.util.List;
+
 /**
  * Created by Squig on 06/05/2018.
  */
-public abstract class RandomStreamGenerator implements StreamGenerator {
+public class RandomStreamGenerator extends RandomizedStreamGenerator {
 
-    protected long seed;
-
-    public RandomStreamGenerator() {
-        this.seed = System.currentTimeMillis();
+    public RandomStreamGenerator(List<String> props) {
+        super(props);
     }
 
-    public RandomStreamGenerator(long seed) {
-        this.seed = seed;
+    public RandomStreamGenerator(List<String> props, long seed) {
+	super(props, seed);
     }
 
+    @Override public Interpretation next() {
+	Interpretation result = new Interpretation();
+	for (String prop : props) {
+	    switch (this.rnd.nextInt(2)) {
+		case 0:
+		    result.setTruthValue(prop, TruthValue.TRUE);
+		    break;
+		case 1:
+		    result.setTruthValue(prop, TruthValue.FALSE);
+		    break;
+		default:
+		    result.setTruthValue(prop, TruthValue.UNKNOWN);
+		    break;
+	    }
+	}
+	return result;
+    }
+
+    @Override public boolean hasNext() {
+	return true;
+    }
+
+    @Override public void reset() {
+
+    }
 }

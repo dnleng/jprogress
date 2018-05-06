@@ -38,6 +38,10 @@ public class DefaultProgressor implements Progressor {
         return new ProgressionStatus(Collections.singletonList(new Node(this.input, new HashSet<>(), 1.0, false, 0)), 0.0);
     }
 
+    @Override public ProgressorProperties getProperties() {
+        return new ProgressorProperties(ProgressionStrategy.DEFAULT, 0, 1, Formula.getCount(), 1, 1);
+    }
+
     public Formula get() {
         return this.input;
     }
