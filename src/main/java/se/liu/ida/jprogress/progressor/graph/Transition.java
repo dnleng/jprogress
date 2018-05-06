@@ -9,12 +9,10 @@ import java.util.UUID;
  */
 public class Transition {
     public int interpretation;
-    public UUID destination;
     public Node destNode;
 
-    public Transition(Interpretation interpretation, UUID destination, Node destNode) {
+    public Transition(Interpretation interpretation, Node destNode) {
         this.interpretation = interpretation.compress();
-        this.destination = destination;
         this.destNode = destNode;
     }
 }

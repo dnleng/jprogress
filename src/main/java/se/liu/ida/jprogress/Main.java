@@ -12,7 +12,8 @@ import java.util.Random;
  * Created by dnleng on 30/04/18.
  */
 public class Main {
-    private static final int ITERATIONS = 10000;
+    private static final int ITERATIONS = 1500;
+    public static final int MAX_THREADS = 8;
 
 
     public static void main(String[] args) {
@@ -129,7 +130,7 @@ public class Main {
         long t1Start = System.currentTimeMillis();
         ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
         graph6.setTTL(1);
-        graph6.setMaxNodes(25);
+//        graph6.setMaxNodes(25);
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End-t1Start) + "ms");
         for (int i = 0; i < ITERATIONS; i++) {
@@ -152,7 +153,8 @@ public class Main {
 
         long t1Start = System.currentTimeMillis();
         ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
-        graph6.setTTL(1);
+        graph6.setTTL(5);
+        graph6.setMaxNodes(100);
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End-t1Start) + "ms");
         for (int i = 0; i < ITERATIONS; i++) {

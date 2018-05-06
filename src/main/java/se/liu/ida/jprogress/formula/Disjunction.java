@@ -177,8 +177,10 @@ public class Disjunction extends Formula {
 
         Disjunction that = (Disjunction) o;
 
-        if (!lhs.equals(that.lhs)) return false;
-        return rhs.equals(that.rhs);
+//        if (!lhs.equals(that.lhs)) return false;
+//        return rhs.equals(that.rhs);
+
+        return ((lhs.equals(that.lhs) && rhs.equals(that.rhs)) || (lhs.equals(that.rhs) && rhs.equals(that.lhs)));
     }
 
     @Override

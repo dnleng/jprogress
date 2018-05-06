@@ -1,11 +1,16 @@
 package se.liu.ida.jprogress.progressor.graph;
 
 import se.liu.ida.jprogress.Interpretation;
+import se.liu.ida.jprogress.Main;
 import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.formula.TruthValue;
 import se.liu.ida.jprogress.progressor.Progressor;
 
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Squig on 01/05/2018.
@@ -15,6 +20,8 @@ public class ProgressionGraph implements Progressor {
     private int maxTTL;
     private int maxNodes;
     private List<Node> nodeList;
+    private final Object nodeListLock = new Object();
+    private ExecutorService executorService;
 
     public ProgressionGraph(ProgressionStrategy strategy) {
         reset(strategy);
@@ -50,34 +57,36 @@ public class ProgressionGraph implements Progressor {
             unknowns.setTruthValue(atom, TruthValue.UNKNOWN);
         }
         Set<Interpretation> hSet = unknowns.getReductions();
-        while (!frontier.isEmpty()) {
+        while (!frontier.isEmpty() && this.nodeList.size() < this.maxNodes) {
             Node f = frontier.remove(0);
             frontier.addAll(expand(f, hSet));
         }
     }
 
-    private List<Node> expand(Node src, Set<Interpretation> hSet) {
+    public List<Node> expand(Node src, Set<Interpretation> hSet) {
         List<Node> frontier = new LinkedList<>();
 
         for (Interpretation i : hSet) {
             Formula result = src.formula.progressOnce(i);
 
-            Node dest = null;
-            for(Node n : nodeList) {
-                if(n.formula.equals(result)) {
-                    dest = n;
-                    break;
+            synchronized(nodeListLock) {
+                Node dest = null;
+                for (Node n : nodeList) {
+                    if (n.formula.equals(result)) {
+                        dest = n;
+                        break;
+                    }
                 }
-            }
 
-            if (dest == null) {
-                dest = new Node(result, new HashSet<>(), 0.0, false, 0);
-                this.nodeList.add(dest);
-                src.transitions.add(new Transition(i, null, dest));
-                frontier.add(dest);
-            } else {
-                // Pre-existing formula encountered; use the pre-existing UUID
-                src.transitions.add(new Transition(i, null, dest));
+                if (dest == null) {
+                    dest = new Node(result, new HashSet<>(), 0.0, false, 0);
+                    this.nodeList.add(dest);
+                    src.transitions.add(new Transition(i, dest));
+                    frontier.add(dest);
+                } else {
+                    // Pre-existing formula encountered; use the pre-existing UUID
+                    src.transitions.add(new Transition(i, dest));
+                }
             }
         }
 
@@ -85,7 +94,7 @@ public class ProgressionGraph implements Progressor {
         return frontier;
     }
 
-    private void shrink(Set<Node> destIds) {
+    public void shrink(Set<Node> destIds) {
         Set<Node> resetSet = new HashSet<>();
         for(Node srcId : this.nodeList) {
             for(Transition trans : srcId.transitions) {
@@ -105,11 +114,14 @@ public class ProgressionGraph implements Progressor {
 
     @Override
     public void progress(Interpretation interpretation) {
-        Set<Integer> redSet = new HashSet<>();
+        long tStart = System.currentTimeMillis();
+
+        List<Integer> redSet = new LinkedList<>();
         for (Interpretation i : interpretation.getReductions()) {
             redSet.add(i.compress());
         }
 
+        final Object massMapLock = new Object();
         Map<Node, Double> nextMassMap = new HashMap<>();
         for (Node n : this.nodeList) {
             nextMassMap.put(n, 0.0);
@@ -119,26 +131,32 @@ public class ProgressionGraph implements Progressor {
         List<Node> jobList = new LinkedList<>();
         jobList.addAll(this.nodeList);
 
+        // Handle expansion (async)
+        long tExpand = System.currentTimeMillis();
+        executorService = Executors.newFixedThreadPool(Main.MAX_THREADS);
+        List<Callable<Object>> callList = new LinkedList<>();
         for (Node id : jobList) {
             if (id.mass > 0.0) {
-                // Update graph if necessary
-                if(!id.expanded) {
-                    expand(id, Interpretation.buildFullyUnknown(interpretation.getAtoms()).getReductions());
-                }
+                callList.add(Executors.callable(() -> {
+		    if(!id.expanded) {
+			expand(id, Interpretation.buildFullyUnknown(interpretation.getAtoms()).getReductions());
+		    }
 
-                // Push mass
-                List<Node> destinations = new LinkedList<>();
-                for (Transition t : id.transitions) {
-                    if (redSet.contains(t.interpretation)) {
-                        destinations.add(t.destNode);
-                    }
-                }
+		    List<Node> destinations = new LinkedList<>();
+		    for (Transition t : id.transitions) {
+			if (redSet.contains(t.interpretation)) {
+			    destinations.add(t.destNode);
+			}
+		    }
 
-                double massChunk = id.mass / (double) destinations.size();
-                for (Node dest : destinations) {
-                    nextMassMap.put(dest, nextMassMap.getOrDefault(dest, 0.0) + massChunk);
-                    dest.age = 0;
-                }
+		    double massChunk = id.mass / (double) destinations.size();
+		    for (Node dest : destinations) {
+			synchronized(massMapLock) {
+			    nextMassMap.put(dest, nextMassMap.getOrDefault(dest, 0.0) + massChunk);
+			}
+			dest.age = 0;
+		    }
+		}));
             }
             else {
                 // List is sorted by mass, so we can break
@@ -146,7 +164,46 @@ public class ProgressionGraph implements Progressor {
             }
         }
 
+        try {
+            executorService.invokeAll(callList);
+            executorService.shutdown();
+           while (!executorService.awaitTermination(1, TimeUnit.SECONDS)) {
+               System.out.println("Awaiting termination");
+           }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+//        // Handle expansion (sync)
+//        for (Node id : jobList) {
+//            if (id.mass > 0.0) {
+//
+//                if(!id.expanded) {
+//                    expand(id, Interpretation.buildFullyUnknown(interpretation.getAtoms()).getReductions());
+//                }
+//
+//                List<Node> destinations = new LinkedList<>();
+//                for (Transition t : id.transitions) {
+//                    if (redSet.contains(t.interpretation)) {
+//                        destinations.add(t.destNode);
+//                    }
+//                }
+//
+//                double massChunk = id.mass / (double) destinations.size();
+//                for (Node dest : destinations) {
+//                    nextMassMap.put(dest, nextMassMap.getOrDefault(dest, 0.0) + massChunk);
+//                    dest.age = 0;
+//                }
+//            }
+//            else {
+//                // List is sorted by mass, so we can break
+//                break;
+//            }
+//        }
+
         // Check whether we need to destroy some of these old nodes
+        long tRemove = System.currentTimeMillis();
         Set<Node> removalSet = new HashSet<>();
         for(Node id : nextMassMap.keySet()) {
             // Update nodes
@@ -160,12 +217,45 @@ public class ProgressionGraph implements Progressor {
         shrink(removalSet);
 
         // Sort by mass
+        long tSort = System.currentTimeMillis();
         Collections.sort(this.nodeList);
 
         // Leak mass where needed
+        long tLeak = System.currentTimeMillis();
         while(this.nodeList.size() - maxNodes > 0) {
             this.nodeList.remove(this.nodeList.size()-1);
         }
+
+        long tEnd = System.currentTimeMillis();
+
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("Time breakdown:\n");
+//
+//        sb.append("Prepare\t:\t");
+//        sb.append(tExpand - tStart);
+//        sb.append("ms\n");
+//
+//        sb.append("Expand\t:\t");
+//        sb.append(tRemove - tExpand);
+//        sb.append("ms\n");
+//
+//        sb.append("Remove\t:\t");
+//        sb.append(tSort - tRemove);
+//        sb.append("ms\n");
+//
+//        sb.append("Sort\t:\t");
+//        sb.append(tLeak - tSort);
+//        sb.append("ms\n");
+//
+//        sb.append("Leak\t:\t");
+//        sb.append(tEnd - tLeak);
+//        sb.append("ms\n");
+//
+//        sb.append("Total\t:\t");
+//        sb.append(tEnd - tStart);
+//        sb.append("ms\n");
+//
+//        System.out.println(sb.toString());
     }
 
     @Override
@@ -205,31 +295,8 @@ public class ProgressionGraph implements Progressor {
 
 
     public String getMassStatus(double threshold) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Probability mass distribution:\n");
-        double totalMass = 0;
-        for (Node key : this.nodeList) {
-            Formula formula = key.formula;
-            double mass = Math.floor(key.mass * 100000.0) / 100000.0;
-            totalMass += key.mass;
-
-            if (mass >= threshold) {
-                sb.append(mass);
-                sb.append("\t\t:\t");
-                sb.append(formula);
-                sb.append("\t\t{TTL: ");
-                sb.append(this.maxTTL-key.age);
-                sb.append("}\n");
-            }
-        }
-
-        double leakedMass = 1.0 - totalMass;
-        if(leakedMass >= threshold) {
-            sb.append(Math.floor(leakedMass * 100000.0) / 100000.0);
-            sb.append("\t\t:\t?\n");
-        }
-
-        return sb.toString();
+        ProgressionStatus status = new ProgressionStatus(this.nodeList, threshold);
+        return status.toString();
     }
 
     public String getGraphStatus() {
@@ -255,6 +322,10 @@ public class ProgressionGraph implements Progressor {
 
         sb.append("Edge count  \t\t:\t");
         sb.append(edgeCount);
+        sb.append("\n");
+
+        sb.append("Thread count  \t\t:\t");
+        sb.append(Main.MAX_THREADS);
         sb.append("\n");
 
         sb.append("Time-to-live\t\t:\t");
