@@ -1,8 +1,9 @@
-package se.liu.ida.jprogress.progressor.graph;
+package se.liu.ida.jprogress.progressor;
 
 import se.liu.ida.jprogress.formula.Bottom;
 import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.formula.Top;
+import se.liu.ida.jprogress.progressor.graph.Node;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

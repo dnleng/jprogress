@@ -4,6 +4,8 @@ import se.liu.ida.jprogress.Interpretation;
 import se.liu.ida.jprogress.Main;
 import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.formula.TruthValue;
+import se.liu.ida.jprogress.progressor.ProgressionStatus;
+import se.liu.ida.jprogress.progressor.ProgressionStrategy;
 import se.liu.ida.jprogress.progressor.Progressor;
 
 import java.util.*;

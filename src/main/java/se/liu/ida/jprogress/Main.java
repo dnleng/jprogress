@@ -1,10 +1,10 @@
 package se.liu.ida.jprogress;
 
 import se.liu.ida.jprogress.formula.*;
-import se.liu.ida.jprogress.progressor.MProgressNaive;
+import se.liu.ida.jprogress.progressor.NaiveProgressor;
 import se.liu.ida.jprogress.progressor.graph.ProgressionGraph;
-import se.liu.ida.jprogress.progressor.graph.ProgressionStrategy;
-import se.liu.ida.jprogress.progressor.stream.UnknownGenerator;
+import se.liu.ida.jprogress.progressor.ProgressionStrategy;
+import se.liu.ida.jprogress.stream.UnknownGenerator;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -90,7 +90,7 @@ public class Main {
 
     private static void runExp4() {
         Formula f4 = FormulaFactory.createFormula(FormulaTemplate.APEQ);
-        MProgressNaive progressor = new MProgressNaive(f4);
+        NaiveProgressor progressor = new NaiveProgressor(f4);
         Interpretation i4 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
         System.out.println("Formula: " + f4);
         for (int i = 0; i < ITERATIONS; i++) {
@@ -196,6 +196,7 @@ public class Main {
 
         System.out.println(graph6.getMassStatus(0.0001));
         System.out.println(graph6.getGraphStatus());
+        System.out.println("Total iterations: " + executor.getIteration());
         System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
     }
 }

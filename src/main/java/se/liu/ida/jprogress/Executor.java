@@ -1,8 +1,8 @@
 package se.liu.ida.jprogress;
 
 import se.liu.ida.jprogress.progressor.Progressor;
-import se.liu.ida.jprogress.progressor.graph.ProgressionStatus;
-import se.liu.ida.jprogress.progressor.stream.StreamGenerator;
+import se.liu.ida.jprogress.progressor.ProgressionStatus;
+import se.liu.ida.jprogress.stream.StreamGenerator;
 
 import java.util.LinkedList;
 import java.util.List;

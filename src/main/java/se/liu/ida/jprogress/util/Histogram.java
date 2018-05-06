@@ -1,13 +1,15 @@
-package se.liu.ida.jprogress;
+package se.liu.ida.jprogress.util;
 
 import se.liu.ida.jprogress.formula.Formula;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by Squig on 01/05/2018.
  */
-public class Histogram extends HashMap<String, Integer> {
+public class Histogram extends LinkedHashMap<Formula, Integer>
+{
 
     private int count;
 
@@ -16,7 +18,7 @@ public class Histogram extends HashMap<String, Integer> {
         this.count = 0;
     }
 
-    public int add(String f) {
+    public int add(Formula f) {
         if (this.get(f) == null) {
             this.put(f, 1);
         } else {
@@ -27,10 +29,14 @@ public class Histogram extends HashMap<String, Integer> {
         return this.get(f);
     }
 
+    public int getCount() {
+        return this.count;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (String key : this.keySet()) {
+        for (Formula key : this.keySet()) {
             int i = this.get(key);
             double r = Math.floor(((double) i / (double) this.count) * 10000.0) / 10000.0;
 

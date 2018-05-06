@@ -2,6 +2,7 @@ package se.liu.ida.jprogress.progressor.graph;
 
 import se.liu.ida.jprogress.Main;
 import se.liu.ida.jprogress.formula.Formula;
+import se.liu.ida.jprogress.progressor.ProgressionStrategy;
 
 /**
  * Created by Squig on 06/05/2018.

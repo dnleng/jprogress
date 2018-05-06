@@ -1,4 +1,4 @@
-package se.liu.ida.jprogress.progressor.stream;
+package se.liu.ida.jprogress.stream;
 
 import se.liu.ida.jprogress.Interpretation;
 
