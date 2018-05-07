@@ -60,4 +60,52 @@ public class ProgressorProperties {
 
         return sb.toString();
     }
+
+    public ProgressionStrategy getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(ProgressionStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public int getEdgeCount() {
+        return edgeCount;
+    }
+
+    public void setEdgeCount(int edgeCount) {
+        this.edgeCount = edgeCount;
+    }
+
+    public int getVertexCount() {
+        return vertexCount;
+    }
+
+    public void setVertexCount(int vertexCount) {
+        this.vertexCount = vertexCount;
+    }
+
+    public int getComponentCount() {
+        return componentCount;
+    }
+
+    public void setComponentCount(int componentCount) {
+        this.componentCount = componentCount;
+    }
+
+    public int getTtl() {
+        return ttl;
+    }
+
+    public void setTtl(int ttl) {
+        this.ttl = ttl;
+    }
+
+    public int getMaxNodes() {
+        return maxNodes;
+    }
+
+    public void setMaxNodes(int maxNodes) {
+        this.maxNodes = maxNodes;
+    }
 }

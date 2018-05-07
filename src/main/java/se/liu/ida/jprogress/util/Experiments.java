@@ -2,6 +2,7 @@ package se.liu.ida.jprogress.util;
 
 import se.liu.ida.jprogress.Executor;
 import se.liu.ida.jprogress.Interpretation;
+import se.liu.ida.jprogress.Logger;
 import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.formula.TruthValue;
 import se.liu.ida.jprogress.progressor.NaiveProgressor;

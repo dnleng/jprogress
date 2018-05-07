@@ -56,6 +56,7 @@ public class Executor extends Thread {
     @Override
     public void run() {
         this.running = true;
+        Logger logger = new Logger("latest.csv");
         while (generator.hasNext()) {
             if (verbose) {
                 System.out.println("Iteration " + this.statusList.size());
@@ -66,6 +67,7 @@ public class Executor extends Thread {
             ProgressionStatus status = progressor.getStatus();
             addStatus(status);
             addProperties(progressor.getProperties());
+            logger.write(status, progressor.getProperties());
 
             if (verbose) {
                 System.out.println(status);
