@@ -172,13 +172,13 @@ public class Experiments {
         System.out.println("EXPERIMENT 8");
         System.out.println("============");
         long tStart = System.currentTimeMillis();
-        Formula f6 = FormulaFactory.createFormula(FormulaTemplate.BIG_APEQ);
+        Formula f6 = FormulaFactory.createFormula(FormulaTemplate.APEQ);
         System.out.println("Progressing " + f6);
 
         long t1Start = System.currentTimeMillis();
-        ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
-        graph6.setTTL(5);
-        graph6.setMaxNodes(100);
+        ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.OFFLINE, f6);
+//        graph6.setTTL(5);
+//        graph6.setMaxNodes(100);
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End - t1Start) + "ms");
         Executor executor = new Executor(graph6, new UnknownGenerator(Arrays.asList("p", "q")), 0.99);

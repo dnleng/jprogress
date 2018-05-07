@@ -34,7 +34,7 @@ public class NaiveProgressor implements Progressor {
         this.prevPerformance = new long[6];
         this.prevPerformance[0] = System.nanoTime();
         Set<Interpretation> reductions = interpretation.getReductions();
-        this.prevQuality = 1.0 - ((double)reductions.size() / Math.pow(2, interpretation.getAtoms().size()));
+        this.prevQuality = 1.0 - (((double)reductions.size()-1.0) / (Math.pow(2, interpretation.getAtoms().size())-1.0));
         List<Formula> result = new LinkedList<>();
         this.prevPerformance[1] = System.nanoTime();
         for (Formula f : frontier) {

@@ -18,11 +18,11 @@ public class FormulaFactory {
     public static Formula createFormula(FormulaTemplate template) {
         switch (template) {
             case APEQ:
-                return createAPEQ(Integer.MAX_VALUE, 5);
+                return createAPEQ(100, 40);
             case BERNOULLI:
                 return createBernoulli();
             case BIG_APEQ:
-                return createAPEQ(1000, 400);
+                return createAPEQ(10000, 4000);
             default:
                 throw new IllegalArgumentException("Unknown template");
         }

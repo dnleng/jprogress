@@ -126,7 +126,7 @@ public class ProgressionGraph implements Progressor {
         for (Interpretation i : interpretation.getReductions()) {
             redSet.add(i.compress());
         }
-        prevQuality = 1.0 - ((double)redSet.size() / Math.pow(2, interpretation.getAtoms().size()));
+        prevQuality = 1.0 - (((double)redSet.size()-1.0) / (Math.pow(2, interpretation.getAtoms().size())-1.0));
 
         final Object massMapLock = new Object();
         Map<Node, Double> nextMassMap = new HashMap<>();

@@ -28,7 +28,7 @@ public class DefaultProgressor implements Progressor {
     public void progress(final Interpretation interpretation) {
         this.prevPerformance = new long[6];
         this.prevPerformance[0] = System.nanoTime();
-        this.prevQuality = 1.0 - ((double)interpretation.getReductions().size() / Math.pow(2, interpretation.getAtoms().size()));
+        this.prevQuality = 1.0 - (((double)interpretation.getReductions().size()-1.0) / (Math.pow(2, interpretation.getAtoms().size())-1.0));
 
         if (this.input != null) {
             this.prevPerformance[1] = System.nanoTime();

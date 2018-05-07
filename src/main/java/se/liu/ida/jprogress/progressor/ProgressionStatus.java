@@ -32,6 +32,7 @@ public class ProgressionStatus {
         for (Node key : nodeList) {
             massMap.put(key.formula, key.mass);
         }
+        this.quality = quality;
     }
 
     public Map<Formula, Double> getMassMap() {
@@ -52,6 +53,28 @@ public class ProgressionStatus {
             totalMass += massMap.get(formula);
         }
         return 1.0 - totalMass;
+    }
+
+    public double getNoVerdict() {
+        return 1.0 - (getTrueVerdict() + getFalseVerdict() + getUnknownVerdict());
+    }
+
+    public double getBucketSize(double lower, double upper) {
+        int count = 0;
+        for (Formula formula : massMap.keySet()) {
+            if(upper < 1.0) {
+                if (lower <= massMap.get(formula) && massMap.get(formula) < upper) {
+                    count++;
+                }
+            }
+            else {
+                if(lower <= massMap.get(formula)) {
+                    count++;
+                }
+            }
+        }
+
+        return (double)count / (double)massMap.keySet().size();
     }
 
     public long[] getPerformance() {

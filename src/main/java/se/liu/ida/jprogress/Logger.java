@@ -20,14 +20,17 @@ public class Logger {
 
     public Logger(String destination) {
         this.destination = Paths.get(destination);
-        if(!Files.exists(this.destination)) {
-            try {
-                Files.createFile(this.destination);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        this.iteration = 1;
+
+        try {
+            Files.deleteIfExists(this.destination);
+            Files.createFile(this.destination);
+            List<String> lines = new LinkedList<>();
+            lines.add("iteration,quality,true,false,unknown,none,bucket_0-1,bucket_1-5,bucket_5-10,bucket_10-20,bucket_20-30,bucket_30-50,bucket_50-70,bucket_70-80,bucket_80-90,bucket_90-95,bucket_95-99,bucket_99-100,d_prepare,d_expand,d_remove,d_sort,d_leak,d_total,n_components,n_vertices,n_edges");
+            Files.write(this.destination, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        this.iteration = 0;
     }
 
     public void write(ProgressionStatus status, ProgressorProperties properties) {
@@ -42,10 +45,38 @@ public class Logger {
         sb.append(",");
         sb.append(status.getUnknownVerdict());
         sb.append(",");
-        for(int i = 0 ; i < status.getPerformance().length; i++) {
-            sb.append(status.getPerformance()[i]);
+        sb.append(status.getNoVerdict());
+        sb.append(",");
+        sb.append(status.getBucketSize(0.0, 0.01));
+        sb.append(",");
+        sb.append(status.getBucketSize(0.01, 0.05));
+        sb.append(",");
+        sb.append(status.getBucketSize(0.05, 0.1));
+        sb.append(",");
+        sb.append(status.getBucketSize(0.1, 0.2));
+        sb.append(",");
+        sb.append(status.getBucketSize(0.2, 0.3));
+        sb.append(",");
+        sb.append(status.getBucketSize(0.3, 0.5));
+        sb.append(",");
+        sb.append(status.getBucketSize(0.5, 0.7));
+        sb.append(",");
+        sb.append(status.getBucketSize(0.7, 0.8));
+        sb.append(",");
+        sb.append(status.getBucketSize(0.8, 0.9));
+        sb.append(",");
+        sb.append(status.getBucketSize(0.9, 0.95));
+        sb.append(",");
+        sb.append(status.getBucketSize(0.95, 0.99));
+        sb.append(",");
+        sb.append(status.getBucketSize(0.99, 1.0));
+        sb.append(",");
+        for(int i = 1 ; i < status.getPerformance().length; i++) {
+            sb.append(status.getPerformance()[i]-status.getPerformance()[i-1]);
             sb.append(",");
         }
+        sb.append(status.getPerformance()[status.getPerformance().length-1]-status.getPerformance()[0]);
+        sb.append(",");
         sb.append(properties.getComponentCount());
         sb.append(",");
         sb.append(properties.getVertexCount());

@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 
 public class Main {
-    public static final int MAX_THREADS = 8;
+    public static final int MAX_THREADS = 12;
 
     public static void main(String[] args) {
 //        Experiments.runExp1();
@@ -24,9 +24,9 @@ public class Main {
 //        Experiments.runExp5();
 //        Experiments.runExp6();
 //        Experiments.runExp7();
-//        Experiments.runExp8();
+        Experiments.runExp8();
 //        Experiments.runFaultyAEP(Integer.MAX_VALUE, 0.5, true);
-        Experiments.runFaultyBernoulli(Integer.MAX_VALUE, 0.1, false);
+//        Experiments.runFaultyBernoulli(Integer.MAX_VALUE, 0.1, false);
     }
 
 

@@ -30,7 +30,7 @@ public class ProgressorProperties {
         StringBuilder sb = new StringBuilder();
         sb.append("Progressor properties:\n");
 
-        sb.append("Strategy\t\t:\t");
+        sb.append("Strategy used\t\t:\t");
         sb.append(this.strategy);
         sb.append("\n");
 
