@@ -17,7 +17,7 @@ public class Bottom extends Atom {
     }
 
     public static Bottom getInstance() {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new Bottom();
         }
 

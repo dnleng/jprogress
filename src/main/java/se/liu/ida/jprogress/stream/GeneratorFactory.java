@@ -5,7 +5,8 @@ package se.liu.ida.jprogress.stream;
  */
 public class GeneratorFactory {
 
-    private GeneratorFactory() {}
+    private GeneratorFactory() {
+    }
 
 
 }

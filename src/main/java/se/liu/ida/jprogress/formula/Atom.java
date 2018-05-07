@@ -23,8 +23,7 @@ public class Atom extends Formula {
             return Top.getInstance();
         } else if (this.eval(interpretation) == TruthValue.FALSE) {
             return Bottom.getInstance();
-        }
-        else {
+        } else {
             return this;
         }
     }

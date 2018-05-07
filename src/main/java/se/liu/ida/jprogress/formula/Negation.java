@@ -42,8 +42,8 @@ public class Negation extends Formula {
         }
 
         // Eliminate double negations
-        if(this.formula instanceof Negation) {
-            Negation child = (Negation)this.formula;
+        if (this.formula instanceof Negation) {
+            Negation child = (Negation) this.formula;
             return child.formula;
         }
 

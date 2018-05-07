@@ -36,52 +36,43 @@ public class Disjunction extends Formula {
 
     public void subsumption(Disjunction prevDisjunction, Formula prevTemporalOp, int prevDir, int thisDir) {
         Formula f;
-        if(thisDir < 0) {
+        if (thisDir < 0) {
             f = this.lhs;
-        }
-        else {
+        } else {
             f = this.rhs;
         }
 
-        if(prevTemporalOp instanceof Always && f instanceof Always) {
-            if(((Always)prevTemporalOp).formula.equals(((Always)f).formula)
-                    && ((Always)prevTemporalOp).startTime == ((Always)f).startTime)
-            {
-                if(((Always)prevTemporalOp).endTime < ((Always)f).endTime) {
-                    if(thisDir < 0) {
+        if (prevTemporalOp instanceof Always && f instanceof Always) {
+            if (((Always) prevTemporalOp).formula.equals(((Always) f).formula)
+                    && ((Always) prevTemporalOp).startTime == ((Always) f).startTime) {
+                if (((Always) prevTemporalOp).endTime < ((Always) f).endTime) {
+                    if (thisDir < 0) {
                         this.lhs = Bottom.getInstance();
-                    }
-                    else {
+                    } else {
                         this.rhs = Bottom.getInstance();
                     }
-                }
-                else {
-                    if(prevDir < 0) {
+                } else {
+                    if (prevDir < 0) {
                         prevDisjunction.lhs = Bottom.getInstance();
-                    }
-                    else {
+                    } else {
                         prevDisjunction.rhs = Bottom.getInstance();
                     }
                 }
             }
-        }
-        else if(prevTemporalOp instanceof Until && f instanceof Until) {
-            if(((Until)prevTemporalOp).lhs.equals(((Until)f).lhs)
-                    && ((Until)prevTemporalOp).rhs.equals(((Until)f).rhs)
-                    && ((Until)prevTemporalOp).startTime == ((Until)f).startTime) {
-                if(((Until)prevTemporalOp).endTime < ((Until)f).endTime) {
-                    if(prevDir < 0) {
+        } else if (prevTemporalOp instanceof Until && f instanceof Until) {
+            if (((Until) prevTemporalOp).lhs.equals(((Until) f).lhs)
+                    && ((Until) prevTemporalOp).rhs.equals(((Until) f).rhs)
+                    && ((Until) prevTemporalOp).startTime == ((Until) f).startTime) {
+                if (((Until) prevTemporalOp).endTime < ((Until) f).endTime) {
+                    if (prevDir < 0) {
                         prevDisjunction.lhs = Bottom.getInstance();
-                    }
-                    else {
+                    } else {
                         prevDisjunction.rhs = Bottom.getInstance();
                     }
-                }
-                else {
-                    if(thisDir < 0) {
+                } else {
+                    if (thisDir < 0) {
                         this.lhs = Bottom.getInstance();
-                    }
-                    else {
+                    } else {
                         this.rhs = Bottom.getInstance();
                     }
                 }
@@ -91,40 +82,36 @@ public class Disjunction extends Formula {
 
     @Override
     public Formula subsumption() {
-        if(this.lhs instanceof Always && this.rhs instanceof Always
-                && ((Always)this.lhs).formula.equals(((Always)this.rhs).formula)
-                && ((Always)this.lhs).startTime == ((Always)this.rhs).startTime)
-        {
-            if(((Always)this.lhs).endTime > ((Always)this.rhs).endTime) {
+        if (this.lhs instanceof Always && this.rhs instanceof Always
+                && ((Always) this.lhs).formula.equals(((Always) this.rhs).formula)
+                && ((Always) this.lhs).startTime == ((Always) this.rhs).startTime) {
+            if (((Always) this.lhs).endTime > ((Always) this.rhs).endTime) {
                 this.lhs = Bottom.getInstance();
-            }
-            else {
+            } else {
                 this.rhs = Bottom.getInstance();
             }
-        } else if(this.lhs instanceof Until && this.rhs instanceof Until
-                && ((Until)this.lhs).lhs.equals(((Until)this.rhs).lhs)
-                && ((Until)this.lhs).rhs.equals(((Until)this.rhs).rhs)
-                && ((Until)this.lhs).startTime == ((Until)this.rhs).startTime)
-        {
-            if(((Until)this.lhs).endTime > ((Until)this.rhs).endTime) {
+        } else if (this.lhs instanceof Until && this.rhs instanceof Until
+                && ((Until) this.lhs).lhs.equals(((Until) this.rhs).lhs)
+                && ((Until) this.lhs).rhs.equals(((Until) this.rhs).rhs)
+                && ((Until) this.lhs).startTime == ((Until) this.rhs).startTime) {
+            if (((Until) this.lhs).endTime > ((Until) this.rhs).endTime) {
                 this.rhs = Bottom.getInstance();
-            }
-            else {
+            } else {
                 this.lhs = Bottom.getInstance();
             }
         }
 
-        if(this.lhs instanceof Disjunction) {
-            if(this.rhs instanceof Always || this.rhs instanceof Eventually || this.rhs instanceof Until) {
-                ((Disjunction)this.lhs).subsumption(this, this.rhs, 1, -1);
-                ((Disjunction)this.lhs).subsumption(this, this.rhs, 1, 1);
+        if (this.lhs instanceof Disjunction) {
+            if (this.rhs instanceof Always || this.rhs instanceof Eventually || this.rhs instanceof Until) {
+                ((Disjunction) this.lhs).subsumption(this, this.rhs, 1, -1);
+                ((Disjunction) this.lhs).subsumption(this, this.rhs, 1, 1);
             }
         }
 
-        if(this.rhs instanceof Disjunction) {
-            if(this.lhs instanceof Always || this.lhs instanceof Eventually || this.lhs instanceof Until) {
-                ((Disjunction)this.rhs).subsumption(this, this.lhs, -1, -1);
-                ((Disjunction)this.rhs).subsumption(this, this.lhs, -1, 1);
+        if (this.rhs instanceof Disjunction) {
+            if (this.lhs instanceof Always || this.lhs instanceof Eventually || this.lhs instanceof Until) {
+                ((Disjunction) this.rhs).subsumption(this, this.lhs, -1, -1);
+                ((Disjunction) this.rhs).subsumption(this, this.lhs, -1, 1);
             }
         }
 
@@ -138,19 +125,15 @@ public class Disjunction extends Formula {
         this.lhs = this.lhs.simplify();
         this.rhs = this.rhs.simplify();
 
-        if(this.lhs.equals(this.rhs)) {
+        if (this.lhs.equals(this.rhs)) {
             return lhs;
-        }
-        else if(this.lhs instanceof Top) {
+        } else if (this.lhs instanceof Top) {
             return Top.getInstance();
-        }
-        else if(this.rhs instanceof Top) {
+        } else if (this.rhs instanceof Top) {
             return Top.getInstance();
-        }
-        else if(this.lhs instanceof Bottom) {
+        } else if (this.lhs instanceof Bottom) {
             return this.rhs;
-        }
-        else if(this.rhs instanceof Bottom) {
+        } else if (this.rhs instanceof Bottom) {
             return this.lhs;
         }
 

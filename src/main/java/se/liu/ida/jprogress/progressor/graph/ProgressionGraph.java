@@ -72,7 +72,7 @@ public class ProgressionGraph implements Progressor {
         for (Interpretation i : hSet) {
             Formula result = src.formula.progressOnce(i);
 
-            synchronized(nodeListLock) {
+            synchronized (nodeListLock) {
                 Node dest = null;
                 for (Node n : nodeList) {
                     if (n.formula.equals(result)) {
@@ -99,15 +99,15 @@ public class ProgressionGraph implements Progressor {
 
     public void shrink(Set<Node> destIds) {
         Set<Node> resetSet = new HashSet<>();
-        for(Node srcId : this.nodeList) {
-            for(Transition trans : srcId.transitions) {
-                if(destIds.contains(trans.destNode)) {
+        for (Node srcId : this.nodeList) {
+            for (Transition trans : srcId.transitions) {
+                if (destIds.contains(trans.destNode)) {
                     resetSet.add(srcId);
                 }
             }
         }
 
-        for(Node id : resetSet) {
+        for (Node id : resetSet) {
             id.expanded = false;
             id.transitions = new HashSet<>();
         }
@@ -141,27 +141,26 @@ public class ProgressionGraph implements Progressor {
         for (Node id : jobList) {
             if (id.mass > 0.0) {
                 callList.add(Executors.callable(() -> {
-		    if(!id.expanded) {
-			expand(id, Interpretation.buildFullyUnknown(interpretation.getAtoms()).getReductions());
-		    }
+                    if (!id.expanded) {
+                        expand(id, Interpretation.buildFullyUnknown(interpretation.getAtoms()).getReductions());
+                    }
 
-		    List<Node> destinations = new LinkedList<>();
-		    for (Transition t : id.transitions) {
-			if (redSet.contains(t.interpretation)) {
-			    destinations.add(t.destNode);
-			}
-		    }
+                    List<Node> destinations = new LinkedList<>();
+                    for (Transition t : id.transitions) {
+                        if (redSet.contains(t.interpretation)) {
+                            destinations.add(t.destNode);
+                        }
+                    }
 
-		    double massChunk = id.mass / (double) destinations.size();
-		    for (Node dest : destinations) {
-			synchronized(massMapLock) {
-			    nextMassMap.put(dest, nextMassMap.getOrDefault(dest, 0.0) + massChunk);
-			}
-			dest.age = 0;
-		    }
-		}));
-            }
-            else {
+                    double massChunk = id.mass / (double) destinations.size();
+                    for (Node dest : destinations) {
+                        synchronized (massMapLock) {
+                            nextMassMap.put(dest, nextMassMap.getOrDefault(dest, 0.0) + massChunk);
+                        }
+                        dest.age = 0;
+                    }
+                }));
+            } else {
                 // List is sorted by mass, so we can break
                 break;
             }
@@ -170,9 +169,9 @@ public class ProgressionGraph implements Progressor {
         try {
             executorService.invokeAll(callList);
             executorService.shutdown();
-           while (!executorService.awaitTermination(1, TimeUnit.SECONDS)) {
-               System.out.println("Awaiting termination");
-           }
+            while (!executorService.awaitTermination(1, TimeUnit.SECONDS)) {
+                System.out.println("Awaiting termination");
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -208,12 +207,12 @@ public class ProgressionGraph implements Progressor {
         // Check whether we need to destroy some of these old nodes
         long tRemove = System.currentTimeMillis();
         Set<Node> removalSet = new HashSet<>();
-        for(Node id : nextMassMap.keySet()) {
+        for (Node id : nextMassMap.keySet()) {
             // Update nodes
             id.mass = nextMassMap.get(id);
             id.age++;
 
-            if(id.age > maxTTL) {
+            if (id.age > maxTTL) {
                 removalSet.add(id);
             }
         }
@@ -225,8 +224,8 @@ public class ProgressionGraph implements Progressor {
 
         // Leak mass where needed
         long tLeak = System.currentTimeMillis();
-        while(this.nodeList.size() - maxNodes > 0) {
-            this.nodeList.remove(this.nodeList.size()-1);
+        while (this.nodeList.size() - maxNodes > 0) {
+            this.nodeList.remove(this.nodeList.size() - 1);
         }
 
         long tEnd = System.currentTimeMillis();
@@ -264,7 +263,7 @@ public class ProgressionGraph implements Progressor {
     @Override
     public void set(Formula input) {
         reset();
-        switch(this.strategy) {
+        switch (this.strategy) {
             case OFFLINE:
                 init(input);
                 precompute(input);
@@ -287,7 +286,7 @@ public class ProgressionGraph implements Progressor {
     }
 
     public void setTTL(int ttl) {
-        if(ttl > 0) {
+        if (ttl > 0) {
             this.maxTTL = ttl;
         }
     }
@@ -305,7 +304,7 @@ public class ProgressionGraph implements Progressor {
     @Override
     public ProgressorProperties getProperties() {
         int edgeCount = 0;
-        for(Node id : this.nodeList) {
+        for (Node id : this.nodeList) {
             edgeCount += id.transitions.size();
         }
 

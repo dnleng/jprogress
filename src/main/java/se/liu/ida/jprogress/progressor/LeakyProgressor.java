@@ -8,8 +8,8 @@ import se.liu.ida.jprogress.progressor.graph.ProgressionGraph;
  */
 public class LeakyProgressor extends ProgressionGraph {
     public LeakyProgressor(Formula formula, int maxTTL, int maxNodes) {
-	super(ProgressionStrategy.LEAKY, formula);
-	this.setTTL(maxTTL);
-	this.setMaxNodes(maxNodes);
+        super(ProgressionStrategy.LEAKY, formula);
+        this.setTTL(maxTTL);
+        this.setMaxNodes(maxNodes);
     }
 }

@@ -15,15 +15,18 @@ public class UnknownGenerator implements StreamGenerator {
         this.props = props;
     }
 
-    @Override public Interpretation next() {
-	return Interpretation.buildFullyUnknown(this.props);
+    @Override
+    public Interpretation next() {
+        return Interpretation.buildFullyUnknown(this.props);
     }
 
-    @Override public boolean hasNext() {
-	return true;
+    @Override
+    public boolean hasNext() {
+        return true;
     }
 
-    @Override public void reset() {
+    @Override
+    public void reset() {
 
     }
 }

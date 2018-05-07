@@ -46,12 +46,13 @@ public class NaiveProgressor implements Progressor {
         this.frontier.add(input);
     }
 
-    @Override public ProgressionStatus getStatus() {
+    @Override
+    public ProgressionStatus getStatus() {
         List<Node> nodeList = new LinkedList<>();
 
         Histogram hist = get();
-        for(Formula key : hist.keySet()) {
-            nodeList.add(new Node(key, new HashSet<>(), hist.get(key)/hist.getCount(), false, 0));
+        for (Formula key : hist.keySet()) {
+            nodeList.add(new Node(key, new HashSet<>(), hist.get(key) / hist.getCount(), false, 0));
         }
 
         Collections.sort(nodeList);
@@ -59,7 +60,8 @@ public class NaiveProgressor implements Progressor {
         return new ProgressionStatus(nodeList, 0.0);
     }
 
-    @Override public ProgressorProperties getProperties() {
+    @Override
+    public ProgressorProperties getProperties() {
         return new ProgressorProperties(ProgressionStrategy.NAIVE, 0, this.frontier.size(), Formula.getCount(), 1, Integer.MAX_VALUE);
     }
 

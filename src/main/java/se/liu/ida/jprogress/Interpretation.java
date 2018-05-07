@@ -26,7 +26,7 @@ public class Interpretation {
     public static Interpretation buildRandom(List<String> props) {
         Random rand = new Random();
         Interpretation result = new Interpretation();
-        for(String prop : props) {
+        for (String prop : props) {
             switch (rand.nextInt(2)) {
                 case 0:
                     result.setTruthValue(prop, TruthValue.TRUE);

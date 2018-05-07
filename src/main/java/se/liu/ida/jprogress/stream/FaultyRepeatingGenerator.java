@@ -14,9 +14,9 @@ public class FaultyRepeatingGenerator extends RepeatingGenerator {
     protected Random rnd;
 
     public FaultyRepeatingGenerator(List<Interpretation> interpretations, int maxRepeats, double faultProbability, long seed) {
-	super(interpretations, maxRepeats);
-	this.faultProbability = faultProbability;
-	this.rnd = new Random(seed);
+        super(interpretations, maxRepeats);
+        this.faultProbability = faultProbability;
+        this.rnd = new Random(seed);
     }
 
     public FaultyRepeatingGenerator(List<Interpretation> interpretations, int maxRepeats, double faultProbability) {
@@ -25,14 +25,14 @@ public class FaultyRepeatingGenerator extends RepeatingGenerator {
         this.rnd = new Random(System.currentTimeMillis());
     }
 
-    @Override public Interpretation next() {
+    @Override
+    public Interpretation next() {
         Interpretation i = super.next();
 
-        if(rnd.nextDouble() > faultProbability) {
+        if (rnd.nextDouble() > faultProbability) {
             return i;
-	}
-	else {
+        } else {
             return Interpretation.buildFullyUnknown(i.getAtoms());
-	}
+        }
     }
 }

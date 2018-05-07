@@ -43,10 +43,10 @@ public class FormulaFactory {
     }
 
     public static Formula createAEP(int endTime) {
-        return new Always(new Eventually(0,endTime, new Atom("p")));
+        return new Always(new Eventually(0, endTime, new Atom("p")));
     }
 
     public static Formula createAPEAI(int endTime) {
-        return new Always(new Disjunction(new Atom("p"), new Eventually(0, endTime, new Always(0, endTime-1, new Atom("p")))));
+        return new Always(new Disjunction(new Atom("p"), new Eventually(0, endTime, new Always(0, endTime - 1, new Atom("p")))));
     }
 }

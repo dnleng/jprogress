@@ -64,7 +64,7 @@ public class Until extends Formula {
         this.lhs = this.lhs.simplify();
         this.rhs = this.rhs.simplify();
 
-        if(this.startTime == 0 && this.endTime == 0) {
+        if (this.startTime == 0 && this.endTime == 0) {
             return this.rhs;
         }
 

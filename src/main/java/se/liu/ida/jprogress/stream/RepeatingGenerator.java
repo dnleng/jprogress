@@ -14,36 +14,39 @@ public class RepeatingGenerator implements StreamGenerator {
     protected int maxRepeats;
 
     public RepeatingGenerator(List<Interpretation> interpretations) {
-	this.interpretations = interpretations;
-	this.index = 0;
-	this.maxRepeats = Integer.MAX_VALUE;
+        this.interpretations = interpretations;
+        this.index = 0;
+        this.maxRepeats = Integer.MAX_VALUE;
     }
 
     public RepeatingGenerator(List<Interpretation> interpretations, int maxRepeats) {
-    	this.interpretations = interpretations;
-    	this.index = 0;
-    	this.maxRepeats = maxRepeats;
+        this.interpretations = interpretations;
+        this.index = 0;
+        this.maxRepeats = maxRepeats;
     }
 
-    @Override public Interpretation next() {
+    @Override
+    public Interpretation next() {
         Interpretation result = interpretations.get(index);
         index++;
-        if(index == interpretations.size()) {
+        if (index == interpretations.size()) {
             index = index % interpretations.size();
             maxRepeats--;
-            if(maxRepeats < 0) {
+            if (maxRepeats < 0) {
                 reset();
-	    }
-	}
-	return result;
+            }
+        }
+        return result;
     }
 
-    @Override public boolean hasNext() {
-	return !interpretations.isEmpty();
+    @Override
+    public boolean hasNext() {
+        return !interpretations.isEmpty();
     }
 
-    @Override public void reset() {
-	this.interpretations.clear();
-	this.index = 0;
+    @Override
+    public void reset() {
+        this.interpretations.clear();
+        this.index = 0;
     }
 }

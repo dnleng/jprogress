@@ -7,6 +7,8 @@ import se.liu.ida.jprogress.Interpretation;
  */
 public interface StreamGenerator {
     Interpretation next();
+
     boolean hasNext();
+
     void reset();
 }

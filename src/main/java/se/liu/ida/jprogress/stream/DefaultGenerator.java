@@ -15,19 +15,22 @@ public class DefaultGenerator implements StreamGenerator {
         init(interpretations);
     }
 
-    @Override public Interpretation next() {
-	return interpretations.remove(0);
+    @Override
+    public Interpretation next() {
+        return interpretations.remove(0);
     }
 
-    @Override public boolean hasNext() {
-	return !interpretations.isEmpty();
+    @Override
+    public boolean hasNext() {
+        return !interpretations.isEmpty();
     }
 
-    @Override public void reset() {
-	interpretations.clear();
+    @Override
+    public void reset() {
+        interpretations.clear();
     }
 
     public void init(List<Interpretation> interpretations) {
-	this.interpretations = interpretations;
+        this.interpretations = interpretations;
     }
 }

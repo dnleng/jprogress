@@ -16,39 +16,39 @@ public class ProgressorFactory {
     }
 
     public ProgressorFactory(int maxTTL, int maxNodes) {
-	this.maxTTL = maxTTL;
-	this.maxNodes = maxNodes;
+        this.maxTTL = maxTTL;
+        this.maxNodes = maxNodes;
     }
 
     public Progressor create(Formula formula, ProgressionStrategy strategy) {
-        switch(strategy) {
-	    case OFFLINE:
-	        return new OfflineProgressor(formula);
-	    case ONLINE:
-		return new OnlineProgressor(formula, this.maxTTL);
-	    case LEAKY:
-		return new LeakyProgressor(formula, this.maxTTL, this.maxNodes);
-	    case NAIVE:
-		return new NaiveProgressor(formula);
-	    case DEFAULT:
-	    default:
-	        return new DefaultProgressor(formula);
-	}
+        switch (strategy) {
+            case OFFLINE:
+                return new OfflineProgressor(formula);
+            case ONLINE:
+                return new OnlineProgressor(formula, this.maxTTL);
+            case LEAKY:
+                return new LeakyProgressor(formula, this.maxTTL, this.maxNodes);
+            case NAIVE:
+                return new NaiveProgressor(formula);
+            case DEFAULT:
+            default:
+                return new DefaultProgressor(formula);
+        }
     }
 
     public int getMaxTTL() {
-	return maxTTL;
+        return maxTTL;
     }
 
     public void setMaxTTL(final int maxTTL) {
-	this.maxTTL = maxTTL;
+        this.maxTTL = maxTTL;
     }
 
     public int getMaxNodes() {
-	return maxNodes;
+        return maxNodes;
     }
 
     public void setMaxNodes(final int maxNodes) {
-	this.maxNodes = maxNodes;
+        this.maxNodes = maxNodes;
     }
 }

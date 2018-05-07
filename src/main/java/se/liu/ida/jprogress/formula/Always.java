@@ -47,7 +47,7 @@ public class Always extends Formula {
             return TruthValue.FALSE;
         } else if (this.endTime == 0) {
             return this.formula.eval(interpretation);
-        } else if(this.formula instanceof Top) {
+        } else if (this.formula instanceof Top) {
             return TruthValue.TRUE;
         } else {
             return TruthValue.UNKNOWN;
@@ -64,7 +64,7 @@ public class Always extends Formula {
 //            return new Bottom();
 //        } else
 
-        if(this.startTime == 0 && this.endTime == 0) {
+        if (this.startTime == 0 && this.endTime == 0) {
             return this.formula;
         }
 

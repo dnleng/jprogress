@@ -23,13 +23,13 @@ public class Executor extends Thread {
     private boolean verbose;
 
     public Executor(Progressor progressor, StreamGenerator generator, double terminator, boolean verbose) {
-	this.progressor = progressor;
-	this.generator = generator;
-	this.terminator = terminator;
-	this.running = false;
-	this.statusList = new LinkedList<>();
-	this.propertiesList = new LinkedList<>();
-	this.verbose = verbose;
+        this.progressor = progressor;
+        this.generator = generator;
+        this.terminator = terminator;
+        this.running = false;
+        this.statusList = new LinkedList<>();
+        this.propertiesList = new LinkedList<>();
+        this.verbose = verbose;
     }
 
     public Executor(Progressor progressor, StreamGenerator generator, double terminator) {
@@ -38,45 +38,45 @@ public class Executor extends Thread {
         this.terminator = terminator;
         this.running = false;
         this.statusList = new LinkedList<>();
-	this.propertiesList = new LinkedList<>();
-	this.verbose = false;
+        this.propertiesList = new LinkedList<>();
+        this.verbose = false;
     }
 
     public Executor(Progressor progressor, StreamGenerator generator) {
-	this.progressor = progressor;
-	this.generator = generator;
-	this.terminator = 1.0;
-	this.running = false;
-	this.statusList = new LinkedList<>();
-	this.propertiesList = new LinkedList<>();
-	this.verbose = false;
+        this.progressor = progressor;
+        this.generator = generator;
+        this.terminator = 1.0;
+        this.running = false;
+        this.statusList = new LinkedList<>();
+        this.propertiesList = new LinkedList<>();
+        this.verbose = false;
     }
 
 
     @Override
     public void run() {
         this.running = true;
-        while(generator.hasNext()) {
-            if(verbose) {
+        while (generator.hasNext()) {
+            if (verbose) {
                 System.out.println("Iteration " + this.statusList.size());
-	    }
+            }
 
             progressor.progress(generator.next());
 
             ProgressionStatus status = progressor.getStatus();
-	    addStatus(status);
-	    addProperties(progressor.getProperties());
+            addStatus(status);
+            addProperties(progressor.getProperties());
 
-	    if(verbose) {
-	        System.out.println(status);
-	        System.out.println(progressor.getProperties());
-	    }
+            if (verbose) {
+                System.out.println(status);
+                System.out.println(progressor.getProperties());
+            }
 
-	    if(status.getTrueVerdict() >= terminator || status.getFalseVerdict() >= terminator || status.getUnknownVerdict() >= terminator) {
-	        break;
-	    }
-	}
-	this.running = false;
+            if (status.getTrueVerdict() >= terminator || status.getFalseVerdict() >= terminator || status.getUnknownVerdict() >= terminator) {
+                break;
+            }
+        }
+        this.running = false;
     }
 
     public synchronized boolean isRunning() {
@@ -98,12 +98,12 @@ public class Executor extends Thread {
     }
 
     public synchronized List<ProgressorProperties> getProperties() {
-	List<ProgressorProperties> result = new LinkedList<>();
-	result.addAll(this.propertiesList);
-	return result;
+        List<ProgressorProperties> result = new LinkedList<>();
+        result.addAll(this.propertiesList);
+        return result;
     }
 
     private synchronized void addProperties(ProgressorProperties properties) {
-	this.propertiesList.add(properties);
+        this.propertiesList.add(properties);
     }
 }

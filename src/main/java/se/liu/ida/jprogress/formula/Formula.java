@@ -41,7 +41,6 @@ public abstract class Formula {
     public abstract Formula simplify();
 
 
-
     public Formula subsumption() {
         // Handle temporal subsumptions
         return this;

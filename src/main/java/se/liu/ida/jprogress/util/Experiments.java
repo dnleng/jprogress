@@ -21,7 +21,8 @@ import java.util.Random;
 public class Experiments {
     private static final int ITERATIONS = 1500;
 
-    private Experiments() {}
+    private Experiments() {
+    }
 
     public static void runExp1() {
         Interpretation i1 = new Interpretation();
@@ -60,7 +61,8 @@ public class Experiments {
                     break;
             }
 
-            f2 = f2.progress(i2).simplify().subsumption();;
+            f2 = f2.progress(i2).simplify().subsumption();
+            ;
             System.out.println("Progressed (" + i2 + "): " + f2);
         }
 
@@ -106,7 +108,7 @@ public class Experiments {
         long t1Start = System.currentTimeMillis();
         ProgressionGraph graph5 = new ProgressionGraph(ProgressionStrategy.OFFLINE, f5);
         long t1End = System.currentTimeMillis();
-        System.out.println("Setup time: " + (t1End-t1Start) + "ms");
+        System.out.println("Setup time: " + (t1End - t1Start) + "ms");
         for (int i = 0; i < ITERATIONS; i++) {
             graph5.progress(i5);
         }
@@ -114,7 +116,7 @@ public class Experiments {
 
         System.out.println(graph5.getMassStatus(0.0001));
         System.out.println(graph5.getProperties());
-        System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
+        System.out.println("Total runtime: " + (tEnd - tStart) + "ms\n");
     }
 
     public static void runExp6() {
@@ -129,7 +131,7 @@ public class Experiments {
         graph6.setTTL(1);
 //        graph6.setMaxNodes(25);
         long t1End = System.currentTimeMillis();
-        System.out.println("Setup time: " + (t1End-t1Start) + "ms");
+        System.out.println("Setup time: " + (t1End - t1Start) + "ms");
         for (int i = 0; i < ITERATIONS; i++) {
             graph6.progress(i6);
         }
@@ -137,7 +139,7 @@ public class Experiments {
 
         System.out.println(graph6.getMassStatus(0.0001));
         System.out.println(graph6.getProperties());
-        System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
+        System.out.println("Total runtime: " + (tEnd - tStart) + "ms\n");
     }
 
     public static void runExp7() {
@@ -146,14 +148,14 @@ public class Experiments {
         long tStart = System.currentTimeMillis();
         Formula f6 = FormulaFactory.createFormula(FormulaTemplate.BIG_APEQ);
         Interpretation i6 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
-        System.out.println("Progressing "+f6);
+        System.out.println("Progressing " + f6);
 
         long t1Start = System.currentTimeMillis();
         ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
         graph6.setTTL(5);
         graph6.setMaxNodes(100);
         long t1End = System.currentTimeMillis();
-        System.out.println("Setup time: " + (t1End-t1Start) + "ms");
+        System.out.println("Setup time: " + (t1End - t1Start) + "ms");
         for (int i = 0; i < ITERATIONS; i++) {
             System.out.println("Progression iteration: " + (i + 1));
             graph6.progress(i6);
@@ -162,7 +164,7 @@ public class Experiments {
 
         System.out.println(graph6.getMassStatus(0.0001));
         System.out.println(graph6.getProperties());
-        System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
+        System.out.println("Total runtime: " + (tEnd - tStart) + "ms\n");
     }
 
     public static void runExp8() {
@@ -170,14 +172,14 @@ public class Experiments {
         System.out.println("============");
         long tStart = System.currentTimeMillis();
         Formula f6 = FormulaFactory.createFormula(FormulaTemplate.BIG_APEQ);
-        System.out.println("Progressing "+f6);
+        System.out.println("Progressing " + f6);
 
         long t1Start = System.currentTimeMillis();
         ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
         graph6.setTTL(5);
         graph6.setMaxNodes(100);
         long t1End = System.currentTimeMillis();
-        System.out.println("Setup time: " + (t1End-t1Start) + "ms");
+        System.out.println("Setup time: " + (t1End - t1Start) + "ms");
         Executor executor = new Executor(graph6, new UnknownGenerator(Arrays.asList("p", "q")), 0.99);
         executor.start();
 
@@ -191,7 +193,7 @@ public class Experiments {
         System.out.println(graph6.getMassStatus(0.0001));
         System.out.println(graph6.getProperties());
         System.out.println("Total iterations: " + executor.getIteration());
-        System.out.println("Total runtime: " + (tEnd-tStart) + "ms\n");
+        System.out.println("Total runtime: " + (tEnd - tStart) + "ms\n");
     }
 
     public static void runFaultyAEP(int maxRepeats, double faultRatio, boolean verbose) {
@@ -201,7 +203,7 @@ public class Experiments {
         StreamGenerator generator = StreamPatterns.createAlteratingFalseTrue("p", 10, 1, maxRepeats, faultRatio);
         long t1End = System.currentTimeMillis();
         System.out.println("Formula: " + FormulaFactory.createAEP(10).toString());
-        System.out.println("Setup time: " + (t1End-t1Start) + "ms\n");
+        System.out.println("Setup time: " + (t1End - t1Start) + "ms\n");
         Executor executor = new Executor(progressor, generator, 0.99, verbose);
         executor.start();
 
@@ -216,7 +218,7 @@ public class Experiments {
         System.out.println(progressor.getStatus());
         System.out.println(progressor.getProperties());
         System.out.println("Total iterations: " + executor.getIteration());
-        System.out.println("Total runtime: " + (tEnd-t1Start) + "ms\n");
+        System.out.println("Total runtime: " + (tEnd - t1Start) + "ms\n");
     }
 
     public static void runFaultyBernoulli(int maxRepeats, double faultRatio, boolean verbose) {
@@ -226,7 +228,7 @@ public class Experiments {
         StreamGenerator generator = StreamPatterns.createConstant("p", false, maxRepeats, faultRatio);
         long t1End = System.currentTimeMillis();
         System.out.println("Formula: " + FormulaFactory.createAEP(10).toString());
-        System.out.println("Setup time: " + (t1End-t1Start) + "ms\n");
+        System.out.println("Setup time: " + (t1End - t1Start) + "ms\n");
         Executor executor = new Executor(progressor, generator, 0.99, verbose);
         executor.start();
 
@@ -241,6 +243,6 @@ public class Experiments {
         System.out.println(progressor.getStatus());
         System.out.println(progressor.getProperties());
         System.out.println("Total iterations: " + executor.getIteration());
-        System.out.println("Total runtime: " + (tEnd-t1Start) + "ms\n");
+        System.out.println("Total runtime: " + (tEnd - t1Start) + "ms\n");
     }
 }
