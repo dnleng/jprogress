@@ -25,6 +25,8 @@ public class ProgressionGraph implements Progressor {
     private List<Node> nodeList;
     private final Object nodeListLock = new Object();
     private ExecutorService executorService;
+    private long[] prevPerformance;
+    private double prevQuality;
 
     public ProgressionGraph(ProgressionStrategy strategy) {
         reset(strategy);
@@ -117,12 +119,14 @@ public class ProgressionGraph implements Progressor {
 
     @Override
     public void progress(Interpretation interpretation) {
-        long tStart = System.currentTimeMillis();
+        prevPerformance = new long[6];
+        prevPerformance[0] = System.nanoTime();
 
         List<Integer> redSet = new LinkedList<>();
         for (Interpretation i : interpretation.getReductions()) {
             redSet.add(i.compress());
         }
+        prevQuality = 1.0 - ((double)redSet.size() / Math.pow(2, interpretation.getAtoms().size()));
 
         final Object massMapLock = new Object();
         Map<Node, Double> nextMassMap = new HashMap<>();
@@ -135,7 +139,7 @@ public class ProgressionGraph implements Progressor {
         jobList.addAll(this.nodeList);
 
         // Handle expansion (async)
-        long tExpand = System.currentTimeMillis();
+        prevPerformance[1] = System.nanoTime();
         executorService = Executors.newFixedThreadPool(Main.MAX_THREADS);
         List<Callable<Object>> callList = new LinkedList<>();
         for (Node id : jobList) {
@@ -205,7 +209,7 @@ public class ProgressionGraph implements Progressor {
 //        }
 
         // Check whether we need to destroy some of these old nodes
-        long tRemove = System.currentTimeMillis();
+        prevPerformance[2] = System.nanoTime();
         Set<Node> removalSet = new HashSet<>();
         for (Node id : nextMassMap.keySet()) {
             // Update nodes
@@ -219,45 +223,16 @@ public class ProgressionGraph implements Progressor {
         shrink(removalSet);
 
         // Sort by mass
-        long tSort = System.currentTimeMillis();
+        prevPerformance[3] = System.nanoTime();
         Collections.sort(this.nodeList);
 
         // Leak mass where needed
-        long tLeak = System.currentTimeMillis();
+        prevPerformance[4] = System.nanoTime();
         while (this.nodeList.size() - maxNodes > 0) {
             this.nodeList.remove(this.nodeList.size() - 1);
         }
 
-        long tEnd = System.currentTimeMillis();
-
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("Time breakdown:\n");
-//
-//        sb.append("Prepare\t:\t");
-//        sb.append(tExpand - tStart);
-//        sb.append("ms\n");
-//
-//        sb.append("Expand\t:\t");
-//        sb.append(tRemove - tExpand);
-//        sb.append("ms\n");
-//
-//        sb.append("Remove\t:\t");
-//        sb.append(tSort - tRemove);
-//        sb.append("ms\n");
-//
-//        sb.append("Sort\t:\t");
-//        sb.append(tLeak - tSort);
-//        sb.append("ms\n");
-//
-//        sb.append("Leak\t:\t");
-//        sb.append(tEnd - tLeak);
-//        sb.append("ms\n");
-//
-//        sb.append("Total\t:\t");
-//        sb.append(tEnd - tStart);
-//        sb.append("ms\n");
-//
-//        System.out.println(sb.toString());
+        prevPerformance[5] = System.nanoTime();
     }
 
     @Override
@@ -297,18 +272,20 @@ public class ProgressionGraph implements Progressor {
 
 
     public ProgressionStatus getMassStatus(double threshold) {
-        ProgressionStatus status = new ProgressionStatus(this.nodeList, threshold);
+        ProgressionStatus status = new ProgressionStatus(this.nodeList, threshold, this.prevPerformance, this.prevQuality);
         return status;
     }
 
     @Override
     public ProgressorProperties getProperties() {
         int edgeCount = 0;
+        int componentCount = 0;
         for (Node id : this.nodeList) {
             edgeCount += id.transitions.size();
+            componentCount += id.formula.getSize();
         }
 
-        return new ProgressorProperties(this.strategy, edgeCount, this.nodeList.size(), Formula.getCount(), this.maxTTL, this.maxNodes);
+        return new ProgressorProperties(this.strategy, edgeCount, this.nodeList.size(), componentCount, this.maxTTL, this.maxNodes);
     }
 
     public ProgressionStatus getMassStatus() {

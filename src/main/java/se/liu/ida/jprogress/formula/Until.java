@@ -71,6 +71,11 @@ public class Until extends Formula {
         return this;
     }
 
+    @Override
+    public int getSize() {
+        return 1 + lhs.getSize() + rhs.getSize();
+    }
+
     public Set<String> getAtoms() {
         Set<String> result = new HashSet<>();
         result.addAll(lhs.getAtoms());

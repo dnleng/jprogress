@@ -72,6 +72,11 @@ public class Always extends Formula {
     }
 
     @Override
+    public int getSize() {
+        return 1 + formula.getSize();
+    }
+
+    @Override
     public Set<String> getAtoms() {
         return this.formula.getAtoms();
     }

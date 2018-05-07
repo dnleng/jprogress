@@ -14,6 +14,8 @@ import java.util.HashSet;
 public class DefaultProgressor implements Progressor {
 
     private Formula input;
+    private long[] prevPerformance;
+    private double prevQuality;
 
     public DefaultProgressor() {
     }
@@ -24,9 +26,16 @@ public class DefaultProgressor implements Progressor {
 
     @Override
     public void progress(final Interpretation interpretation) {
+        this.prevPerformance = new long[6];
+        this.prevPerformance[0] = System.nanoTime();
+        this.prevQuality = 1.0 - ((double)interpretation.getReductions().size() / Math.pow(2, interpretation.getAtoms().size()));
+
         if (this.input != null) {
+            this.prevPerformance[1] = System.nanoTime();
             this.input = this.input.progress(interpretation);
+            this.prevPerformance[2] = System.nanoTime();
         }
+        this.prevPerformance[5] = System.nanoTime();
     }
 
     @Override
@@ -36,12 +45,12 @@ public class DefaultProgressor implements Progressor {
 
     @Override
     public ProgressionStatus getStatus() {
-        return new ProgressionStatus(Collections.singletonList(new Node(this.input, new HashSet<>(), 1.0, false, 0)), 0.0);
+        return new ProgressionStatus(Collections.singletonList(new Node(this.input, new HashSet<>(), 1.0, false, 0)), 0.0, this.prevPerformance, this.prevQuality);
     }
 
     @Override
     public ProgressorProperties getProperties() {
-        return new ProgressorProperties(ProgressionStrategy.DEFAULT, 0, 1, Formula.getCount(), 1, 1);
+        return new ProgressorProperties(ProgressionStrategy.DEFAULT, 0, 1, input.getSize(), 1, 1);
     }
 
     public Formula get() {

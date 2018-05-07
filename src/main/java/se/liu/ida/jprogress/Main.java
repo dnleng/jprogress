@@ -26,7 +26,7 @@ public class Main {
 //        Experiments.runExp7();
 //        Experiments.runExp8();
 //        Experiments.runFaultyAEP(Integer.MAX_VALUE, 0.5, true);
-        Experiments.runFaultyBernoulli(Integer.MAX_VALUE, 0.01, false);
+        Experiments.runFaultyBernoulli(Integer.MAX_VALUE, 0.1, false);
     }
 
 

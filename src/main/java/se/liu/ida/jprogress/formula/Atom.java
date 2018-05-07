@@ -42,6 +42,11 @@ public class Atom extends Formula {
         return this;
     }
 
+    @Override
+    public int getSize() {
+        return 1;
+    }
+
     public Set<String> getAtoms() {
         Set<String> result = new HashSet<>();
         result.add(this.label);

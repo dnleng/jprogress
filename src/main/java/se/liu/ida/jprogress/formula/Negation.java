@@ -50,6 +50,11 @@ public class Negation extends Formula {
         return this;
     }
 
+    @Override
+    public int getSize() {
+        return 1 + formula.getSize();
+    }
+
     public Set<String> getAtoms() {
         return formula.getAtoms();
     }

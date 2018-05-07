@@ -17,10 +17,18 @@ public class ProgressionStatus {
 
     private Map<Formula, Double> massMap;
     private double threshold;
+    private long[] performance;
+    private double quality;
 
-    public ProgressionStatus(List<Node> nodeList, double threshold) {
+    public ProgressionStatus(List<Node> nodeList, double threshold, long[] performance, double quality) {
         this.massMap = new LinkedHashMap<>();
         this.threshold = threshold;
+        if(performance.length == 6) {
+            this.performance = performance;
+        }
+        else {
+            this.performance = new long[6];
+        }
         for (Node key : nodeList) {
             massMap.put(key.formula, key.mass);
         }
@@ -46,9 +54,20 @@ public class ProgressionStatus {
         return 1.0 - totalMass;
     }
 
+    public long[] getPerformance() {
+        return this.performance;
+    }
+
+    public double getQuality() {
+        return this.quality;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("State quality: ");
+        sb.append(Math.floor(this.quality*1000.0)/1000.0);
+        sb.append("\n\n");
         sb.append("Probability mass distribution:\n");
         double totalMass = 0;
         for (Formula formula : massMap.keySet()) {
@@ -68,6 +87,28 @@ public class ProgressionStatus {
             sb.append(Math.floor(leakedMass * 100000.0) / 100000.0);
             sb.append("\t\t:\t?\n");
         }
+
+        sb.append("\n");
+        sb.append("Time breakdown (nanoseconds):\n");
+        sb.append("Prepare\t:\t");
+        sb.append(performance[1] - performance[0]);
+        sb.append("\n");
+        sb.append("Expand\t:\t");
+        sb.append(performance[2] - performance[1]);
+        sb.append("\n");
+        sb.append("Remove\t:\t");
+        sb.append(performance[3] - performance[2]);
+        sb.append("\n");
+        sb.append("Sort\t:\t");
+        sb.append(performance[4] - performance[3]);
+        sb.append("\n");
+        sb.append("Leak\t:\t");
+        sb.append(performance[5] - performance[4]);
+        sb.append("\n");
+        sb.append("Total\t:\t");
+        sb.append(performance[5] - performance[0]);
+        sb.append("\n");
+
 
         return sb.toString();
     }

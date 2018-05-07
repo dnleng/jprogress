@@ -17,6 +17,8 @@ import java.util.Set;
 public class NaiveProgressor implements Progressor {
 
     private List<Formula> frontier;
+    private long[] prevPerformance;
+    private double prevQuality;
 
     public NaiveProgressor() {
         this.frontier = new LinkedList<>();
@@ -29,15 +31,20 @@ public class NaiveProgressor implements Progressor {
 
     @Override
     public void progress(final Interpretation interpretation) {
+        this.prevPerformance = new long[6];
+        this.prevPerformance[0] = System.nanoTime();
         Set<Interpretation> reductions = interpretation.getReductions();
+        this.prevQuality = 1.0 - ((double)reductions.size() / Math.pow(2, interpretation.getAtoms().size()));
         List<Formula> result = new LinkedList<>();
+        this.prevPerformance[1] = System.nanoTime();
         for (Formula f : frontier) {
             for (Interpretation i : reductions) {
                 result.add(f.progress(i).simplify().subsumption());
             }
         }
-
         this.frontier = result;
+        this.prevPerformance[2] = System.nanoTime();
+        this.prevPerformance[5] = System.nanoTime();
     }
 
     @Override
@@ -57,12 +64,17 @@ public class NaiveProgressor implements Progressor {
 
         Collections.sort(nodeList);
 
-        return new ProgressionStatus(nodeList, 0.0);
+        return new ProgressionStatus(nodeList, 0.0, this.prevPerformance, this.prevQuality);
     }
 
     @Override
     public ProgressorProperties getProperties() {
-        return new ProgressorProperties(ProgressionStrategy.NAIVE, 0, this.frontier.size(), Formula.getCount(), 1, Integer.MAX_VALUE);
+        int componentCount = 0;
+        for(Formula f : frontier) {
+            componentCount += f.getSize();
+        }
+
+        return new ProgressorProperties(ProgressionStrategy.NAIVE, 0, this.frontier.size(), componentCount, 1, Integer.MAX_VALUE);
     }
 
     public Histogram get() {

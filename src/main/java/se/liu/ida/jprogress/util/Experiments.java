@@ -222,13 +222,13 @@ public class Experiments {
     }
 
     public static void runFaultyBernoulli(int maxRepeats, double faultRatio, boolean verbose) {
-        long t1Start = System.currentTimeMillis();
+        long t1Start = System.nanoTime();
         ProgressorFactory pf = new ProgressorFactory();
         Progressor progressor = pf.create(FormulaFactory.createBernoulli(), ProgressionStrategy.ONLINE);
         StreamGenerator generator = StreamPatterns.createConstant("p", false, maxRepeats, faultRatio);
-        long t1End = System.currentTimeMillis();
+        long t1End = System.nanoTime();
         System.out.println("Formula: " + FormulaFactory.createAEP(10).toString());
-        System.out.println("Setup time: " + (t1End - t1Start) + "ms\n");
+        System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
         Executor executor = new Executor(progressor, generator, 0.99, verbose);
         executor.start();
 
@@ -237,12 +237,12 @@ public class Experiments {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        long tEnd = System.currentTimeMillis();
+        long tEnd = System.nanoTime();
 
         System.out.println("RESULT");
         System.out.println(progressor.getStatus());
         System.out.println(progressor.getProperties());
         System.out.println("Total iterations: " + executor.getIteration());
-        System.out.println("Total runtime: " + (tEnd - t1Start) + "ms\n");
+        System.out.println("Total runtime: " + Math.round(((double)tEnd - (double)t1Start)/1000.0/1000.0) + "ms\n");
     }
 }

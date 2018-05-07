@@ -12,19 +12,10 @@ import java.util.UUID;
 public abstract class Formula {
 
     private UUID id;
-    private static int count = 0;
 
-    public Formula() {
-        count++;
-    }
+    public Formula() {}
 
-    public static int getCount() {
-        return count;
-    }
-
-    public static void resetCount() {
-        count = 0;
-    }
+    public abstract int getSize();
 
     public UUID getId() {
         return id;
@@ -39,7 +30,6 @@ public abstract class Formula {
     public abstract TruthValue eval(Interpretation interpretation);
 
     public abstract Formula simplify();
-
 
     public Formula subsumption() {
         // Handle temporal subsumptions
