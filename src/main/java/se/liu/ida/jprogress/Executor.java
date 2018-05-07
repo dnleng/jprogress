@@ -74,7 +74,7 @@ public class Executor extends Thread {
                 System.out.println(progressor.getProperties());
             }
 
-            if (status.getTrueVerdict() >= terminator || status.getFalseVerdict() >= terminator || status.getUnknownVerdict() >= terminator) {
+            if (status.getTrueVerdict() + status.getFalseVerdict() + status.getUnknownVerdict() >= terminator) {
                 break;
             }
         }

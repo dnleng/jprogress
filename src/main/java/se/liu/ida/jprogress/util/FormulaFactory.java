@@ -18,7 +18,7 @@ public class FormulaFactory {
     public static Formula createFormula(FormulaTemplate template) {
         switch (template) {
             case APEQ:
-                return createAPEQ(100, 40);
+                return createAPEQ(Integer.MAX_VALUE, 10);
             case BERNOULLI:
                 return createBernoulli();
             case BIG_APEQ:
