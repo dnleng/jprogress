@@ -10,10 +10,13 @@ import se.liu.ida.jprogress.progressor.ProgressionStrategy;
 import se.liu.ida.jprogress.progressor.Progressor;
 import se.liu.ida.jprogress.progressor.ProgressorFactory;
 import se.liu.ida.jprogress.progressor.graph.ProgressionGraph;
+import se.liu.ida.jprogress.stream.ComplexGenerator;
 import se.liu.ida.jprogress.stream.StreamGenerator;
 import se.liu.ida.jprogress.stream.UnknownGenerator;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -225,10 +228,125 @@ public class Experiments {
     public static void runFaultyBernoulli(int maxRepeats, double faultRatio, boolean verbose) {
         long t1Start = System.nanoTime();
         ProgressorFactory pf = new ProgressorFactory();
-        Progressor progressor = pf.create(FormulaFactory.createBernoulli(), ProgressionStrategy.ONLINE);
+        Progressor progressor = pf.create(FormulaFactory.createBernoulli(Integer.MAX_VALUE), ProgressionStrategy.ONLINE);
         StreamGenerator generator = StreamPatterns.createConstant("p", false, maxRepeats, faultRatio);
         long t1End = System.nanoTime();
         System.out.println("Formula: " + FormulaFactory.createAEP(10).toString());
+        System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
+        Executor executor = new Executor(progressor, generator, 0.9995, verbose);
+        executor.start();
+
+        try {
+            executor.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        long tEnd = System.nanoTime();
+
+        System.out.println("RESULT");
+        System.out.println(progressor.getStatus());
+        System.out.println(progressor.getProperties());
+        System.out.println("Total iterations: " + executor.getIteration());
+        System.out.println("Total runtime: " + Math.round(((double)tEnd - (double)t1Start)/1000.0/1000.0) + "ms\n");
+    }
+
+    public static void runFaultyBernoulli2(int maxRepeats, double faultRatio, int ttl, int maxNodes, boolean verbose) {
+        long t1Start = System.nanoTime();
+        ProgressorFactory pf = new ProgressorFactory();
+        pf.setMaxNodes(maxNodes);
+        pf.setMaxTTL(ttl);
+        Progressor progressor = pf.create(FormulaFactory.createBernoulli(10000), ProgressionStrategy.LEAKY);
+        StreamGenerator generator = StreamPatterns.createConstant("p", false, maxRepeats, faultRatio);
+        long t1End = System.nanoTime();
+        System.out.println("Formula: " + FormulaFactory.createAEP(10).toString());
+        System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
+        Executor executor = new Executor(progressor, generator, 0.9995, verbose);
+        executor.start();
+
+        try {
+            executor.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        long tEnd = System.nanoTime();
+
+        System.out.println("RESULT");
+        System.out.println(progressor.getStatus());
+        System.out.println(progressor.getProperties());
+        System.out.println("Total iterations: " + executor.getIteration());
+        System.out.println("Total runtime: " + Math.round(((double)tEnd - (double)t1Start)/1000.0/1000.0) + "ms\n");
+    }
+
+
+    public static void runFaultyLeashing(int maxRepeats, double faultRatio, int ttl, int maxNodes, boolean verbose) {
+        long t1Start = System.nanoTime();
+        ProgressorFactory pf = new ProgressorFactory();
+        pf.setMaxNodes(maxNodes);
+        pf.setMaxTTL(ttl);
+        Progressor progressor = pf.create(FormulaFactory.createTypeB(Integer.MAX_VALUE, 100), ProgressionStrategy.LEAKY);
+        //StreamGenerator generator = StreamPatterns.createAlteratingFalseTrue("p", 5000, 1, maxRepeats, faultRatio);
+        StreamGenerator generator = StreamPatterns.createConstant("p", true, maxRepeats, faultRatio);
+        long t1End = System.nanoTime();
+        System.out.println("Formula: " + FormulaFactory.createTypeB(Integer.MAX_VALUE, 100).toString());
+        System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
+        Executor executor = new Executor(progressor, generator, 0.9995, verbose);
+        executor.start();
+
+        try {
+            executor.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        long tEnd = System.nanoTime();
+
+        System.out.println("RESULT");
+        System.out.println(progressor.getStatus());
+        System.out.println(progressor.getProperties());
+        System.out.println("Total iterations: " + executor.getIteration());
+        System.out.println("Total runtime: " + Math.round(((double)tEnd - (double)t1Start)/1000.0/1000.0) + "ms\n");
+    }
+
+    public static void runFaultyTypeC(int maxRepeats, double faultRatio, int ttl, int maxNodes, boolean verbose) {
+        long t1Start = System.nanoTime();
+        ProgressorFactory pf = new ProgressorFactory();
+        pf.setMaxNodes(maxNodes);
+        pf.setMaxTTL(ttl);
+        Progressor progressor = pf.create(FormulaFactory.createTypeC(Integer.MAX_VALUE, 100, 10), ProgressionStrategy.LEAKY);
+        //StreamGenerator generator = StreamPatterns.createAlteratingFalseTrue("p", 5000, 1, maxRepeats, faultRatio);
+        StreamGenerator generator = StreamPatterns.createConstant("p", true, maxRepeats, faultRatio);
+        long t1End = System.nanoTime();
+        System.out.println("Formula: " + FormulaFactory.createTypeC(Integer.MAX_VALUE, 100, 10).toString());
+        System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
+        Executor executor = new Executor(progressor, generator, 0.9995, verbose);
+        executor.start();
+
+        try {
+            executor.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        long tEnd = System.nanoTime();
+
+        System.out.println("RESULT");
+        System.out.println(progressor.getStatus());
+        System.out.println(progressor.getProperties());
+        System.out.println("Total iterations: " + executor.getIteration());
+        System.out.println("Total runtime: " + Math.round(((double)tEnd - (double)t1Start)/1000.0/1000.0) + "ms\n");
+    }
+
+    public static void runFaultTypeD(int maxRepeats, double faultRatio, int ttl, int maxNodes, boolean verbose) {
+        long t1Start = System.nanoTime();
+        ProgressorFactory pf = new ProgressorFactory();
+        pf.setMaxNodes(maxNodes);
+        pf.setMaxTTL(ttl);
+        Progressor progressor = pf.create(FormulaFactory.createTypeD(10000, 4000), ProgressionStrategy.LEAKY);
+        List<StreamGenerator> generatorList = new LinkedList<>();
+        generatorList.add(StreamPatterns.createConstant("p", false, maxRepeats, faultRatio));
+        generatorList.add(StreamPatterns.createAlteratingTrueFalse("q", 399, 1, maxRepeats, 0.0));
+        generatorList.add(StreamPatterns.createConstant("r", true, maxRepeats, faultRatio));
+        StreamGenerator generator = new ComplexGenerator(generatorList);
+        long t1End = System.nanoTime();
+        System.out.println("Formula: " + FormulaFactory.createTypeD(10000, 4000).toString());
         System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
         Executor executor = new Executor(progressor, generator, 0.9995, verbose);
         executor.start();

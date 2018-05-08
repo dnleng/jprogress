@@ -15,6 +15,17 @@ public class Interpretation {
         this.truthFunc = new HashMap<>();
     }
 
+    public void merge(Interpretation interpretation) {
+        for(String atom : interpretation.getAtoms()) {
+            if(getTruthValue(atom) == TruthValue.UNKNOWN) {
+                setTruthValue(atom, interpretation.getTruthValue(atom));
+            }
+            else if(getTruthValue(atom) != interpretation.getTruthValue(atom)) {
+                throw new IllegalStateException("Attempting to merge inconsistent interpretations");
+            }
+        }
+    }
+
     public static Interpretation buildFullyUnknown(List<String> props) {
         Interpretation result = new Interpretation();
         for (String prop : props) {

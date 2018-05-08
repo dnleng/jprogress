@@ -224,8 +224,12 @@ public class ProgressionGraph implements Progressor {
 
         // Sort by mass
         prevPerformance[3] = System.nanoTime();
-        Collections.sort(this.nodeList);
-
+        try {
+            Collections.sort(this.nodeList);
+        }
+        catch(IllegalArgumentException e) {
+            e.printStackTrace();
+        }
         // Leak mass where needed
         prevPerformance[4] = System.nanoTime();
         while (this.nodeList.size() - maxNodes > 0) {

@@ -24,9 +24,11 @@ public class Main {
 //        Experiments.runExp5();
 //        Experiments.runExp6();
 //        Experiments.runExp7();
-        Experiments.runExp8();
+//        Experiments.runExp8();
 //        Experiments.runFaultyAEP(Integer.MAX_VALUE, 0.5, true);
-//        Experiments.runFaultyBernoulli(Integer.MAX_VALUE, 0.01, false);
+//        Experiments.runFaultyBernoulli2(Integer.MAX_VALUE, 0.0001, Integer.MAX_VALUE, 2, false);
+        Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, Integer.MAX_VALUE, Integer.MAX_VALUE, false);
+//        Experiments.runFaultTypeD(Integer.MAX_VALUE, 0.01, Integer.MAX_VALUE, 15, true);
     }
 
 
