@@ -12,10 +12,10 @@ perfMatrix1 = csvread('../latest.csv',1,0);
 idVec = perfMatrix1(:,1);
 qualityVec = perfMatrix1(:,2);
 verdictMatrix = perfMatrix1(:,3:6);
-bucketMatrix = perfMatrix1(:,7:18);
-durationMatrix = perfMatrix1(:,19:24);
+bucketMatrix = perfMatrix1(:,7:19);
+durationMatrix = perfMatrix1(:,20:25);
 %durationMatrix = ( perfMatrix1(:,19:24) + perfMatrix2(:,19:24) + perfMatrix3(:,19:24) + perfMatrix4(:,19:24) + perfMatrix5(:,19:24) ) ./ 5;
-graphMatrix = perfMatrix1(:,25:27);
+graphMatrix = perfMatrix1(:,26:28);
 
 
 %% Progression trace graph
@@ -24,7 +24,7 @@ verdictFalse = verdictMatrix(:,2);
 verdictUnknown = verdictMatrix(:,3);
 verdictNone =  verdictMatrix(:,4);
 
-subplot(3,1,1);
+subplot(4,1,1);
 %plot(idVec,verdictTrue,idVec,verdictFalse,'--',idVec,verdictUnknown,':',idVec,verdictNone,'-.',idVec,qualityVec,'black.');
 %plot(idVec,verdictTrue,idVec,verdictFalse,'--',idVec,verdictUnknown,':',idVec,qualityVec,'black.');
 plot(idVec,verdictTrue,idVec,verdictFalse,'--',idVec,verdictUnknown,':');
@@ -40,7 +40,7 @@ legend('boxoff');
 %% Time graph
 durationTotalMs = durationMatrix(:,6)/1000000;
 
-subplot(3,1,2);
+subplot(4,1,2);
 plot(idVec,durationTotalMs);
 grid on;
 axis([1 length(idVec)*1.1 0.0 max(durationTotalMs)*1.1])
@@ -54,16 +54,31 @@ componentVec = graphMatrix(:,1);
 vertexVec = graphMatrix(:,2);
 edgeVec = graphMatrix(:,3);
 
-subplot(3,1,3);
+subplot(4,1,3);
 plot(idVec,componentVec);
 %plot(idVec,componentVec,idVec,vertexVec,'--',idVec,edgeVec,':');
 grid on;
 axis([1 length(idVec)*1.1 0 max(graphMatrix(:))*1.1])
-xlabel('Iteration');
+%xlabel('Iteration');
 y = ylabel('Formula size');
 set(y, 'Units', 'Normalized', 'Position', [-0.09, 0.5, 0]);
 %legend('Components','Vertices','Edges','Location','northwest');
 %legend('boxoff');
+
+
+%% Population graph
+zeroPop = 1-bucketMatrix(:,1);
+
+subplot(4,1,4);
+%plot(idVec,verdictTrue,idVec,verdictFalse,'--',idVec,verdictUnknown,':',idVec,verdictNone,'-.',idVec,qualityVec,'black.');
+%plot(idVec,verdictTrue,idVec,verdictFalse,'--',idVec,verdictUnknown,':',idVec,qualityVec,'black.');
+plot(idVec,zeroPop);
+grid on;
+axis([1 length(idVec)*1.1 -0.1 1.1])
+xlabel('Iteration');
+y = ylabel('Density');
+set(y, 'Units', 'Normalized', 'Position', [-0.09, 0.5, 0]);
+
 
 
 

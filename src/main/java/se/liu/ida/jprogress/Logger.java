@@ -26,7 +26,7 @@ public class Logger {
             Files.deleteIfExists(this.destination);
             Files.createFile(this.destination);
             List<String> lines = new LinkedList<>();
-            lines.add("iteration,quality,true,false,unknown,none,bucket_0-1,bucket_1-5,bucket_5-10,bucket_10-20,bucket_20-30,bucket_30-50,bucket_50-70,bucket_70-80,bucket_80-90,bucket_90-95,bucket_95-99,bucket_99-100,d_prepare,d_expand,d_remove,d_sort,d_leak,d_total,n_components,n_vertices,n_edges");
+            lines.add("iteration,quality,true,false,unknown,none,bucket_0,bucket_0-1,bucket_1-5,bucket_5-10,bucket_10-20,bucket_20-30,bucket_30-50,bucket_50-70,bucket_70-80,bucket_80-90,bucket_90-95,bucket_95-99,bucket_99-100,d_prepare,d_expand,d_remove,d_sort,d_leak,d_total,n_components,n_vertices,n_edges");
             Files.write(this.destination, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,6 +46,8 @@ public class Logger {
         sb.append(status.getUnknownVerdict());
         sb.append(",");
         sb.append(status.getNoVerdict());
+        sb.append(",");
+        sb.append(status.getZeroBucketSize());
         sb.append(",");
         sb.append(status.getBucketSize(0.0, 0.01));
         sb.append(",");

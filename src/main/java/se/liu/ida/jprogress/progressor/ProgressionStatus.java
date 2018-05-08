@@ -59,6 +59,17 @@ public class ProgressionStatus {
         return 1.0 - (getTrueVerdict() + getFalseVerdict() + getUnknownVerdict());
     }
 
+    public double getZeroBucketSize() {
+        int count = 0;
+        for (Formula formula : massMap.keySet()) {
+            if (massMap.get(formula) == 0.0) {
+                count++;
+            }
+        }
+
+        return (double)count / (double)massMap.keySet().size();
+    }
+
     public double getBucketSize(double lower, double upper) {
         int count = 0;
         for (Formula formula : massMap.keySet()) {

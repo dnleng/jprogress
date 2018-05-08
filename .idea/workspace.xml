@@ -2,27 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="43841279-98ad-479b-a33d-8f954138b831" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/typeA-10000-5000-0_0-1-inf.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/typeA-10000-5000-0_0-inf-inf.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/typeA-10000-5000-1_0-inf-15.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/typeC-100-10-0_2-1-inf.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/generate.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/typeA-10000-5000-0_0-1-inf.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/typeA-10000-5000-0_0-inf-inf.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/typeA-10000-5000-1_0-inf-15.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/typeC-100-10-0_2-1-inf.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/stream/ComplexGenerator.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apeq.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bernoulli.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/big-apeq.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/generate.m" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Interpretation.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Interpretation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Node.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Node.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionGraph.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionGraph.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/util/Experiments.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/util/Experiments.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/util/FormulaFactory.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/util/FormulaFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/generate.m" afterPath="$PROJECT_DIR$/data/generate.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Logger.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Logger.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/ProgressionStatus.java" afterPath="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/ProgressionStatus.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -36,21 +19,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="437">
-              <caret line="29" column="76" lean-forward="false" selection-start-line="29" selection-start-column="76" selection-end-line="29" selection-end-column="76" />
+              <caret line="29" column="31" lean-forward="true" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Experiments.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Experiments.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/util/Experiments.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="310" column="55" lean-forward="false" selection-start-line="310" selection-start-column="55" selection-end-line="310" selection-end-column="55" />
+            <state relative-caret-position="288">
+              <caret line="309" column="24" lean-forward="false" selection-start-line="309" selection-start-column="24" selection-end-line="309" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -79,11 +62,33 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Logger.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Logger.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="530">
+              <caret line="32" column="9" lean-forward="true" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Progressor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/Progressor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="184">
               <caret line="9" column="9" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProgressionStatus.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/ProgressionStatus.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="61" column="37" lean-forward="true" selection-start-line="61" selection-start-column="18" selection-end-line="61" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -105,24 +110,6 @@
             <state relative-caret-position="690">
               <caret line="32" column="21" lean-forward="false" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ComplexGenerator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/stream/ComplexGenerator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="28" column="29" lean-forward="false" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#315#316#0" expanded="true" />
-                <element signature="e#367#368#0" expanded="true" />
-                <element signature="e#432#433#0" expanded="true" />
-                <element signature="e#476#477#0" expanded="true" />
-                <element signature="e#526#527#0" expanded="true" />
-                <element signature="e#572#573#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -201,22 +188,22 @@
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Negation.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/Until.java" />
         <option value="$PROJECT_DIR$/latest.csv" />
-        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/ProgressionStatus.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/NaiveProgressor.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/DefaultProgressor.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/ProgressorProperties.java" />
-        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Logger.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Executor.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/stream/TypeDRepeatingGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/formula/TruthValue.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/stream/ComplexGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Interpretation.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/util/StreamPatterns.java" />
-        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/util/Experiments.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/util/FormulaFactory.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/ProgressionGraph.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/graph/Node.java" />
+        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/ProgressionStatus.java" />
+        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Logger.java" />
         <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/util/Experiments.java" />
       </list>
     </option>
   </component>
@@ -1880,12 +1867,18 @@
       <option name="project" value="LOCAL" />
       <updated>1525685981856</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Running experiments for KR">
+      <created>1525792502018</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1525792502018</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="25" width="2566" height="1418" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1902,7 +1895,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2578125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2578125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1959,7 +1952,8 @@
     <MESSAGE value="Refactoring, stream generators" />
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Enhanced logging" />
-    <option name="LAST_COMMIT_MESSAGE" value="Enhanced logging" />
+    <MESSAGE value="Running experiments for KR" />
+    <option name="LAST_COMMIT_MESSAGE" value="Running experiments for KR" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2188,19 +2182,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/latest-ttl5-maxnodes100.csv" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/ProgressionStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="22" column="16" lean-forward="false" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
-          <folding>
-            <element signature="e#1569#1570#0" expanded="false" />
-            <element signature="e#1658#1659#0" expanded="false" />
-            <element signature="e#2222#2223#0" expanded="false" />
-            <element signature="e#2261#2262#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/NaiveProgressor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1265">
@@ -2270,16 +2251,6 @@
         <state relative-caret-position="554">
           <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Logger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="553">
-          <caret line="72" column="23" lean-forward="false" selection-start-line="72" selection-start-column="23" selection-end-line="72" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2414,18 +2385,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/util/Experiments.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/ProgressionStatus.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="310" column="55" lean-forward="false" selection-start-line="310" selection-start-column="55" selection-end-line="310" selection-end-column="55" />
+        <state relative-caret-position="216">
+          <caret line="61" column="37" lean-forward="true" selection-start-line="61" selection-start-column="18" selection-end-line="61" selection-end-column="37" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="530">
+          <caret line="32" column="9" lean-forward="true" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
-          <caret line="29" column="76" lean-forward="false" selection-start-line="29" selection-start-column="76" selection-end-line="29" selection-end-column="76" />
+          <caret line="29" column="31" lean-forward="true" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/util/Experiments.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="309" column="24" lean-forward="false" selection-start-line="309" selection-start-column="24" selection-end-line="309" selection-end-column="24" />
           <folding />
         </state>
       </provider>
