@@ -38,10 +38,12 @@ legend('boxoff');
 
 
 %% Time graph
+expandMs = durationMatrix(:,2)/1000000;
+removeMs = durationMatrix(:,3)/1000000;
 durationTotalMs = durationMatrix(:,6)/1000000;
 
 subplot(4,1,2);
-plot(idVec,durationTotalMs);
+plot(idVec,expandMs);
 grid on;
 axis([1 length(idVec)*1.1 0.0 max(durationTotalMs)*1.1])
 %xlabel('Iteration');
@@ -55,15 +57,15 @@ vertexVec = graphMatrix(:,2);
 edgeVec = graphMatrix(:,3);
 
 subplot(4,1,3);
-plot(idVec,componentVec);
-%plot(idVec,componentVec,idVec,vertexVec,'--',idVec,edgeVec,':');
+%plot(idVec,componentVec);
+plot(idVec,componentVec,idVec,vertexVec,'--',idVec,edgeVec,':');
 grid on;
 axis([1 length(idVec)*1.1 0 max(graphMatrix(:))*1.1])
 %xlabel('Iteration');
 y = ylabel('Formula size');
 set(y, 'Units', 'Normalized', 'Position', [-0.09, 0.5, 0]);
-%legend('Components','Vertices','Edges','Location','northwest');
-%legend('boxoff');
+legend('Components','Vertices','Edges','Location','northwest');
+legend('boxoff');
 
 
 %% Population graph
@@ -78,8 +80,6 @@ axis([1 length(idVec)*1.1 -0.1 1.1])
 xlabel('Iteration');
 y = ylabel('Density');
 set(y, 'Units', 'Normalized', 'Position', [-0.09, 0.5, 0]);
-
-
 
 
 %% Print figures

@@ -14,7 +14,8 @@ import java.util.Arrays;
 
 
 public class Main {
-    public static final int MAX_THREADS = 12;
+    public static final int MAX_THREADS = 10;
+    public static final long SEED = 1129384888971617300L;
 
     public static void main(String[] args) {
 //        Experiments.runExp1();
@@ -27,7 +28,7 @@ public class Main {
 //        Experiments.runExp8();
 //        Experiments.runFaultyAEP(Integer.MAX_VALUE, 0.5, true);
 //        Experiments.runFaultyBernoulli2(Integer.MAX_VALUE, 0.0001, Integer.MAX_VALUE, 2, false);
-        Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, Integer.MAX_VALUE, Integer.MAX_VALUE, false);
+        Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 1, 150, false);
 //        Experiments.runFaultTypeD(Integer.MAX_VALUE, 0.01, Integer.MAX_VALUE, 15, true);
     }
 

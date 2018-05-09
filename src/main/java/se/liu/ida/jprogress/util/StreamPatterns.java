@@ -49,12 +49,12 @@ public class StreamPatterns {
         return new FaultyRepeatingGenerator(pattern, maxRepeats, faultRatio);
     }
 
-    public static StreamGenerator createConstant(String prop, boolean defaultTruth, int maxRepeats, double faultRatio) {
+    public static StreamGenerator createConstant(String prop, boolean defaultTruth, int maxRepeats, double faultRatio, long seed) {
         Interpretation interpretation = new Interpretation();
         interpretation.setTruthValue(prop, defaultTruth ? TruthValue.TRUE : TruthValue.FALSE);
         List<Interpretation> list = new LinkedList<>();
         list.add(interpretation);
-        return new FaultyRepeatingGenerator(list, maxRepeats, faultRatio);
+        return new FaultyRepeatingGenerator(list, maxRepeats, faultRatio, seed);
     }
 
 }

@@ -49,6 +49,7 @@ public class ProgressionGraph implements Progressor {
     }
 
     private void precompute(Formula formula) {
+        long start = System.nanoTime();;
         List<Node> frontier = new LinkedList<>();
         frontier.addAll(this.nodeList);
 
@@ -66,6 +67,8 @@ public class ProgressionGraph implements Progressor {
             Node f = frontier.remove(0);
             frontier.addAll(expand(f, hSet));
         }
+        long end = System.nanoTime();
+        System.out.println("Precomputation time: " + (end-start));
     }
 
     public List<Node> expand(Node src, Set<Interpretation> hSet) {
@@ -180,34 +183,6 @@ public class ProgressionGraph implements Progressor {
             e.printStackTrace();
         }
 
-
-//        // Handle expansion (sync)
-//        for (Node id : jobList) {
-//            if (id.mass > 0.0) {
-//
-//                if(!id.expanded) {
-//                    expand(id, Interpretation.buildFullyUnknown(interpretation.getAtoms()).getReductions());
-//                }
-//
-//                List<Node> destinations = new LinkedList<>();
-//                for (Transition t : id.transitions) {
-//                    if (redSet.contains(t.interpretation)) {
-//                        destinations.add(t.destNode);
-//                    }
-//                }
-//
-//                double massChunk = id.mass / (double) destinations.size();
-//                for (Node dest : destinations) {
-//                    nextMassMap.put(dest, nextMassMap.getOrDefault(dest, 0.0) + massChunk);
-//                    dest.age = 0;
-//                }
-//            }
-//            else {
-//                // List is sorted by mass, so we can break
-//                break;
-//            }
-//        }
-
         // Check whether we need to destroy some of these old nodes
         prevPerformance[2] = System.nanoTime();
         Set<Node> removalSet = new HashSet<>();
@@ -224,17 +199,15 @@ public class ProgressionGraph implements Progressor {
 
         // Sort by mass
         prevPerformance[3] = System.nanoTime();
-        try {
-            Collections.sort(this.nodeList);
-        }
-        catch(IllegalArgumentException e) {
-            e.printStackTrace();
-        }
+        Collections.sort(this.nodeList);
+
         // Leak mass where needed
         prevPerformance[4] = System.nanoTime();
+        removalSet = new HashSet<>();
         while (this.nodeList.size() - maxNodes > 0) {
-            this.nodeList.remove(this.nodeList.size() - 1);
+            removalSet.add(this.nodeList.remove(this.nodeList.size() - 1));
         }
+        shrink(removalSet);
 
         prevPerformance[5] = System.nanoTime();
     }

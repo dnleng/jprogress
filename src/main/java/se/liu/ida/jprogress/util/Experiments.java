@@ -3,6 +3,7 @@ package se.liu.ida.jprogress.util;
 import se.liu.ida.jprogress.Executor;
 import se.liu.ida.jprogress.Interpretation;
 import se.liu.ida.jprogress.Logger;
+import se.liu.ida.jprogress.Main;
 import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.formula.TruthValue;
 import se.liu.ida.jprogress.progressor.NaiveProgressor;
@@ -229,7 +230,7 @@ public class Experiments {
         long t1Start = System.nanoTime();
         ProgressorFactory pf = new ProgressorFactory();
         Progressor progressor = pf.create(FormulaFactory.createBernoulli(Integer.MAX_VALUE), ProgressionStrategy.ONLINE);
-        StreamGenerator generator = StreamPatterns.createConstant("p", false, maxRepeats, faultRatio);
+        StreamGenerator generator = StreamPatterns.createConstant("p", false, maxRepeats, faultRatio, Main.SEED);
         long t1End = System.nanoTime();
         System.out.println("Formula: " + FormulaFactory.createAEP(10).toString());
         System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
@@ -256,7 +257,7 @@ public class Experiments {
         pf.setMaxNodes(maxNodes);
         pf.setMaxTTL(ttl);
         Progressor progressor = pf.create(FormulaFactory.createBernoulli(10000), ProgressionStrategy.LEAKY);
-        StreamGenerator generator = StreamPatterns.createConstant("p", false, maxRepeats, faultRatio);
+        StreamGenerator generator = StreamPatterns.createConstant("p", false, maxRepeats, faultRatio, Main.SEED);
         long t1End = System.nanoTime();
         System.out.println("Formula: " + FormulaFactory.createAEP(10).toString());
         System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
@@ -285,7 +286,7 @@ public class Experiments {
         pf.setMaxTTL(ttl);
         Progressor progressor = pf.create(FormulaFactory.createTypeB(Integer.MAX_VALUE, 100), ProgressionStrategy.LEAKY);
         //StreamGenerator generator = StreamPatterns.createAlteratingFalseTrue("p", 5000, 1, maxRepeats, faultRatio);
-        StreamGenerator generator = StreamPatterns.createConstant("p", true, maxRepeats, faultRatio);
+        StreamGenerator generator = StreamPatterns.createConstant("p", true, maxRepeats, faultRatio, Main.SEED);
         long t1End = System.nanoTime();
         System.out.println("Formula: " + FormulaFactory.createTypeB(Integer.MAX_VALUE, 100).toString());
         System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
@@ -312,12 +313,11 @@ public class Experiments {
         pf.setMaxNodes(maxNodes);
         pf.setMaxTTL(ttl);
         Progressor progressor = pf.create(FormulaFactory.createTypeC(Integer.MAX_VALUE, 100, 10), ProgressionStrategy.LEAKY);
-        //StreamGenerator generator = StreamPatterns.createAlteratingFalseTrue("p", 5000, 1, maxRepeats, faultRatio);
-        StreamGenerator generator = StreamPatterns.createConstant("p", true, maxRepeats, faultRatio);
+        StreamGenerator generator = StreamPatterns.createConstant("p", true, maxRepeats, faultRatio, Main.SEED);
         long t1End = System.nanoTime();
         System.out.println("Formula: " + FormulaFactory.createTypeC(Integer.MAX_VALUE, 100, 10).toString());
         System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
-        Executor executor = new Executor(progressor, generator, 0.9995, verbose);
+        Executor executor = new Executor(progressor, generator, 0.99, verbose);
         executor.start();
 
         try {
@@ -341,9 +341,9 @@ public class Experiments {
         pf.setMaxTTL(ttl);
         Progressor progressor = pf.create(FormulaFactory.createTypeD(10000, 4000), ProgressionStrategy.LEAKY);
         List<StreamGenerator> generatorList = new LinkedList<>();
-        generatorList.add(StreamPatterns.createConstant("p", false, maxRepeats, faultRatio));
+        generatorList.add(StreamPatterns.createConstant("p", false, maxRepeats, faultRatio, Main.SEED));
         generatorList.add(StreamPatterns.createAlteratingTrueFalse("q", 399, 1, maxRepeats, 0.0));
-        generatorList.add(StreamPatterns.createConstant("r", true, maxRepeats, faultRatio));
+        generatorList.add(StreamPatterns.createConstant("r", true, maxRepeats, faultRatio, Main.SEED));
         StreamGenerator generator = new ComplexGenerator(generatorList);
         long t1End = System.nanoTime();
         System.out.println("Formula: " + FormulaFactory.createTypeD(10000, 4000).toString());

@@ -18,18 +18,20 @@ public class Executor extends Thread {
     private StreamGenerator generator;
     private double terminator;
     private boolean running;
-    private List<ProgressionStatus> statusList;
-    private List<ProgressorProperties> propertiesList;
+//    private List<ProgressionStatus> statusList;
+//    private List<ProgressorProperties> propertiesList;
     private boolean verbose;
+    private int iteration;
 
     public Executor(Progressor progressor, StreamGenerator generator, double terminator, boolean verbose) {
         this.progressor = progressor;
         this.generator = generator;
         this.terminator = terminator;
         this.running = false;
-        this.statusList = new LinkedList<>();
-        this.propertiesList = new LinkedList<>();
+//        this.statusList = new LinkedList<>();
+//        this.propertiesList = new LinkedList<>();
         this.verbose = verbose;
+        this.iteration = 0;
     }
 
     public Executor(Progressor progressor, StreamGenerator generator, double terminator) {
@@ -37,9 +39,10 @@ public class Executor extends Thread {
         this.generator = generator;
         this.terminator = terminator;
         this.running = false;
-        this.statusList = new LinkedList<>();
-        this.propertiesList = new LinkedList<>();
+//        this.statusList = new LinkedList<>();
+//        this.propertiesList = new LinkedList<>();
         this.verbose = false;
+        this.iteration = 0;
     }
 
     public Executor(Progressor progressor, StreamGenerator generator) {
@@ -47,9 +50,10 @@ public class Executor extends Thread {
         this.generator = generator;
         this.terminator = 1.0;
         this.running = false;
-        this.statusList = new LinkedList<>();
-        this.propertiesList = new LinkedList<>();
+//        this.statusList = new LinkedList<>();
+//        this.propertiesList = new LinkedList<>();
         this.verbose = false;
+        this.iteration = 0;
     }
 
 
@@ -59,14 +63,14 @@ public class Executor extends Thread {
         Logger logger = new Logger("latest.csv");
         while (generator.hasNext()) {
             if (verbose) {
-                System.out.println("Iteration " + this.statusList.size());
+                System.out.println("Iteration " + this.iteration);
             }
 
             progressor.progress(generator.next());
 
             ProgressionStatus status = progressor.getStatus();
-            addStatus(status);
-            addProperties(progressor.getProperties());
+//            addStatus(status);
+//            addProperties(progressor.getProperties());
             logger.write(status, progressor.getProperties());
 
             if (verbose) {
@@ -77,6 +81,8 @@ public class Executor extends Thread {
             if (status.getTrueVerdict() + status.getFalseVerdict() + status.getUnknownVerdict() >= terminator) {
                 break;
             }
+
+            this.iteration++;
         }
         this.running = false;
     }
@@ -86,26 +92,26 @@ public class Executor extends Thread {
     }
 
     public int getIteration() {
-        return this.statusList.size();
+        return this.iteration;
     }
 
-    public synchronized List<ProgressionStatus> getStatus() {
-        List<ProgressionStatus> result = new LinkedList<>();
-        result.addAll(this.statusList);
-        return result;
-    }
-
-    private synchronized void addStatus(ProgressionStatus status) {
-        this.statusList.add(status);
-    }
-
-    public synchronized List<ProgressorProperties> getProperties() {
-        List<ProgressorProperties> result = new LinkedList<>();
-        result.addAll(this.propertiesList);
-        return result;
-    }
-
-    private synchronized void addProperties(ProgressorProperties properties) {
-        this.propertiesList.add(properties);
-    }
+//    public synchronized List<ProgressionStatus> getStatus() {
+//        List<ProgressionStatus> result = new LinkedList<>();
+//        result.addAll(this.statusList);
+//        return result;
+//    }
+//
+//    private synchronized void addStatus(ProgressionStatus status) {
+//        this.statusList.add(status);
+//    }
+//
+//    public synchronized List<ProgressorProperties> getProperties() {
+//        List<ProgressorProperties> result = new LinkedList<>();
+//        result.addAll(this.propertiesList);
+//        return result;
+//    }
+//
+//    private synchronized void addProperties(ProgressorProperties properties) {
+//        this.propertiesList.add(properties);
+//    }
 }
