@@ -1,16 +1,7 @@
 package se.liu.ida.jprogress;
 
 import se.liu.ida.jprogress.progressor.ProgressionStrategy;
-import se.liu.ida.jprogress.progressor.Progressor;
-import se.liu.ida.jprogress.progressor.ProgressorFactory;
-import se.liu.ida.jprogress.progressor.graph.ProgressionGraph;
-import se.liu.ida.jprogress.stream.StreamGenerator;
-import se.liu.ida.jprogress.stream.UnknownGenerator;
 import se.liu.ida.jprogress.util.Experiments;
-import se.liu.ida.jprogress.util.FormulaFactory;
-import se.liu.ida.jprogress.util.StreamPatterns;
-
-import java.util.Arrays;
 
 
 public class Main {
@@ -18,18 +9,28 @@ public class Main {
     public static final long SEED = 1129384888971617300L;
 
     public static void main(String[] args) {
-//        Experiments.runExp1();
-//        Experiments.runExp2();
-//        Experiments.runExp3();
-//        Experiments.runExp4();
-//        Experiments.runExp5();
-//        Experiments.runExp6();
-//        Experiments.runExp7();
-//        Experiments.runExp8();
-//        Experiments.runFaultyAEP(Integer.MAX_VALUE, 0.5, true);
-//        Experiments.runFaultyBernoulli2(Integer.MAX_VALUE, 0.0001, Integer.MAX_VALUE, 2, false);
-        Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 1, 150, false);
-//        Experiments.runFaultTypeD(Integer.MAX_VALUE, 0.01, Integer.MAX_VALUE, 15, true);
+        final int RERUNS = 10;
+
+        for(int i = 0; i < RERUNS; i++) {
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, Integer.MAX_VALUE, Integer.MAX_VALUE, ProgressionStrategy.OFFLINE, "kr-offline-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 1, 175, ProgressionStrategy.LEAKY, "kr-online-1-175-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 1, 200, ProgressionStrategy.LEAKY, "kr-online-1-200-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 1, 225, ProgressionStrategy.LEAKY, "kr-online-1-225-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 1, 250, ProgressionStrategy.LEAKY, "kr-online-1-250-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 1, Integer.MAX_VALUE, ProgressionStrategy.ONLINE, "kr-online-1-inf-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 5, 175, ProgressionStrategy.LEAKY, "kr-online-5-175-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 5, 200, ProgressionStrategy.LEAKY, "kr-online-5-200-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 5, 225, ProgressionStrategy.LEAKY, "kr-online-5-225-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 5, 250, ProgressionStrategy.LEAKY, "kr-online-5-250-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 5, Integer.MAX_VALUE, ProgressionStrategy.ONLINE, "kr-online-5-inf-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, Integer.MAX_VALUE, 175, ProgressionStrategy.LEAKY, "kr-online-inf-175-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, Integer.MAX_VALUE, 200, ProgressionStrategy.LEAKY, "kr-online-inf-200-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, Integer.MAX_VALUE, 225, ProgressionStrategy.LEAKY, "kr-online-inf-225-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, Integer.MAX_VALUE, 250, ProgressionStrategy.LEAKY, "kr-online-inf-250-"+(i+1)+".csv", false);
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, Integer.MAX_VALUE, Integer.MAX_VALUE, ProgressionStrategy.ONLINE, "kr-online-inf-inf-"+(i+1)+".csv", false);
+        }
+
+        System.out.println("Done!");
     }
 
 

@@ -22,27 +22,26 @@ public class Executor extends Thread {
 //    private List<ProgressorProperties> propertiesList;
     private boolean verbose;
     private int iteration;
+    private String path;
 
-    public Executor(Progressor progressor, StreamGenerator generator, double terminator, boolean verbose) {
+    public Executor(Progressor progressor, StreamGenerator generator, double terminator, String path, boolean verbose) {
         this.progressor = progressor;
         this.generator = generator;
         this.terminator = terminator;
         this.running = false;
-//        this.statusList = new LinkedList<>();
-//        this.propertiesList = new LinkedList<>();
         this.verbose = verbose;
         this.iteration = 0;
+        this.path = path;
     }
 
-    public Executor(Progressor progressor, StreamGenerator generator, double terminator) {
+    public Executor(Progressor progressor, StreamGenerator generator, String path, double terminator) {
         this.progressor = progressor;
         this.generator = generator;
         this.terminator = terminator;
         this.running = false;
-//        this.statusList = new LinkedList<>();
-//        this.propertiesList = new LinkedList<>();
         this.verbose = false;
         this.iteration = 0;
+        this.path = path;
     }
 
     public Executor(Progressor progressor, StreamGenerator generator) {
@@ -50,17 +49,16 @@ public class Executor extends Thread {
         this.generator = generator;
         this.terminator = 1.0;
         this.running = false;
-//        this.statusList = new LinkedList<>();
-//        this.propertiesList = new LinkedList<>();
         this.verbose = false;
         this.iteration = 0;
+        this.path = "latest.csv";
     }
 
 
     @Override
     public void run() {
         this.running = true;
-        Logger logger = new Logger("latest.csv");
+        Logger logger = new Logger(this.path);
         while (generator.hasNext()) {
             if (verbose) {
                 System.out.println("Iteration " + this.iteration);
@@ -69,8 +67,6 @@ public class Executor extends Thread {
             progressor.progress(generator.next());
 
             ProgressionStatus status = progressor.getStatus();
-//            addStatus(status);
-//            addProperties(progressor.getProperties());
             logger.write(status, progressor.getProperties());
 
             if (verbose) {
@@ -94,24 +90,4 @@ public class Executor extends Thread {
     public int getIteration() {
         return this.iteration;
     }
-
-//    public synchronized List<ProgressionStatus> getStatus() {
-//        List<ProgressionStatus> result = new LinkedList<>();
-//        result.addAll(this.statusList);
-//        return result;
-//    }
-//
-//    private synchronized void addStatus(ProgressionStatus status) {
-//        this.statusList.add(status);
-//    }
-//
-//    public synchronized List<ProgressorProperties> getProperties() {
-//        List<ProgressorProperties> result = new LinkedList<>();
-//        result.addAll(this.propertiesList);
-//        return result;
-//    }
-//
-//    private synchronized void addProperties(ProgressorProperties properties) {
-//        this.propertiesList.add(properties);
-//    }
 }
