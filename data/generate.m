@@ -4,16 +4,23 @@ set (0, 'defaulttextfontname', 'Helvetica')
 set (0, 'defaulttextfontsize', 7) 
 
 %% Load data
-perfMatrix1 = csvread('../latest.csv',1,0);
-%perfMatrix2 = csvread('run1.csv',1,0);
-%perfMatrix3 = csvread('run1.csv',1,0);
-%perfMatrix4 = csvread('run1.csv',1,0);
-%perfMatrix5 = csvread('run1.csv',1,0);
+perfMatrix1 = csvread('exp1/kr-online-5-inf-1.csv',1,0);
+%perfMatrix2 = csvread('exp1/kr-online-1-175-2.csv',1,0);
+%perfMatrix3 = csvread('exp1/kr-online-1-175-3.csv',1,0);
+%perfMatrix4 = csvread('exp1/kr-online-1-175-4.csv',1,0);
+%perfMatrix5 = csvread('exp1/kr-online-1-175-5.csv',1,0);
+%perfMatrix6 = csvread('exp1/kr-online-1-175-6.csv',1,0);
+%perfMatrix7 = csvread('exp1/kr-online-1-175-7.csv',1,0);
+%perfMatrix8 = csvread('exp1/kr-online-1-175-8.csv',1,0);
+%perfMatrix9 = csvread('exp1/kr-online-1-175-9.csv',1,0);
+%perfMatrix10 = csvread('exp1/kr-online-1-175-10.csv',1,0);
+
 idVec = perfMatrix1(:,1);
 qualityVec = perfMatrix1(:,2);
 verdictMatrix = perfMatrix1(:,3:6);
 bucketMatrix = perfMatrix1(:,7:19);
 durationMatrix = perfMatrix1(:,20:25);
+%durationMatrix = ( perfMatrix1(:,20:25) + perfMatrix2(:,20:25) + perfMatrix3(:,20:25) + perfMatrix4(:,20:25) + perfMatrix5(:,20:25) + perfMatrix6(:,20:25) + perfMatrix7(:,20:25) + perfMatrix8(:,20:25) + perfMatrix9(:,20:25) + perfMatrix10(:,20:25) ) ./ 10;
 %durationMatrix = ( perfMatrix1(:,19:24) + perfMatrix2(:,19:24) + perfMatrix3(:,19:24) + perfMatrix4(:,19:24) + perfMatrix5(:,19:24) ) ./ 5;
 graphMatrix = perfMatrix1(:,26:28);
 
