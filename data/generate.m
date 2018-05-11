@@ -4,7 +4,7 @@ set (0, 'defaulttextfontname', 'Helvetica')
 set (0, 'defaulttextfontsize', 7) 
 
 %% Load data
-perfMatrix1 = csvread('exp1/kr-online-5-inf-1.csv',1,0);
+perfMatrix1 = csvread('exp2/kr-online-1-149.csv',1,0);
 %perfMatrix2 = csvread('exp1/kr-online-1-175-2.csv',1,0);
 %perfMatrix3 = csvread('exp1/kr-online-1-175-3.csv',1,0);
 %perfMatrix4 = csvread('exp1/kr-online-1-175-4.csv',1,0);

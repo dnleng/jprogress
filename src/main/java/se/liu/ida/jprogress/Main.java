@@ -30,9 +30,22 @@ public class Main {
 //            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, Integer.MAX_VALUE, Integer.MAX_VALUE, ProgressionStrategy.ONLINE, "kr-online-inf-inf-"+(i+1)+".csv", false);
 //        }
 
-        for(int i = 50; i < 150; i++) {
-            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 1, 75, ProgressionStrategy.LEAKY, "kr-online-1-"+(i)+".csv", false);
+        // Hackish solution
+        try {
+            String path = args[0];
+            boolean precompute = args[1].equals("true");
+            int maxTTL = Integer.parseInt(args[2]);
+            int maxNodes = Integer.parseInt(args[3]);
+
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, maxTTL, maxNodes,
+                                       precompute ? ProgressionStrategy.OFFLINE : ProgressionStrategy.LEAKY, path, false);
+        } catch(Exception e) {
+            e.printStackTrace();
         }
+
+//        for(int i = 50; i < 150; i++) {
+//            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, 1, 75, ProgressionStrategy.LEAKY, "kr-online-1-"+(i)+".csv", false);
+//        }
 
         System.out.println("Done!");
     }
