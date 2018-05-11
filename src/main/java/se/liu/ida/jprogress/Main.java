@@ -34,8 +34,16 @@ public class Main {
         try {
             String path = args[0];
             boolean precompute = args[1].equals("true");
-            int maxTTL = Integer.parseInt(args[2]);
-            int maxNodes = Integer.parseInt(args[3]);
+
+            int maxTTL = Integer.MAX_VALUE;
+            if(!args[2].equals("inf")) {
+                maxTTL = Integer.parseInt(args[2]);
+            }
+
+            int maxNodes = Integer.MAX_VALUE;
+            if(!args[3].equals("inf")) {
+                maxNodes = Integer.parseInt(args[3]);
+            }
 
             Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, maxTTL, maxNodes,
                                        precompute ? ProgressionStrategy.OFFLINE : ProgressionStrategy.LEAKY, path, false);
