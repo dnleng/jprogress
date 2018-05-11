@@ -4,25 +4,30 @@ set (0, 'defaulttextfontname', 'Helvetica')
 set (0, 'defaulttextfontsize', 7) 
 
 %% Load data
-perfMatrix1 = csvread('exp2/kr-online-1-149.csv',1,0);
-%perfMatrix2 = csvread('exp1/kr-online-1-175-2.csv',1,0);
-%perfMatrix3 = csvread('exp1/kr-online-1-175-3.csv',1,0);
-%perfMatrix4 = csvread('exp1/kr-online-1-175-4.csv',1,0);
-%perfMatrix5 = csvread('exp1/kr-online-1-175-5.csv',1,0);
-%perfMatrix6 = csvread('exp1/kr-online-1-175-6.csv',1,0);
-%perfMatrix7 = csvread('exp1/kr-online-1-175-7.csv',1,0);
-%perfMatrix8 = csvread('exp1/kr-online-1-175-8.csv',1,0);
-%perfMatrix9 = csvread('exp1/kr-online-1-175-9.csv',1,0);
-%perfMatrix10 = csvread('exp1/kr-online-1-175-10.csv',1,0);
+perfMatrix1 = csvread('exp6/kr-offline-1.csv',1,0);
+perfMatrix2 = csvread('exp6/kr-offline-2.csv',1,0);
+perfMatrix3 = csvread('exp6/kr-offline-3.csv',1,0);
 
-idVec = perfMatrix1(:,1);
-qualityVec = perfMatrix1(:,2);
-verdictMatrix = perfMatrix1(:,3:6);
-bucketMatrix = perfMatrix1(:,7:19);
-durationMatrix = perfMatrix1(:,20:25);
-%durationMatrix = ( perfMatrix1(:,20:25) + perfMatrix2(:,20:25) + perfMatrix3(:,20:25) + perfMatrix4(:,20:25) + perfMatrix5(:,20:25) + perfMatrix6(:,20:25) + perfMatrix7(:,20:25) + perfMatrix8(:,20:25) + perfMatrix9(:,20:25) + perfMatrix10(:,20:25) ) ./ 10;
-%durationMatrix = ( perfMatrix1(:,19:24) + perfMatrix2(:,19:24) + perfMatrix3(:,19:24) + perfMatrix4(:,19:24) + perfMatrix5(:,19:24) ) ./ 5;
-graphMatrix = perfMatrix1(:,26:28);
+%idVec = perfMatrix1(:,1);
+%qualityVec = perfMatrix1(:,2);
+%verdictMatrix = perfMatrix1(:,3:6);
+%bucketMatrix = perfMatrix1(:,7:19);
+%durationMatrix = perfMatrix1(:,20:25);
+
+n1 = size(perfMatrix1(:,20:25));
+n = n1(1);
+n2 = size(perfMatrix2(:,20:25));
+n = min(n, n2(1));
+n3 = size(perfMatrix3(:,20:25));
+n = min(n, n3(1));
+durationMatrix = ( perfMatrix1(1:n,20:25) + perfMatrix2(1:n,20:25) + perfMatrix3(1:n,20:25) ) ./ 3;
+
+
+idVec = perfMatrix1(1:n,1);
+qualityVec = perfMatrix1(1:n,2);
+verdictMatrix = perfMatrix1(1:n,3:6);
+bucketMatrix = perfMatrix1(1:n,7:19);
+graphMatrix = perfMatrix1(1:n,26:28);
 
 
 %% Progression trace graph
@@ -79,8 +84,6 @@ legend('boxoff');
 zeroPop = 1-bucketMatrix(:,1);
 
 subplot(4,1,4);
-%plot(idVec,verdictTrue,idVec,verdictFalse,'--',idVec,verdictUnknown,':',idVec,verdictNone,'-.',idVec,qualityVec,'black.');
-%plot(idVec,verdictTrue,idVec,verdictFalse,'--',idVec,verdictUnknown,':',idVec,qualityVec,'black.');
 plot(idVec,zeroPop);
 grid on;
 axis([1 length(idVec)*1.1 -0.1 1.1])
@@ -90,4 +93,7 @@ set(y, 'Units', 'Normalized', 'Position', [-0.09, 0.5, 0]);
 
 
 %% Print figures
-print('graph', '-dpng', '-r300');
+%print('graph', '-dpng', '-r300');
+
+disp(sum(durationTotalMs)/1000);
+disp(mean(durationTotalMs));

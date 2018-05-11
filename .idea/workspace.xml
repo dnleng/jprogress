@@ -8,7 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="43841279-98ad-479b-a33d-8f954138b831" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/run.sh" afterPath="$PROJECT_DIR$/data/run.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/generate.m" afterPath="$PROJECT_DIR$/data/generate.m" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -25,18 +25,18 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="697">
+            <state relative-caret-position="109">
               <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="run.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="run.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/run.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+            <state relative-caret-position="289">
+              <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -45,8 +45,8 @@
       <file leaf-file-name="ProgressionStatus.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/ProgressionStatus.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="11" lean-forward="false" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
+            <state relative-caret-position="272">
+              <caret line="49" column="18" lean-forward="false" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="18" />
               <folding>
                 <marker date="1525890750445" expanded="true" signature="4252:4279" ph="{...}" />
               </folding>
@@ -59,7 +59,32 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="612">
               <caret line="36" column="16" lean-forward="false" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
-              <folding />
+              <folding>
+                <element signature="e#1838#1839#0" expanded="false" />
+                <element signature="e#1869#1870#0" expanded="false" />
+                <element signature="e#1930#1931#0" expanded="false" />
+                <element signature="e#1970#1971#0" expanded="false" />
+                <element signature="e#2003#2004#0" expanded="false" />
+                <element signature="e#2035#2036#0" expanded="false" />
+                <element signature="e#2082#2083#0" expanded="false" />
+                <element signature="e#2124#2125#0" expanded="false" />
+                <element signature="e#2159#2160#0" expanded="false" />
+                <element signature="e#2193#2194#0" expanded="false" />
+                <element signature="e#2244#2245#0" expanded="false" />
+                <element signature="e#2290#2291#0" expanded="false" />
+                <element signature="e#2328#2329#0" expanded="false" />
+                <element signature="e#2365#2366#0" expanded="false" />
+                <element signature="e#2422#2423#0" expanded="false" />
+                <element signature="e#2474#2475#0" expanded="false" />
+                <element signature="e#2501#2502#0" expanded="false" />
+                <element signature="e#2527#2528#0" expanded="false" />
+                <element signature="e#2562#2563#0" expanded="false" />
+                <element signature="e#2592#2593#0" expanded="false" />
+                <element signature="e#2624#2625#0" expanded="false" />
+                <element signature="e#2655#2656#0" expanded="false" />
+                <element signature="e#2700#2701#0" expanded="false" />
+                <element signature="e#2740#2741#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -79,7 +104,14 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
               <caret line="15" column="55" lean-forward="false" selection-start-line="15" selection-start-column="55" selection-end-line="15" selection-end-column="55" />
-              <folding />
+              <folding>
+                <element signature="e#692#693#0" expanded="false" />
+                <element signature="e#750#751#0" expanded="false" />
+                <element signature="e#1028#1029#0" expanded="false" />
+                <element signature="e#1083#1084#0" expanded="false" />
+                <element signature="e#1135#1136#0" expanded="false" />
+                <element signature="e#1211#1212#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -90,17 +122,27 @@
             <state relative-caret-position="544">
               <caret line="34" column="11" lean-forward="false" selection-start-line="34" selection-start-column="11" selection-end-line="34" selection-end-column="11" />
               <folding>
+                <element signature="e#1079#1080#0" expanded="false" />
+                <element signature="e#1110#1111#0" expanded="false" />
+                <element signature="e#7597#7598#0" expanded="false" />
+                <element signature="e#7633#7634#0" expanded="false" />
+                <element signature="e#8006#8007#0" expanded="false" />
+                <element signature="e#8046#8047#0" expanded="false" />
+                <element signature="e#8726#8727#0" expanded="false" />
+                <element signature="e#8767#8768#0" expanded="false" />
+                <element signature="e#8825#8826#0" expanded="false" />
+                <element signature="e#8863#8864#0" expanded="false" />
                 <marker date="1525890750455" expanded="true" signature="7212:7267" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Logger.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Logger.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Logger.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="53" column="24" lean-forward="false" selection-start-line="53" selection-start-column="24" selection-end-line="53" selection-end-column="24" />
+            <state relative-caret-position="381">
+              <caret line="28" column="59" lean-forward="false" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="59" />
               <folding>
                 <marker date="1525890750438" expanded="true" signature="1797:3551" ph="{...}" />
               </folding>
@@ -113,7 +155,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1377">
               <caret line="83" column="5" lean-forward="false" selection-start-line="83" selection-start-column="5" selection-end-line="83" selection-end-column="5" />
-              <folding />
+              <folding>
+                <element signature="e#2235#2236#0" expanded="false" />
+                <element signature="e#2291#2292#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -123,7 +168,12 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="612">
               <caret line="36" column="11" lean-forward="false" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
-              <folding />
+              <folding>
+                <element signature="e#2619#2620#0" expanded="false" />
+                <element signature="e#2654#2655#0" expanded="false" />
+                <element signature="e#2687#2688#0" expanded="false" />
+                <element signature="e#2724#2725#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -261,6 +311,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jprogress" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jprogress" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jprogress" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -768,7 +844,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526033909025</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Script updates">
+      <created>1526034377478</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1526034377478</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -829,7 +912,8 @@
     <MESSAGE value="Running experiments for KR" />
     <MESSAGE value="Minor" />
     <MESSAGE value="Initial hackish solution to run with arguments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial hackish solution to run with arguments" />
+    <MESSAGE value="Script updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Script updates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -975,7 +1059,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1377">
           <caret line="83" column="5" lean-forward="false" selection-start-line="83" selection-start-column="5" selection-end-line="83" selection-end-column="5" />
-          <folding />
+          <folding>
+            <element signature="e#2235#2236#0" expanded="false" />
+            <element signature="e#2291#2292#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1012,7 +1099,32 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="36" column="16" lean-forward="false" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
-          <folding />
+          <folding>
+            <element signature="e#1838#1839#0" expanded="false" />
+            <element signature="e#1869#1870#0" expanded="false" />
+            <element signature="e#1930#1931#0" expanded="false" />
+            <element signature="e#1970#1971#0" expanded="false" />
+            <element signature="e#2003#2004#0" expanded="false" />
+            <element signature="e#2035#2036#0" expanded="false" />
+            <element signature="e#2082#2083#0" expanded="false" />
+            <element signature="e#2124#2125#0" expanded="false" />
+            <element signature="e#2159#2160#0" expanded="false" />
+            <element signature="e#2193#2194#0" expanded="false" />
+            <element signature="e#2244#2245#0" expanded="false" />
+            <element signature="e#2290#2291#0" expanded="false" />
+            <element signature="e#2328#2329#0" expanded="false" />
+            <element signature="e#2365#2366#0" expanded="false" />
+            <element signature="e#2422#2423#0" expanded="false" />
+            <element signature="e#2474#2475#0" expanded="false" />
+            <element signature="e#2501#2502#0" expanded="false" />
+            <element signature="e#2527#2528#0" expanded="false" />
+            <element signature="e#2562#2563#0" expanded="false" />
+            <element signature="e#2592#2593#0" expanded="false" />
+            <element signature="e#2624#2625#0" expanded="false" />
+            <element signature="e#2655#2656#0" expanded="false" />
+            <element signature="e#2700#2701#0" expanded="false" />
+            <element signature="e#2740#2741#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1057,26 +1169,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="607">
           <caret line="23412" column="37" lean-forward="true" selection-start-line="23412" selection-start-column="37" selection-end-line="23412" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Logger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="53" column="24" lean-forward="false" selection-start-line="53" selection-start-column="24" selection-end-line="53" selection-end-column="24" />
-          <folding>
-            <marker date="1525890750438" expanded="true" signature="1797:3551" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/ProgressionStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="11" lean-forward="false" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
-          <folding>
-            <marker date="1525890750445" expanded="true" signature="4252:4279" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1134,6 +1226,16 @@
         <state relative-caret-position="544">
           <caret line="34" column="11" lean-forward="false" selection-start-line="34" selection-start-column="11" selection-end-line="34" selection-end-column="11" />
           <folding>
+            <element signature="e#1079#1080#0" expanded="false" />
+            <element signature="e#1110#1111#0" expanded="false" />
+            <element signature="e#7597#7598#0" expanded="false" />
+            <element signature="e#7633#7634#0" expanded="false" />
+            <element signature="e#8006#8007#0" expanded="false" />
+            <element signature="e#8046#8047#0" expanded="false" />
+            <element signature="e#8726#8727#0" expanded="false" />
+            <element signature="e#8767#8768#0" expanded="false" />
+            <element signature="e#8825#8826#0" expanded="false" />
+            <element signature="e#8863#8864#0" expanded="false" />
             <marker date="1525890750455" expanded="true" signature="7212:7267" ph="{...}" />
           </folding>
         </state>
@@ -1143,7 +1245,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="55" lean-forward="false" selection-start-line="15" selection-start-column="55" selection-end-line="15" selection-end-column="55" />
-          <folding />
+          <folding>
+            <element signature="e#692#693#0" expanded="false" />
+            <element signature="e#750#751#0" expanded="false" />
+            <element signature="e#1028#1029#0" expanded="false" />
+            <element signature="e#1083#1084#0" expanded="false" />
+            <element signature="e#1135#1136#0" expanded="false" />
+            <element signature="e#1211#1212#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1158,7 +1267,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="36" column="11" lean-forward="false" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
-          <folding />
+          <folding>
+            <element signature="e#2619#2620#0" expanded="false" />
+            <element signature="e#2654#2655#0" expanded="false" />
+            <element signature="e#2687#2688#0" expanded="false" />
+            <element signature="e#2724#2725#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1170,19 +1284,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/data/run.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
+        <state relative-caret-position="109">
           <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/run.sh">
+    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/progressor/ProgressionStatus.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
-          <folding />
+        <state relative-caret-position="272">
+          <caret line="49" column="18" lean-forward="false" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="18" />
+          <folding>
+            <marker date="1525890750445" expanded="true" signature="4252:4279" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="28" column="59" lean-forward="false" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="59" />
+          <folding>
+            <marker date="1525890750438" expanded="true" signature="1797:3551" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
