@@ -8,7 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="43841279-98ad-479b-a33d-8f954138b831" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/generate.m" afterPath="$PROJECT_DIR$/data/generate.m" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -141,8 +140,8 @@
       <file leaf-file-name="Logger.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Logger.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="28" column="59" lean-forward="false" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="59" />
+            <state relative-caret-position="466">
+              <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
               <folding>
                 <marker date="1525890750438" expanded="true" signature="1797:3551" ph="{...}" />
               </folding>
@@ -851,7 +850,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526034377478</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Script updates">
+      <created>1526053856713</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1526053856713</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1312,8 +1318,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/se/liu/ida/jprogress/Logger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="28" column="59" lean-forward="false" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="59" />
+        <state relative-caret-position="466">
+          <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
           <folding>
             <marker date="1525890750438" expanded="true" signature="1797:3551" ph="{...}" />
           </folding>
