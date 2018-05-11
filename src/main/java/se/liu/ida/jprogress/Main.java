@@ -45,6 +45,7 @@ public class Main {
                 maxNodes = Integer.parseInt(args[3]);
             }
 
+            System.out.println("Writing "+path);
             Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, maxTTL, maxNodes,
                                        precompute ? ProgressionStrategy.OFFLINE : ProgressionStrategy.LEAKY, path, false);
         } catch(Exception e) {
