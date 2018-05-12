@@ -45,7 +45,7 @@ public class Main {
                 maxNodes = Integer.parseInt(args[3]);
             }
 
-            double faultRatio = Double.parseDouble(args[4]);
+            double faultRatio = Integer.parseInt(args[4])/100.0;
 
             System.out.println("Writing "+path);
             Experiments.runFaultyTypeC(Integer.MAX_VALUE, faultRatio, maxTTL, maxNodes,
