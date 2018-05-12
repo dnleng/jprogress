@@ -45,8 +45,10 @@ public class Main {
                 maxNodes = Integer.parseInt(args[3]);
             }
 
+            double faultRatio = Double.parseDouble(args[4]);
+
             System.out.println("Writing "+path);
-            Experiments.runFaultyTypeC(Integer.MAX_VALUE, 0.2, maxTTL, maxNodes,
+            Experiments.runFaultyTypeC(Integer.MAX_VALUE, faultRatio, maxTTL, maxNodes,
                                        precompute ? ProgressionStrategy.OFFLINE : ProgressionStrategy.LEAKY, path, false);
         } catch(Exception e) {
             e.printStackTrace();
