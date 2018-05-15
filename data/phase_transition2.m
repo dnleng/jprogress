@@ -4,16 +4,16 @@
 %set (0, 'defaulttextfontsize', 14) 
 
 set (0, 'defaultaxesfontname', 'Times')
-set (0, 'defaultaxesfontsize', 14)
+set (0, 'defaultaxesfontsize', 12)
 set (0, 'defaulttextfontname', 'Times')
-set (0, 'defaulttextfontsize', 14) 
+set (0, 'defaulttextfontsize', 12) 
 
 
 %% Load data for F20
 maxLength100 = 0;
 for i = 5:190
     disp(int2str(i));
-    perfMatrix = csvread(strcat('exp9/kr-online-1-',int2str(i),'-F100.csv'),1,0);
+    perfMatrix = csvread(strcat('kr-exp-9/kr-online-1-',int2str(i),'-F100.csv'),1,0);
     durationMatrix = perfMatrix(:,20:25);
     durationTotalMs{i} = sum(durationMatrix(:,6))/1000000;
     verdictTrue = perfMatrix(:,3);
@@ -53,7 +53,7 @@ end
 maxLength80 = 0;
 for i = 5:190
     disp(int2str(i));
-    perfMatrix = csvread(strcat('exp9/kr-online-1-',int2str(i),'-F80.csv'),1,0);
+    perfMatrix = csvread(strcat('kr-exp-9/kr-online-1-',int2str(i),'-F80.csv'),1,0);
     durationMatrix = perfMatrix(:,20:25);
     durationTotalMs{i} = sum(durationMatrix(:,6))/1000000;
     verdictTrue = perfMatrix(:,3);
@@ -93,7 +93,7 @@ end
 maxLength60 = 0;
 for i = 5:190
     disp(int2str(i));
-    perfMatrix = csvread(strcat('exp9/kr-online-1-',int2str(i),'-F60.csv'),1,0);
+    perfMatrix = csvread(strcat('kr-exp-9/kr-online-1-',int2str(i),'-F60.csv'),1,0);
     durationMatrix = perfMatrix(:,20:25);
     durationTotalMs{i} = sum(durationMatrix(:,6))/1000000;
     verdictTrue = perfMatrix(:,3);
@@ -133,7 +133,7 @@ end
 maxLength40 = 0;
 for i = 5:190
     disp(int2str(i));
-    perfMatrix = csvread(strcat('exp9/kr-online-1-',int2str(i),'-F40.csv'),1,0);
+    perfMatrix = csvread(strcat('kr-exp-9/kr-online-1-',int2str(i),'-F40.csv'),1,0);
     durationMatrix = perfMatrix(:,20:25);
     durationTotalMs{i} = sum(durationMatrix(:,6))/1000000;
     verdictTrue = perfMatrix(:,3);
@@ -170,19 +170,20 @@ end
 
 
 %% Plot results
+figure(1);
 subplot(1,2,1);
 index = 5:190;
 %qx = [0     190   190   0   ];
 %qy = [1.00  1.00  0.99  0.99];
 %patch(qx, qy, [1 1 1]*0.8, 'LineStyle', 'None');
 %hold on;
-plot(index,M40(maxLength40(1),:),'-black');
+plot(index,M40(maxLength40(1),:),'-');
 hold on;
-plot(index,M60(maxLength60(1),:),':black');
+plot(index,M60(maxLength60(1),:),':');
 hold on;
-plot(index,M80(maxLength80(1),:),'-.black');
+plot(index,M80(maxLength80(1),:),'-.');
 hold on;
-plot(index,M100(maxLength100(1),:),'--black');
+plot(index,M100(maxLength100(1),:),'--');
 hold off;
 grid on;
 axis([5 190 0.0 1.0])
@@ -199,22 +200,48 @@ index = 5:190;
 %qy = [1.00  1.00  0.99  0.99];
 %patch(qx, qy, [1 1 1]*0.8, 'LineStyle', 'None');
 %hold on;
-plot(index,N40(maxLength40(1),:),'-black');
+plot(index,N40(maxLength40(1),:),'-');
 hold on;
-plot(index,N60(maxLength60(1),:),':black');
+plot(index,N60(maxLength60(1),:),':');
 hold on;
-plot(index,N80(maxLength80(1),:),'-.black');
+plot(index,N80(maxLength80(1),:),'-.');
 hold on;
-plot(index,N100(maxLength100(1),:),'--black');
+plot(index,N100(maxLength100(1),:),'--');
 hold off;
 grid on;
 axis([5 190 0.0 1.0])
 xlabel('MAX\_NODES');
-y = ylabel('False Probability at Termination');
+y = ylabel('Probability of False at Termination');
 set(y, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
 legend('0.4','0.6','0.8','1.0','Location','southoutside', 'Orientation', 'horizontal');
 %legend('boxoff');
 
 
 %% Print figures
-print('graph', '-dpng', '-r150');
+print('sensitivity', '-dpng', '-r300');
+
+
+%% Wide version
+figure(2);
+index = 5:190;
+%qx = [0     190   190   0   ];
+%qy = [1.00  1.00  0.99  0.99];
+%patch(qx, qy, [1 1 1]*0.8, 'LineStyle', 'None');
+%hold on;
+plot(index,M40(maxLength40(1),:),'-');
+hold on;
+plot(index,M60(maxLength60(1),:),':');
+hold on;
+plot(index,M80(maxLength80(1),:),'-.');
+hold on;
+plot(index,M100(maxLength100(1),:),'--');
+hold off;
+grid on;
+axis([5 190 0.0 1.0])
+xlabel('MAX\_NODES');
+y2 = ylabel('Leaked Probability at Termination');
+%set(y2, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
+legend('0.4','0.6','0.8','1.0','Location','northeast', 'Orientation', 'vertical');
+legend('boxoff');
+
+print('sensitivity-wide', '-dpng', '-r300');

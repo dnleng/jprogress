@@ -4,17 +4,17 @@
 %set (0, 'defaulttextfontsize', 14) 
 
 set (0, 'defaultaxesfontname', 'Times')
-set (0, 'defaultaxesfontsize', 14)
+set (0, 'defaultaxesfontsize', 12)
 set (0, 'defaulttextfontname', 'Times')
-set (0, 'defaulttextfontsize', 14) 
+set (0, 'defaulttextfontsize', 12) 
 
 %% Load data
 maxLength = 0;
 for i = 5:190
     disp(int2str(i));
-    perfMatrix1 = csvread(strcat('exp8/kr-online-1-',int2str(i),'-1.csv'),1,0);
-    perfMatrix2 = csvread(strcat('exp8/kr-online-1-',int2str(i),'-2.csv'),1,0);
-    perfMatrix3 = csvread(strcat('exp8/kr-online-1-',int2str(i),'-3.csv'),1,0);
+    perfMatrix1 = csvread(strcat('kr-exp-8/kr-online-1-',int2str(i),'-1.csv'),1,0);
+    perfMatrix2 = csvread(strcat('kr-exp-8/kr-online-1-',int2str(i),'-2.csv'),1,0);
+    perfMatrix3 = csvread(strcat('kr-exp-8/kr-online-1-',int2str(i),'-3.csv'),1,0);
     
     n1 = size(perfMatrix1(:,20:25));
     n = n1(1);
@@ -104,9 +104,9 @@ index = 5:190;
 %qy = [1.00  1.00  0.99  0.99];
 %patch(qx, qy, [1 1 1]*0.8, 'LineStyle', 'None');
 %hold on;
-plot(index,M(maxLength(1),:),'-black');
+plot(index,M(maxLength(1),:),'-');
 hold on;
-plot(index,N(maxLength(1),:),':black');
+plot(index,N(maxLength(1),:),':');
 hold off;
 grid on;
 axis([5 190 0.0 1.0])
@@ -118,7 +118,7 @@ legend('Unknown','False','Location','west', 'Orientation', 'vertical');
 legend('boxoff');
 
 subplot(1,2,2);
-plot(index,timeVec(5:190),'-black');
+plot(index,timeVec,'-black');
 grid on;
 axis([5 190 0.0 max(timeVec)])
 xlabel('MAX\_NODES');
@@ -127,4 +127,4 @@ set(y, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
 
 
 %% Print figures
-print('graph', '-dpng', '-r150');
+print('leakage-characteristics', '-dpng', '-r300');

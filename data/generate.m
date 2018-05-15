@@ -4,15 +4,28 @@ set (0, 'defaulttextfontname', 'Helvetica')
 set (0, 'defaulttextfontsize', 7) 
 
 %% Load data
-perfMatrix1 = csvread('exp6/kr-offline-1.csv',1,0);
-perfMatrix2 = csvread('exp6/kr-offline-2.csv',1,0);
-perfMatrix3 = csvread('exp6/kr-offline-3.csv',1,0);
+% perfMatrix1 = csvread('exp6/kr-offline-1.csv',1,0);
+% perfMatrix2 = csvread('exp6/kr-offline-2.csv',1,0);
+% perfMatrix3 = csvread('exp6/kr-offline-3.csv',1,0);
+% 
+% n1 = size(perfMatrix1(:,20:25));
+% n = n1(1);
+% n2 = size(perfMatrix2(:,20:25));
+% n = min(n, n2(1));
+% n3 = size(perfMatrix3(:,20:25));
+% n = min(n, n3(1));
+% durationMatrix = ( perfMatrix1(1:n,20:25) + perfMatrix2(1:n,20:25) + perfMatrix3(1:n,20:25) ) ./ 3;
 
-%idVec = perfMatrix1(:,1);
-%qualityVec = perfMatrix1(:,2);
-%verdictMatrix = perfMatrix1(:,3:6);
-%bucketMatrix = perfMatrix1(:,7:19);
-%durationMatrix = perfMatrix1(:,20:25);
+perfMatrix1 = csvread('kr-exp-10/kr-online-inf-inf-1.csv',1,0);
+perfMatrix2 = csvread('kr-exp-10/kr-online-inf-inf-2.csv',1,0);
+perfMatrix3 = csvread('kr-exp-10/kr-online-inf-inf-3.csv',1,0);
+perfMatrix4 = csvread('kr-exp-10/kr-online-inf-inf-4.csv',1,0);
+perfMatrix5 = csvread('kr-exp-10/kr-online-inf-inf-5.csv',1,0);
+perfMatrix6 = csvread('kr-exp-10/kr-online-inf-inf-6.csv',1,0);
+perfMatrix7 = csvread('kr-exp-10/kr-online-inf-inf-7.csv',1,0);
+perfMatrix8 = csvread('kr-exp-10/kr-online-inf-inf-8.csv',1,0);
+perfMatrix9 = csvread('kr-exp-10/kr-online-inf-inf-9.csv',1,0);
+perfMatrix10 = csvread('kr-exp-10/kr-online-inf-inf-10.csv',1,0);
 
 n1 = size(perfMatrix1(:,20:25));
 n = n1(1);
@@ -20,7 +33,21 @@ n2 = size(perfMatrix2(:,20:25));
 n = min(n, n2(1));
 n3 = size(perfMatrix3(:,20:25));
 n = min(n, n3(1));
-durationMatrix = ( perfMatrix1(1:n,20:25) + perfMatrix2(1:n,20:25) + perfMatrix3(1:n,20:25) ) ./ 3;
+n4 = size(perfMatrix4(:,20:25));
+n = min(n, n4(1));
+n5 = size(perfMatrix5(:,20:25));
+n = min(n, n5(1));
+n6 = size(perfMatrix6(:,20:25));
+n = min(n, n6(1));
+n7 = size(perfMatrix7(:,20:25));
+n = min(n, n7(1));
+n8 = size(perfMatrix8(:,20:25));
+n = min(n, n8(1));
+n9 = size(perfMatrix9(:,20:25));
+n = min(n, n9(1));
+n10 = size(perfMatrix10(:,20:25));
+n = min(n, n10(1));
+durationMatrix = ( perfMatrix1(1:n,20:25) + perfMatrix2(1:n,20:25) + perfMatrix3(1:n,20:25) + perfMatrix4(1:n,20:25) + perfMatrix5(1:n,20:25) + perfMatrix6(1:n,20:25) + perfMatrix7(1:n,20:25) + perfMatrix8(1:n,20:25) + perfMatrix9(1:n,20:25) + perfMatrix10(1:n,20:25) ) ./ 10;
 
 
 idVec = perfMatrix1(1:n,1);
