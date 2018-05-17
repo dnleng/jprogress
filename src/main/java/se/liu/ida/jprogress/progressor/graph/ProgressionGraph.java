@@ -8,6 +8,7 @@ import se.liu.ida.jprogress.progressor.ProgressionStatus;
 import se.liu.ida.jprogress.progressor.ProgressionStrategy;
 import se.liu.ida.jprogress.progressor.Progressor;
 import se.liu.ida.jprogress.progressor.ProgressorProperties;
+import se.liu.ida.jprogress.reasoning.InconsistentStateException;
 
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -62,7 +63,12 @@ public class ProgressionGraph implements Progressor {
         for (String atom : atoms) {
             unknowns.setTruthValue(atom, TruthValue.UNKNOWN);
         }
-        Set<Interpretation> hSet = unknowns.getReductions();
+        Set<Interpretation> hSet = null;
+        try {
+            hSet = unknowns.getReductions();
+        } catch (InconsistentStateException e) {
+            e.printStackTrace();
+        }
         while (!frontier.isEmpty() && this.nodeList.size() < this.maxNodes) {
             Node f = frontier.remove(0);
             frontier.addAll(expand(f, hSet));
@@ -126,8 +132,12 @@ public class ProgressionGraph implements Progressor {
         prevPerformance[0] = System.nanoTime();
 
         List<Integer> redSet = new LinkedList<>();
-        for (Interpretation i : interpretation.getReductions()) {
-            redSet.add(i.compress());
+        try {
+            for (Interpretation i : interpretation.getReductions()) {
+                redSet.add(i.compress());
+            }
+        } catch (InconsistentStateException e) {
+            e.printStackTrace();
         }
         prevQuality = 1.0 - (((double)redSet.size()-1.0) / (Math.pow(2, interpretation.getAtoms().size())-1.0));
 
@@ -149,7 +159,11 @@ public class ProgressionGraph implements Progressor {
             if (id.mass > 0.0) {
                 callList.add(Executors.callable(() -> {
                     if (!id.expanded) {
-                        expand(id, Interpretation.buildFullyUnknown(interpretation.getAtoms()).getReductions());
+                        try {
+                            expand(id, Interpretation.buildFullyUnknown(interpretation.getAtoms()).getReductions());
+                        } catch (InconsistentStateException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     List<Node> destinations = new LinkedList<>();

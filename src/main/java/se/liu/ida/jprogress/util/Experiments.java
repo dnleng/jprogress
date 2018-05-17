@@ -12,6 +12,7 @@ import se.liu.ida.jprogress.progressor.Progressor;
 import se.liu.ida.jprogress.progressor.ProgressorFactory;
 import se.liu.ida.jprogress.progressor.graph.ProgressionGraph;
 import se.liu.ida.jprogress.reasoning.IClosure;
+import se.liu.ida.jprogress.reasoning.InconsistentStateException;
 import se.liu.ida.jprogress.stream.ComplexGenerator;
 import se.liu.ida.jprogress.stream.StreamGenerator;
 import se.liu.ida.jprogress.stream.UnknownGenerator;
@@ -83,8 +84,12 @@ public class Experiments {
         i3.setTruthValue("s", TruthValue.FALSE);
         i3.setTruthValue("t", TruthValue.UNKNOWN);
         System.out.println("Interpretation: " + i3);
-        for (Interpretation i : i3.getReductions()) {
-            System.out.println("Reduction: " + i);
+        try {
+            for (Interpretation i : i3.getReductions()) {
+                System.out.println("Reduction: " + i);
+            }
+        } catch (InconsistentStateException e) {
+            e.printStackTrace();
         }
 
         System.out.println();
@@ -373,7 +378,11 @@ public class Experiments {
         pf.setMaxTTL(ttl);
         Formula f = FormulaFactory.createType2Chi(Integer.MAX_VALUE, 5, 10);
         Progressor progressor = pf.create(f, strategy);
-        StreamGenerator generator = new UnknownGenerator(f.getAtoms(), gamma);
+//        StreamGenerator generator = new UnknownGenerator(f.getAtoms(), gamma);
+        ComplexGenerator generator = new ComplexGenerator(gamma);
+        generator.add(StreamPatterns.createConstant("p", true, maxRepeats, faultRatio, Main.SEED));
+        generator.add(StreamPatterns.createConstant("q", true, maxRepeats, faultRatio, Main.SEED));
+        generator.add(StreamPatterns.createConstant("r", true, maxRepeats, faultRatio, Main.SEED));
         long t1End = System.nanoTime();
         System.out.println("Formula: " + f.toString());
         System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");

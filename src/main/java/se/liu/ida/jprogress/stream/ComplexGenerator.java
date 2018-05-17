@@ -1,6 +1,8 @@
 package se.liu.ida.jprogress.stream;
 
 import se.liu.ida.jprogress.Interpretation;
+import se.liu.ida.jprogress.reasoning.DefaultTheory;
+import se.liu.ida.jprogress.reasoning.IClosure;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,9 +13,16 @@ import java.util.List;
 public class ComplexGenerator implements StreamGenerator {
 
     private List<StreamGenerator> generators;
+    private IClosure theory;
 
     public ComplexGenerator() {
         this.generators = new LinkedList<>();
+        this.theory = new DefaultTheory();
+    }
+
+    public ComplexGenerator(IClosure theory) {
+        this.generators = new LinkedList<>();
+        this.theory = theory;
     }
 
     public ComplexGenerator(List<StreamGenerator> generators) {
@@ -31,6 +40,7 @@ public class ComplexGenerator implements StreamGenerator {
         for(StreamGenerator generator : this.generators) {
             result.merge(generator.next());
         }
+        result.setClosureStrategy(this.theory);
 
         return result;
     }

@@ -2,6 +2,7 @@ package se.liu.ida.jprogress.progressor;
 
 import se.liu.ida.jprogress.Interpretation;
 import se.liu.ida.jprogress.formula.Formula;
+import se.liu.ida.jprogress.reasoning.InconsistentStateException;
 import se.liu.ida.jprogress.util.Histogram;
 import se.liu.ida.jprogress.progressor.graph.Node;
 
@@ -33,7 +34,13 @@ public class NaiveProgressor implements Progressor {
     public void progress(final Interpretation interpretation) {
         this.prevPerformance = new long[6];
         this.prevPerformance[0] = System.nanoTime();
-        Set<Interpretation> reductions = interpretation.getReductions();
+        Set<Interpretation> reductions = null;
+        try {
+            reductions = interpretation.getReductions();
+        } catch (InconsistentStateException e) {
+            e.printStackTrace();
+            return;
+        }
         this.prevQuality = 1.0 - (((double)reductions.size()-1.0) / (Math.pow(2, interpretation.getAtoms().size())-1.0));
         List<Formula> result = new LinkedList<>();
         this.prevPerformance[1] = System.nanoTime();

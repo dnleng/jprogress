@@ -3,6 +3,7 @@ package se.liu.ida.jprogress;
 import se.liu.ida.jprogress.formula.TruthValue;
 import se.liu.ida.jprogress.reasoning.DefaultTheory;
 import se.liu.ida.jprogress.reasoning.IClosure;
+import se.liu.ida.jprogress.reasoning.InconsistentStateException;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -83,7 +84,7 @@ public class Interpretation {
         this.truthFunc.put(label, value);
     }
 
-    public Set<Interpretation> getReductions() {
+    public Set<Interpretation> getReductions() throws InconsistentStateException {
         List<String> trueProps = new LinkedList<>();
         List<String> falseProps = new LinkedList<>();
         List<String> unknownProps = new LinkedList<>();
@@ -133,6 +134,16 @@ public class Interpretation {
         // Filter based on background theory
         Predicate<Interpretation> predicate = i -> !i.close();
         result.removeIf(predicate);
+        if(result.size() == 0) {
+            throw new InconsistentStateException("Inconsistent state: "+this.toString());
+        }
+        else {
+            for(Interpretation i : result) {
+                if(i.truthFunc.keySet().size() != this.truthFunc.keySet().size()) {
+                    throw new InconsistentStateException("Inconsistent state: "+this.toString());
+                }
+            }
+        }
 
         return result;
     }
