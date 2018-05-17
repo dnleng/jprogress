@@ -65,4 +65,8 @@ public class FormulaFactory {
         return new Conjunction(new Eventually(i1, new Disjunction(new Atom("p"), new Always(i2, new Atom("q")))), new Always(i1, new Atom("r")));
     }
 
+    public static Formula createType2Chi(int i1, int i2, int i3) {
+        return new Always(i1, new Disjunction(new Negation(new Atom("p")), new Eventually(i2, new Disjunction(new Negation(new Atom("q")), new Always(i3, new Atom("r"))))));
+    }
+
 }

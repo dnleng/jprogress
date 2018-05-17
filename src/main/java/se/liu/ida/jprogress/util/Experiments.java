@@ -11,6 +11,7 @@ import se.liu.ida.jprogress.progressor.ProgressionStrategy;
 import se.liu.ida.jprogress.progressor.Progressor;
 import se.liu.ida.jprogress.progressor.ProgressorFactory;
 import se.liu.ida.jprogress.progressor.graph.ProgressionGraph;
+import se.liu.ida.jprogress.reasoning.IClosure;
 import se.liu.ida.jprogress.stream.ComplexGenerator;
 import se.liu.ida.jprogress.stream.StreamGenerator;
 import se.liu.ida.jprogress.stream.UnknownGenerator;
@@ -172,34 +173,34 @@ public class Experiments {
         System.out.println("Total runtime: " + (tEnd - tStart) + "ms\n");
     }
 
-    public static void runExp8(String path) {
-        System.out.println("EXPERIMENT 8");
-        System.out.println("============");
-        long tStart = System.currentTimeMillis();
-        Formula f6 = FormulaFactory.createFormula(FormulaTemplate.BIG_APEQ);
-        System.out.println("Progressing " + f6);
-
-        long t1Start = System.currentTimeMillis();
-        ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
-//        graph6.setTTL(5);
-        graph6.setMaxNodes(12);
-        long t1End = System.currentTimeMillis();
-        System.out.println("Setup time: " + (t1End - t1Start) + "ms");
-        Executor executor = new Executor(graph6, new UnknownGenerator(Arrays.asList("p", "q")), path, 0.9995);
-        executor.start();
-
-        try {
-            executor.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        long tEnd = System.currentTimeMillis();
-
-        System.out.println(graph6.getMassStatus(0.0001));
-        System.out.println(graph6.getProperties());
-        System.out.println("Total iterations: " + executor.getIteration());
-        System.out.println("Total runtime: " + (tEnd - tStart) + "ms\n");
-    }
+//    public static void runExp8(String path) {
+//        System.out.println("EXPERIMENT 8");
+//        System.out.println("============");
+//        long tStart = System.currentTimeMillis();
+//        Formula f6 = FormulaFactory.createFormula(FormulaTemplate.BIG_APEQ);
+//        System.out.println("Progressing " + f6);
+//
+//        long t1Start = System.currentTimeMillis();
+//        ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
+////        graph6.setTTL(5);
+//        graph6.setMaxNodes(12);
+//        long t1End = System.currentTimeMillis();
+//        System.out.println("Setup time: " + (t1End - t1Start) + "ms");
+//        Executor executor = new Executor(graph6, new UnknownGenerator(Arrays.asList("p", "q")), path, 0.9995);
+//        executor.start();
+//
+//        try {
+//            executor.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        long tEnd = System.currentTimeMillis();
+//
+//        System.out.println(graph6.getMassStatus(0.0001));
+//        System.out.println(graph6.getProperties());
+//        System.out.println("Total iterations: " + executor.getIteration());
+//        System.out.println("Total runtime: " + (tEnd - tStart) + "ms\n");
+//    }
 
     public static void runFaultyAEP(int maxRepeats, double faultRatio, String path, boolean verbose) {
         long t1Start = System.currentTimeMillis();
@@ -349,6 +350,34 @@ public class Experiments {
         System.out.println("Formula: " + FormulaFactory.createTypeD(10000, 4000).toString());
         System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
         Executor executor = new Executor(progressor, generator, 0.9995, path, verbose);
+        executor.start();
+
+        try {
+            executor.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        long tEnd = System.nanoTime();
+
+        System.out.println("RESULT");
+        System.out.println(progressor.getStatus());
+        System.out.println(progressor.getProperties());
+        System.out.println("Total iterations: " + executor.getIteration());
+        System.out.println("Total runtime: " + Math.round(((double)tEnd - (double)t1Start)/1000.0/1000.0) + "ms\n");
+    }
+
+    public static void runTypeTwoChi(int maxRepeats, double faultRatio, int ttl, int maxNodes, ProgressionStrategy strategy, IClosure gamma, String path, boolean verbose) {
+        long t1Start = System.nanoTime();
+        ProgressorFactory pf = new ProgressorFactory();
+        pf.setMaxNodes(maxNodes);
+        pf.setMaxTTL(ttl);
+        Formula f = FormulaFactory.createType2Chi(Integer.MAX_VALUE, 5, 10);
+        Progressor progressor = pf.create(f, strategy);
+        StreamGenerator generator = new UnknownGenerator(f.getAtoms(), gamma);
+        long t1End = System.nanoTime();
+        System.out.println("Formula: " + f.toString());
+        System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
+        Executor executor = new Executor(progressor, generator, 0.99, path, verbose);
         executor.start();
 
         try {

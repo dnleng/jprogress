@@ -1,8 +1,11 @@
 package se.liu.ida.jprogress;
 
 import se.liu.ida.jprogress.formula.TruthValue;
+import se.liu.ida.jprogress.reasoning.DefaultTheory;
+import se.liu.ida.jprogress.reasoning.IClosure;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * Created by dnleng on 30/04/18.
@@ -10,9 +13,16 @@ import java.util.*;
 public class Interpretation {
 
     private Map<String, TruthValue> truthFunc;
+    private IClosure closureStrategy;
 
     public Interpretation() {
         this.truthFunc = new HashMap<>();
+        this.closureStrategy = new DefaultTheory();
+    }
+
+    public Interpretation(IClosure closureStrategy) {
+        this.truthFunc = new HashMap<>();
+        this.closureStrategy = closureStrategy;
     }
 
     public void merge(Interpretation interpretation) {
@@ -24,6 +34,18 @@ public class Interpretation {
                 throw new IllegalStateException("Attempting to merge inconsistent interpretations");
             }
         }
+    }
+
+    public boolean close() {
+        return this.closureStrategy.close(this.truthFunc);
+    }
+
+    public static Interpretation buildFullyUnknown(Set<String> props) {
+        Interpretation result = new Interpretation();
+        for (String prop : props) {
+            result.setTruthValue(prop, TruthValue.UNKNOWN);
+        }
+        return result;
     }
 
     public static Interpretation buildFullyUnknown(List<String> props) {
@@ -86,7 +108,7 @@ public class Interpretation {
         } else {
             for (int mask = 0; mask < (int) Math.floor(Math.pow(2, unknownProps.size())); mask++) {
                 int bit = 1;
-                Interpretation interpretation = new Interpretation();
+                Interpretation interpretation = new Interpretation(this.getClosureStrategy());
                 for (String trueProp : trueProps) {
                     interpretation.setTruthValue(trueProp, TruthValue.TRUE);
                 }
@@ -108,6 +130,9 @@ public class Interpretation {
             }
         }
 
+        // Filter based on background theory
+        Predicate<Interpretation> predicate = i -> !i.close();
+        result.removeIf(predicate);
 
         return result;
     }
@@ -145,5 +170,13 @@ public class Interpretation {
         }
         sb.append("}");
         return sb.toString();
+    }
+
+    public void setClosureStrategy(IClosure closureStrategy) {
+        this.closureStrategy = closureStrategy;
+    }
+
+    public IClosure getClosureStrategy() {
+        return closureStrategy;
     }
 }
