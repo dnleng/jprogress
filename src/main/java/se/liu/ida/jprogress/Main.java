@@ -26,9 +26,9 @@ public class Main {
             gamma3.addRule(new Rule(new Literal("r", TruthValue.TRUE), Arrays.asList(new Literal("p", TruthValue.TRUE))));
 
             for(int i = 1; i < 10; i++) {
-                Experiments.runTypeTwoChi(Integer.MAX_VALUE, 0.1*i, 1, Integer.MAX_VALUE, ProgressionStrategy.LEAKY, gamma1, "gamma1-"+i+".csv", false);
-                Experiments.runTypeTwoChi(Integer.MAX_VALUE, 0.1*i, 1, Integer.MAX_VALUE, ProgressionStrategy.LEAKY, gamma2, "gamma2-"+i+".csv", false);
-                Experiments.runTypeTwoChi(Integer.MAX_VALUE, 0.1*i, 1, Integer.MAX_VALUE, ProgressionStrategy.LEAKY, gamma3, "gamma3-"+i+".csv", false);
+                Experiments.runTypeTwoChi(Integer.MAX_VALUE, 0.1*i, 1, Integer.MAX_VALUE, ProgressionStrategy.LEAKY, gamma1, "data/kr-exp-13/gamma1-"+i+".csv", false);
+                Experiments.runTypeTwoChi(Integer.MAX_VALUE, 0.1*i, 1, Integer.MAX_VALUE, ProgressionStrategy.LEAKY, gamma2, "data/kr-exp-13/gamma2-"+i+".csv", false);
+                Experiments.runTypeTwoChi(Integer.MAX_VALUE, 0.1*i, 1, Integer.MAX_VALUE, ProgressionStrategy.LEAKY, gamma3, "data/kr-exp-13/gamma3-"+i+".csv", false);
             }
         }
         else {

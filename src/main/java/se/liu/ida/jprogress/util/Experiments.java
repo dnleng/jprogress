@@ -17,10 +17,7 @@ import se.liu.ida.jprogress.stream.ComplexGenerator;
 import se.liu.ida.jprogress.stream.StreamGenerator;
 import se.liu.ida.jprogress.stream.UnknownGenerator;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Squig on 06/05/2018.
@@ -379,10 +376,17 @@ public class Experiments {
         Formula f = FormulaFactory.createType2Chi(Integer.MAX_VALUE, 5, 10);
         Progressor progressor = pf.create(f, strategy);
 //        StreamGenerator generator = new UnknownGenerator(f.getAtoms(), gamma);
+
+//        Map<String, Boolean> constants = new HashMap<>();
+//        constants.put("p", true);
+//        constants.put("q", true);
+//        constants.put("r", true);
+//        StreamGenerator generator = StreamPatterns.createConstant(constants, maxRepeats, faultRatio, Main.SEED);
+
         ComplexGenerator generator = new ComplexGenerator(gamma);
         generator.add(StreamPatterns.createConstant("p", true, maxRepeats, faultRatio, Main.SEED));
-        generator.add(StreamPatterns.createConstant("q", true, maxRepeats, faultRatio, Main.SEED));
-        generator.add(StreamPatterns.createConstant("r", true, maxRepeats, faultRatio, Main.SEED));
+        generator.add(StreamPatterns.createConstant("q", true, maxRepeats, faultRatio, Main.SEED-1));
+        generator.add(StreamPatterns.createConstant("r", true, maxRepeats, faultRatio, Main.SEED+1));
         long t1End = System.nanoTime();
         System.out.println("Formula: " + f.toString());
         System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");

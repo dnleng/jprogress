@@ -6,10 +6,7 @@ import se.liu.ida.jprogress.stream.FaultyRepeatingGenerator;
 import se.liu.ida.jprogress.stream.RepeatingGenerator;
 import se.liu.ida.jprogress.stream.StreamGenerator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Squig on 06/05/2018.
@@ -53,6 +50,16 @@ public class StreamPatterns {
         Interpretation interpretation = new Interpretation();
         interpretation.setTruthValue(prop, defaultTruth ? TruthValue.TRUE : TruthValue.FALSE);
         List<Interpretation> list = new LinkedList<>();
+        list.add(interpretation);
+        return new FaultyRepeatingGenerator(list, maxRepeats, faultRatio, seed);
+    }
+
+    public static StreamGenerator createConstant(Map<String, Boolean> input, int maxRepeats, double faultRatio, long seed) {
+        List<Interpretation> list = new LinkedList<>();
+        Interpretation interpretation = new Interpretation();
+        for(String prop : input.keySet()) {
+            interpretation.setTruthValue(prop, input.get(prop) ? TruthValue.TRUE : TruthValue.FALSE);
+        }
         list.add(interpretation);
         return new FaultyRepeatingGenerator(list, maxRepeats, faultRatio, seed);
     }
