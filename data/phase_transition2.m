@@ -169,56 +169,56 @@ for i = 5:190
 end
 
 
-%% Plot results
-figure(1);
-subplot(1,2,1);
-index = 5:190;
-%qx = [0     190   190   0   ];
-%qy = [1.00  1.00  0.99  0.99];
-%patch(qx, qy, [1 1 1]*0.8, 'LineStyle', 'None');
-%hold on;
-plot(index,M40(maxLength40(1),:),'-');
-hold on;
-plot(index,M60(maxLength60(1),:),':');
-hold on;
-plot(index,M80(maxLength80(1),:),'-.');
-hold on;
-plot(index,M100(maxLength100(1),:),'--');
-hold off;
-grid on;
-axis([5 190 0.0 1.0])
-xlabel('MAX\_NODES');
-y = ylabel('Leaked Probability at Termination');
-set(y, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
-legend('0.4','0.6','0.8','1.0','Location','southoutside', 'Orientation', 'horizontal');
-%legend('boxoff');
-
-
-subplot(1,2,2);
-index = 5:190;
-%qx = [0     190   190   0   ];
-%qy = [1.00  1.00  0.99  0.99];
-%patch(qx, qy, [1 1 1]*0.8, 'LineStyle', 'None');
-%hold on;
-plot(index,N40(maxLength40(1),:),'-');
-hold on;
-plot(index,N60(maxLength60(1),:),':');
-hold on;
-plot(index,N80(maxLength80(1),:),'-.');
-hold on;
-plot(index,N100(maxLength100(1),:),'--');
-hold off;
-grid on;
-axis([5 190 0.0 1.0])
-xlabel('MAX\_NODES');
-y = ylabel('Probability of False at Termination');
-set(y, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
-legend('0.4','0.6','0.8','1.0','Location','southoutside', 'Orientation', 'horizontal');
-%legend('boxoff');
-
-
-%% Print figures
-print('sensitivity', '-dpng', '-r300');
+% %% Plot results
+% figure(1);
+% subplot(1,2,1);
+% index = 5:190;
+% %qx = [0     190   190   0   ];
+% %qy = [1.00  1.00  0.99  0.99];
+% %patch(qx, qy, [1 1 1]*0.8, 'LineStyle', 'None');
+% %hold on;
+% plot(index,M40(maxLength40(1),:),'-');
+% hold on;
+% plot(index,M60(maxLength60(1),:),':');
+% hold on;
+% plot(index,M80(maxLength80(1),:),'-.');
+% hold on;
+% plot(index,M100(maxLength100(1),:),'--');
+% hold off;
+% grid on;
+% axis([5 190 0.0 1.0])
+% xlabel('MAX\_NODES');
+% y = ylabel('Leaked Probability at Termination');
+% set(y, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
+% legend('0.4','0.6','0.8','1.0','Location','southoutside', 'Orientation', 'horizontal');
+% %legend('boxoff');
+% 
+% 
+% subplot(1,2,2);
+% index = 5:190;
+% %qx = [0     190   190   0   ];
+% %qy = [1.00  1.00  0.99  0.99];
+% %patch(qx, qy, [1 1 1]*0.8, 'LineStyle', 'None');
+% %hold on;
+% plot(index,N40(maxLength40(1),:),'-');
+% hold on;
+% plot(index,N60(maxLength60(1),:),':');
+% hold on;
+% plot(index,N80(maxLength80(1),:),'-.');
+% hold on;
+% plot(index,N100(maxLength100(1),:),'--');
+% hold off;
+% grid on;
+% axis([5 190 0.0 1.0])
+% xlabel('MAX\_NODES');
+% y = ylabel('Probability of False at Termination');
+% set(y, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
+% legend('0.4','0.6','0.8','1.0','Location','southoutside', 'Orientation', 'horizontal');
+% %legend('boxoff');
+% 
+% 
+% %% Print figures
+% print('sensitivity', '-dpng', '-r300');
 
 
 %% Wide version
@@ -228,13 +228,13 @@ index = 5:190;
 %qy = [1.00  1.00  0.99  0.99];
 %patch(qx, qy, [1 1 1]*0.8, 'LineStyle', 'None');
 %hold on;
-plot(index,M40(maxLength40(1),:),'-');
+plot(index,M40(maxLength40(1),:),'-','linewidth',2);
 hold on;
-plot(index,M60(maxLength60(1),:),':');
+plot(index,M60(maxLength60(1),:),':','linewidth',2);
 hold on;
-plot(index,M80(maxLength80(1),:),'-.');
+plot(index,M80(maxLength80(1),:),'-.','linewidth',2);
 hold on;
-plot(index,M100(maxLength100(1),:),'--');
+plot(index,M100(maxLength100(1),:),'--','linewidth',2);
 hold off;
 grid on;
 axis([5 190 0.0 1.0])
@@ -244,4 +244,4 @@ y2 = ylabel('Leaked Probability at Termination');
 legend('0.4','0.6','0.8','1.0','Location','northeast', 'Orientation', 'vertical');
 legend('boxoff');
 
-print('sensitivity-wide', '-dpng', '-r300');
+print('sensitivity-wide.eps', '-depsc');

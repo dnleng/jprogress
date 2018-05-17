@@ -16,16 +16,27 @@ set (0, 'defaulttextfontsize', 7)
 % n = min(n, n3(1));
 % durationMatrix = ( perfMatrix1(1:n,20:25) + perfMatrix2(1:n,20:25) + perfMatrix3(1:n,20:25) ) ./ 3;
 
-perfMatrix1 = csvread('kr-exp-10/kr-online-inf-inf-1.csv',1,0);
-perfMatrix2 = csvread('kr-exp-10/kr-online-inf-inf-2.csv',1,0);
-perfMatrix3 = csvread('kr-exp-10/kr-online-inf-inf-3.csv',1,0);
-perfMatrix4 = csvread('kr-exp-10/kr-online-inf-inf-4.csv',1,0);
-perfMatrix5 = csvread('kr-exp-10/kr-online-inf-inf-5.csv',1,0);
-perfMatrix6 = csvread('kr-exp-10/kr-online-inf-inf-6.csv',1,0);
-perfMatrix7 = csvread('kr-exp-10/kr-online-inf-inf-7.csv',1,0);
-perfMatrix8 = csvread('kr-exp-10/kr-online-inf-inf-8.csv',1,0);
-perfMatrix9 = csvread('kr-exp-10/kr-online-inf-inf-9.csv',1,0);
-perfMatrix10 = csvread('kr-exp-10/kr-online-inf-inf-10.csv',1,0);
+% perfMatrix1 = csvread('kr-exp-10/kr-online-1-175-1.csv',1,0);
+% perfMatrix2 = csvread('kr-exp-10/kr-online-1-175-2.csv',1,0);
+% perfMatrix3 = csvread('kr-exp-10/kr-online-1-175-3.csv',1,0);
+% perfMatrix4 = csvread('kr-exp-10/kr-online-1-175-4.csv',1,0);
+% perfMatrix5 = csvread('kr-exp-10/kr-online-1-175-5.csv',1,0);
+% perfMatrix6 = csvread('kr-exp-10/kr-online-1-175-6.csv',1,0);
+% perfMatrix7 = csvread('kr-exp-10/kr-online-1-175-7.csv',1,0);
+% perfMatrix8 = csvread('kr-exp-10/kr-online-1-175-8.csv',1,0);
+% perfMatrix9 = csvread('kr-exp-10/kr-online-1-175-9.csv',1,0);
+% perfMatrix10 = csvread('kr-exp-10/kr-online-1-175-10.csv',1,0);
+
+perfMatrix1 = csvread('kr-exp-11/kr-offline-1.csv',1,0);
+perfMatrix2 = csvread('kr-exp-11/kr-offline-2.csv',1,0);
+perfMatrix3 = csvread('kr-exp-11/kr-offline-3.csv',1,0);
+perfMatrix4 = csvread('kr-exp-11/kr-offline-4.csv',1,0);
+perfMatrix5 = csvread('kr-exp-11/kr-offline-5.csv',1,0);
+perfMatrix6 = csvread('kr-exp-11/kr-offline-6.csv',1,0);
+perfMatrix7 = csvread('kr-exp-11/kr-offline-7.csv',1,0);
+perfMatrix8 = csvread('kr-exp-11/kr-offline-8.csv',1,0);
+perfMatrix9 = csvread('kr-exp-11/kr-offline-9.csv',1,0);
+perfMatrix10 = csvread('kr-exp-11/kr-offline-10.csv',1,0);
 
 n1 = size(perfMatrix1(:,20:25));
 n = n1(1);
