@@ -20,7 +20,7 @@ import se.liu.ida.jprogress.stream.UnknownGenerator;
 import java.util.*;
 
 /**
- * Created by Squig on 06/05/2018.
+ * Created by dnleng on 06/05/2018.
  */
 public class Experiments {
     private static final int ITERATIONS = 1500;

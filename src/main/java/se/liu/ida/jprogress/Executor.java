@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Squig on 06/05/2018.
+ * Created by dnleng on 06/05/2018.
  */
 public class Executor extends Thread {
 

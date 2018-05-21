@@ -5,7 +5,7 @@ import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.progressor.ProgressionStrategy;
 
 /**
- * Created by Squig on 06/05/2018.
+ * Created by dnleng on 06/05/2018.
  */
 public class ProgressorProperties {
 

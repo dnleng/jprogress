@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.HashSet;
 
 /**
- * Created by Squig on 01/05/2018.
+ * Created by dnleng on 01/05/2018.
  */
 public class DefaultProgressor implements Progressor {
 

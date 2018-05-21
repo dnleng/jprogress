@@ -3,7 +3,7 @@ package se.liu.ida.jprogress.progressor;
 import se.liu.ida.jprogress.formula.Formula;
 
 /**
- * Created by Squig on 06/05/2018.
+ * Created by dnleng on 06/05/2018.
  */
 public class ProgressorFactory {
 

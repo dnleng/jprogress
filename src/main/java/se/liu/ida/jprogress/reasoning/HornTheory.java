@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Squig on 17/05/2018.
+ * Created by dnleng on 17/05/2018.
  */
 public class HornTheory implements IClosure {
     private List<Rule> ruleList;

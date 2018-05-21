@@ -1,7 +1,7 @@
 package se.liu.ida.jprogress.reasoning;
 
 /**
- * Created by Squig on 17/05/2018.
+ * Created by dnleng on 17/05/2018.
  */
 public class InconsistentStateException extends Exception {
 

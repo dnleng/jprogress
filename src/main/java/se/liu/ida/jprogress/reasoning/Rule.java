@@ -3,7 +3,7 @@ package se.liu.ida.jprogress.reasoning;
 import java.util.List;
 
 /**
- * Created by Squig on 17/05/2018.
+ * Created by dnleng on 17/05/2018.
  */
 public class Rule {
     public Literal head;

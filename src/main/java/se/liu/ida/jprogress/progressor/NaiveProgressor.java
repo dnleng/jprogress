@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Squig on 01/05/2018.
+ * Created by dnleng on 01/05/2018.
  */
 public class NaiveProgressor implements Progressor {
 

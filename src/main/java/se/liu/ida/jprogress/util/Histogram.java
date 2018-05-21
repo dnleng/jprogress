@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
- * Created by Squig on 01/05/2018.
+ * Created by dnleng on 01/05/2018.
  */
 public class Histogram extends LinkedHashMap<Formula, Integer> {
 

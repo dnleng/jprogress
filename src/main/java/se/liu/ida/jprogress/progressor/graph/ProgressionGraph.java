@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Squig on 01/05/2018.
+ * Created by dnleng on 01/05/2018.
  */
 public class ProgressionGraph implements Progressor {
     private ProgressionStrategy strategy;

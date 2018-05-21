@@ -5,7 +5,7 @@ import se.liu.ida.jprogress.Interpretation;
 import java.util.UUID;
 
 /**
- * Created by Squig on 01/05/2018.
+ * Created by dnleng on 01/05/2018.
  */
 public class Transition {
     public int interpretation;

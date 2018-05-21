@@ -9,7 +9,7 @@ import se.liu.ida.jprogress.stream.StreamGenerator;
 import java.util.*;
 
 /**
- * Created by Squig on 06/05/2018.
+ * Created by dnleng on 06/05/2018.
  */
 public class StreamPatterns {
 

@@ -5,7 +5,7 @@ import se.liu.ida.jprogress.Interpretation;
 import java.util.List;
 
 /**
- * Created by Squig on 06/05/2018.
+ * Created by dnleng on 06/05/2018.
  */
 public class RepeatingGenerator implements StreamGenerator {
 

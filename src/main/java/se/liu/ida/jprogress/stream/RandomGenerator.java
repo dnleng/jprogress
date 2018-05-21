@@ -6,7 +6,7 @@ import se.liu.ida.jprogress.formula.TruthValue;
 import java.util.List;
 
 /**
- * Created by Squig on 06/05/2018.
+ * Created by dnleng on 06/05/2018.
  */
 public class RandomGenerator extends RandomizedGenerator {
 
