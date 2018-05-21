@@ -124,38 +124,65 @@ idVec = 1:maxLength(1);
 % surf(N2);
 
 %% Generate figures
-subplot(1,2,1);
+% subplot(1,2,1);
+% index = 5:190;
+% %qx = [0     190   190   0   ];
+% %qy = [1.00  1.00  0.99  0.99];
+% %patch(qx, qy, [1 1 1]*0.8, 'LineStyle', 'None');
+% %hold on;
+% plot(index,M(maxLength(1),:),'-k','linewidth',2);
+% hold on;
+% plot(index,N(maxLength(1),:),'-.r','linewidth',2);
+% hold off;
+% grid on;
+% axis([5 190 0.0 1.0])
+% xlabel('MAX\_NODES');
+% y = ylabel('Verdict Probability at Termination');
+% set(y, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
+% legend({'Unknown','False'},'Location','west', 'Orientation', 'vertical','FontSize',8);
+% %legend('Terminator','Unknown','False','Location','west', 'Orientation', 'vertical');
+% legend('boxoff');
+% 
+% subplot(1,2,2);
+% plot(index,timeVec,'-k','linewidth',2);
+% hold on;
+% plot(index,timeVec + 2*stdVec,'-b');
+% hold on;
+% plot(index,timeVec - 2*stdVec,'-b');
+% hold off;
+% grid on;
+% axis([5 190 0.0 max(timeVec)])
+% xlabel('MAX\_NODES');
+% y = ylabel('Time to Termination (sec)');
+% set(y, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
+
+%% Alternative plot
 index = 5:190;
-%qx = [0     190   190   0   ];
-%qy = [1.00  1.00  0.99  0.99];
-%patch(qx, qy, [1 1 1]*0.8, 'LineStyle', 'None');
+
+yyaxis left;
+plot(index,M(maxLength(1),:),'-.','linewidth',2);
 %hold on;
-plot(index,M(maxLength(1),:),'-k','linewidth',2);
-hold on;
-plot(index,N(maxLength(1),:),'-.r','linewidth',2);
-hold off;
+%plot(index,N(maxLength(1),:),'-.r','linewidth',2);
+%hold off;
 grid on;
 axis([5 190 0.0 1.0])
-xlabel('MAX\_NODES');
-y = ylabel('Verdict Probability at Termination');
-set(y, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
-legend({'Unknown','False'},'Location','west', 'Orientation', 'vertical','FontSize',8);
-%legend('Terminator','Unknown','False','Location','west', 'Orientation', 'vertical');
-legend('boxoff');
+y = ylabel('Leaked Probability at Termination');
+%set(y, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
+%legend({'Unknown','False'},'Location','west', 'Orientation', 'vertical','FontSize',8);
+%legend('boxoff');
 
-subplot(1,2,2);
-plot(index,timeVec,'-k','linewidth',2);
+yyaxis right;
+plot(index,timeVec,'linewidth',2);
 hold on;
-plot(index,timeVec + 2*stdVec,'-b');
+plot(index,timeVec + 2*stdVec,'-k');
 hold on;
-plot(index,timeVec - 2*stdVec,'-b');
+plot(index,timeVec - 2*stdVec,'-k');
 hold off;
 grid on;
-axis([5 190 0.0 max(timeVec)])
+axis([5 190 0.0 max(timeVec + 2*stdVec)])
 xlabel('MAX\_NODES');
 y = ylabel('Time to Termination (sec)');
-set(y, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
-
+%set(y, 'Units', 'Normalized', 'Position', [-0.18, 0.5, 0]);
 
 %% Print figures
 %print('leakage-characteristics-300', '-dpng', '-r300');
