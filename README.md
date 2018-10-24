@@ -67,16 +67,25 @@ The final argument is for verbosity, which we disabled here.
 
 Adding timers and printing results leads to the following code:
 ```java
+// Construct a progressor factory
 long t1Start = System.nanoTime();
 ProgressorFactory pf = new ProgressorFactory();
 pf.setMaxNodes(maxNodes);
-pf.setMaxTTL(ttl);
-Progressor progressor = pf.create(FormulaFactory.createTypeC(Integer.MAX_VALUE, 100, 10), strategy);
-StreamGenerator generator = StreamPatterns.createConstant("p", true, maxRepeats, faultRatio, Main.SEED);
+pf.setMaxTTL(1);
+
+// Build an MTL formula and feed it to a progressor
+Atom p = new Atom("p");
+Formula f = new Always(Integer.MAX_VALUE, new Disjunction(p, new Eventually(100, new Always(10, p))));
+Progressor progressor = pf.create(f, ProgressionStrategy.LEAKY);
+
+// Configure a stream generator with a stream pattern
+StreamGenerator generator = StreamPatterns.createConstant("p", true, Integer.MAX_VALUE, 0.2, Main.SEED);
 long t1End = System.nanoTime();
-System.out.println("Formula: " + FormulaFactory.createTypeC(Integer.MAX_VALUE, 100, 10).toString());
-System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
-Executor executor = new Executor(progressor, generator, 0.99, path, verbose);
+System.out.println("Formula: " + f.toString());
+System.out.println("Setup time: " + Math.round(((double) t1End - (double) t1Start) / 1000.0 / 1000.0) + "ms\n");
+
+// Run partial-state progression
+Executor executor = new Executor(progressor, generator, 0.99, "kr-online-1-" + maxNodes + "-" + i + ".csv", false);
 executor.start();
 
 try {
@@ -90,7 +99,7 @@ System.out.println("RESULT");
 System.out.println(progressor.getStatus());
 System.out.println(progressor.getProperties());
 System.out.println("Total iterations: " + executor.getIteration());
-System.out.println("Total runtime: " + Math.round(((double)tEnd - (double)t1Start)/1000.0/1000.0) + "ms\n");
+System.out.println("Total runtime: " + Math.round(((double) tEnd - (double) t1Start) / 1000.0 / 1000.0) + "ms\n");
 ```
 
 
