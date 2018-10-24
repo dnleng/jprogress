@@ -9,7 +9,7 @@ For more details, we refer to the extended abstract on jprogress:
 The software has been prepared as a Maven project in the IntelliJ IDEA IDE.
 We recommend cloning the repository and opening the provided project files in IntelliJ IDEA.
 To run a quick example, one can build a JAR artifact and progress the MTL formula `always ( not p -> (eventually [0,100] ( always [0,10] p ) ) )` with a `MAX_NODES` value of 180 as follows:
-```
+```sh
 java -Xms50g -Xmx50g -jar jprogressor.jar "output.csv" "180"
 ```
 This will generate log data in the `output.csv` file.
