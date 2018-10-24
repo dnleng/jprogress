@@ -8,10 +8,15 @@ For more details, we refer to the extended abstract on jprogress:
 ## Installation
 The software has been prepared as a Maven project in the IntelliJ IDEA IDE.
 We recommend cloning the repository and opening the provided project files in IntelliJ IDEA.
+To run a quick example, one can build a JAR artifact and progress the MTL formula `always ( not p -> (eventually [0,100] ( always [0,10] p ) ) )` with a `MAX_NODES` value of 180 as follows:
+```
+java -Xms50g -Xmx50g -jar jprogressor.jar "output.csv" "180"
+```
+This will generate log data in the `output.csv` file.
 
 
 ## Getting Started
-The jprogress implementation in its current form does not yet provide an interactive mode using for example command-line interface.
+The jprogress implementation in its current form does not yet provide an interactive mode using for example a command-line interface.
 It is best regarded as a library.
 To perform partial-state progression, one needs to provide an MTL formula, a stream generator, a progression strategy, and optional strategy-associated parameters.
 The jprogress implementation will use the stream generator to generate a sequence of states, which it uses to progress the provided MTL formula.
@@ -43,10 +48,10 @@ The implementation provides a number of default generators for this purpose.
 In this case, we'll go with the following:
 ```java
 // Configure a stream generator with a stream pattern
-StreamGenerator generator = StreamPatterns.createConstant("p", true, Integer.MAX_VALUE, 0.1, Main.SEED);
+StreamGenerator generator = StreamPatterns.createConstant("p", true, Integer.MAX_VALUE, 0.2, Main.SEED);
 ```
 Here the `Integer.MAX_VALUE` corresponds to the maximum number of times a state is generated, so this generator produces an infinite-length stream.
-The `0.1` corresponds to the fault ratio; this generator will produce an infinite stream of states `{{p}}`, but will produce a fully-unknown state `{{p},{}}` in 10% of the cases.
+The `0.2` corresponds to the fault ratio; this generator will produce an infinite stream of states `{{p}}`, but will produce a fully-unknown state `{{p},{}}` in 20% of the cases.
 The `Main.SEED` value is used to repeat the experiments with the same random number generator seed.
 
 In order to start progression, we use an executor:
@@ -85,7 +90,7 @@ System.out.println("Formula: " + f.toString());
 System.out.println("Setup time: " + Math.round(((double) t1End - (double) t1Start) / 1000.0 / 1000.0) + "ms\n");
 
 // Run partial-state progression
-Executor executor = new Executor(progressor, generator, 0.99, "kr-online-1-" + maxNodes + "-" + i + ".csv", false);
+Executor executor = new Executor(progressor, generator, 0.99, path, false);
 executor.start();
 
 try {
@@ -104,4 +109,4 @@ System.out.println("Total runtime: " + Math.round(((double) tEnd - (double) t1St
 
 
 ## License
-The software is released under the MIT license.
+The jprogress software is released under the MIT license.
