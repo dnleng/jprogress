@@ -1,7 +1,7 @@
-# The jprogress progression engine
-The Java progression engine, called jprogress, implements support for the progression of MTL formulas with partial-state information.
+# The *jprogress* progression engine
+The Java progression engine, called *jprogress*, implements support for the progression of MTL formulas with partial-state information.
 It does so by keeping track of all the formulas progression could have reached, given the observed partial-state stream.
-For more details, we refer to the extended abstract on jprogress:
+For more details, we refer to the extended abstract on *jprogress*:
 - de Leng, D., and Heintz., F. 2018. Partial-State Progression for Stream Reasoning with Metric Temporal Logic. In Proceedings of the 16th International Conference on Principles of Knowledge Representation and Reasoning.
 
 
@@ -9,17 +9,17 @@ For more details, we refer to the extended abstract on jprogress:
 The software has been prepared as a Maven project in the IntelliJ IDEA IDE.
 We recommend cloning the repository and opening the provided project files in IntelliJ IDEA.
 To run a quick example, one can build a JAR artifact and progress the MTL formula `always ( not p -> (eventually [0,100] ( always [0,10] p ) ) )` with a `MAX_NODES` value of 180 as follows:
-```shell
-java -Xms50g -Xmx50g -jar jprogressor.jar "output.csv" "180"
+```console
+$ java -Xms50g -Xmx50g -jar jprogressor.jar "output.csv" "180"
 ```
 This will generate log data in the `output.csv` file.
 
 
 ## Getting Started
-The jprogress implementation in its current form does not yet provide an interactive mode using for example a command-line interface.
+The *jprogress* implementation in its current form does not yet provide an interactive mode using for example a command-line interface.
 It is best regarded as a library.
 To perform partial-state progression, one needs to provide an MTL formula, a stream generator, a progression strategy, and optional strategy-associated parameters.
-The jprogress implementation will use the stream generator to generate a sequence of states, which it uses to progress the provided MTL formula.
+The *jprogress* implementation will use the stream generator to generate a sequence of states, which it uses to progress the provided MTL formula.
 The progression strategy determines how the progression graph is constructed and maintained over time.
 We recommend using the LEAKY progression strategy, as described in the KR extended abstract.
 
@@ -108,5 +108,21 @@ System.out.println("Total runtime: " + Math.round(((double) tEnd - (double) t1St
 ```
 
 
+## Reproducing the Leakage Experiments (KR-2018)
+In order to reproduce the leakage experiments illustrated in Figure 1 of our KR extended abstract, we have provided some useful scripts in the `scripts/` folder.
+We will assume a Linux environment.
+First, one has to build the project artifact using IntelliJ IDEA.
+This will produce a JAR file at `out/artifacts/jprogressor_jar/jprogressor.jar`.
+We can then run the experiments by running the following command inside the `scripts/` folder:
+```console
+$ sh run-leakage-experiments.sh
+```
+Note that this may take a while, so it might help to start this in a `screen` session.
+Once the experiments have been completed, there will be a number of files called `kr-online-1-*-*` for values of `MAX_NODES` ranging from 5 to 190, and iterations 1 through 10.
+To generate the graph shown in the extended abstract, one can use Matlab to run the `leakage-characteristics.m` file.
+This should then generate a `leakage-characteristics.eps` file similar to the one shown in the extended abstract.
+Variations in run-time are to be expected depending on the differences in the hardware used.
+
+
 ## License
-The jprogress software is released under the MIT license.
+The *jprogress* software is released under the MIT license.
