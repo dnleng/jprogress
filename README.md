@@ -119,7 +119,7 @@ $ sh run-leakage-experiments.sh
 ```
 Note that this may take a while, so it might help to start this in a `screen` session.
 Once the experiments have been completed, there will be a number of files called `kr-online-1-*-*` for values of `MAX_NODES` ranging from 5 to 190, and iterations 1 through 10.
-To generate the graph shown in the extended abstract, one can use Matlab to run the `leakage-characteristics.m` file.
+To generate the graph shown in the extended abstract, one can use Matlab to run the `leakage_characteristics.m` file.
 This should then generate a `leakage-characteristics.eps` file similar to the one shown in the extended abstract.
 Variations in run-time are to be expected depending on the differences in the hardware used.
 
