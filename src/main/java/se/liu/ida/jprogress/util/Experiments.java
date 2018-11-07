@@ -4,6 +4,7 @@ import se.liu.ida.jprogress.Executor;
 import se.liu.ida.jprogress.Interpretation;
 import se.liu.ida.jprogress.Logger;
 import se.liu.ida.jprogress.Main;
+import se.liu.ida.jprogress.distribution.UniformDistribution;
 import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.formula.TruthValue;
 import se.liu.ida.jprogress.progressor.NaiveProgressor;
@@ -114,7 +115,7 @@ public class Experiments {
         Interpretation i5 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
 
         long t1Start = System.currentTimeMillis();
-        ProgressionGraph graph5 = new ProgressionGraph(ProgressionStrategy.OFFLINE, f5);
+        ProgressionGraph graph5 = new ProgressionGraph(ProgressionStrategy.OFFLINE, new UniformDistribution(f5.getAtoms()), f5);
         long t1End = System.currentTimeMillis();
         System.out.println("Setup time: " + (t1End - t1Start) + "ms");
         for (int i = 0; i < ITERATIONS; i++) {
@@ -135,7 +136,7 @@ public class Experiments {
         Interpretation i6 = Interpretation.buildFullyUnknown(Arrays.asList("p", "q"));
 
         long t1Start = System.currentTimeMillis();
-        ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
+        ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, new UniformDistribution(f6.getAtoms()), f6);
         graph6.setTTL(1);
 //        graph6.setMaxNodes(25);
         long t1End = System.currentTimeMillis();
@@ -159,7 +160,7 @@ public class Experiments {
         System.out.println("Progressing " + f6);
 
         long t1Start = System.currentTimeMillis();
-        ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, f6);
+        ProgressionGraph graph6 = new ProgressionGraph(ProgressionStrategy.ONLINE, new UniformDistribution(f6.getAtoms()), f6);
         graph6.setTTL(5);
         graph6.setMaxNodes(100);
         long t1End = System.currentTimeMillis();
@@ -207,7 +208,7 @@ public class Experiments {
     public static void runFaultyAEP(int maxRepeats, double faultRatio, String path, boolean verbose) {
         long t1Start = System.currentTimeMillis();
         ProgressorFactory pf = new ProgressorFactory();
-        Progressor progressor = pf.create(FormulaFactory.createAEP(10), ProgressionStrategy.ONLINE);
+        Progressor progressor = pf.create(FormulaFactory.createAEP(10), new UniformDistribution(FormulaFactory.createAEP(10).getAtoms()), ProgressionStrategy.ONLINE);
         StreamGenerator generator = StreamPatterns.createAlteratingFalseTrue("p", 10, 1, maxRepeats, faultRatio);
         long t1End = System.currentTimeMillis();
         System.out.println("Formula: " + FormulaFactory.createAEP(10).toString());
@@ -232,7 +233,7 @@ public class Experiments {
     public static void runFaultyBernoulli(int maxRepeats, double faultRatio, String path, boolean verbose) {
         long t1Start = System.nanoTime();
         ProgressorFactory pf = new ProgressorFactory();
-        Progressor progressor = pf.create(FormulaFactory.createBernoulli(Integer.MAX_VALUE), ProgressionStrategy.ONLINE);
+        Progressor progressor = pf.create(FormulaFactory.createBernoulli(Integer.MAX_VALUE), new UniformDistribution(FormulaFactory.createBernoulli(Integer.MAX_VALUE).getAtoms()), ProgressionStrategy.ONLINE);
         StreamGenerator generator = StreamPatterns.createConstant("p", false, maxRepeats, faultRatio, Main.SEED);
         long t1End = System.nanoTime();
         System.out.println("Formula: " + FormulaFactory.createAEP(10).toString());
@@ -259,7 +260,7 @@ public class Experiments {
         ProgressorFactory pf = new ProgressorFactory();
         pf.setMaxNodes(maxNodes);
         pf.setMaxTTL(ttl);
-        Progressor progressor = pf.create(FormulaFactory.createBernoulli(10000), ProgressionStrategy.LEAKY);
+        Progressor progressor = pf.create(FormulaFactory.createBernoulli(10000), new UniformDistribution(FormulaFactory.createBernoulli(10000).getAtoms()), ProgressionStrategy.LEAKY);
         StreamGenerator generator = StreamPatterns.createConstant("p", false, maxRepeats, faultRatio, Main.SEED);
         long t1End = System.nanoTime();
         System.out.println("Formula: " + FormulaFactory.createAEP(10).toString());
@@ -287,7 +288,7 @@ public class Experiments {
         ProgressorFactory pf = new ProgressorFactory();
         pf.setMaxNodes(maxNodes);
         pf.setMaxTTL(ttl);
-        Progressor progressor = pf.create(FormulaFactory.createTypeB(Integer.MAX_VALUE, 100), ProgressionStrategy.LEAKY);
+        Progressor progressor = pf.create(FormulaFactory.createTypeB(Integer.MAX_VALUE, 100), new UniformDistribution(FormulaFactory.createTypeB(Integer.MAX_VALUE, 100).getAtoms()), ProgressionStrategy.LEAKY);
         //StreamGenerator generator = StreamPatterns.createAlteratingFalseTrue("p", 5000, 1, maxRepeats, faultRatio);
         StreamGenerator generator = StreamPatterns.createConstant("p", true, maxRepeats, faultRatio, Main.SEED);
         long t1End = System.nanoTime();
@@ -315,7 +316,7 @@ public class Experiments {
         ProgressorFactory pf = new ProgressorFactory();
         pf.setMaxNodes(maxNodes);
         pf.setMaxTTL(ttl);
-        Progressor progressor = pf.create(FormulaFactory.createTypeC(Integer.MAX_VALUE, 100, 10), strategy);
+        Progressor progressor = pf.create(FormulaFactory.createTypeC(Integer.MAX_VALUE, 100, 10), new UniformDistribution(FormulaFactory.createTypeC(Integer.MAX_VALUE, 100, 10).getAtoms()), strategy);
         StreamGenerator generator = StreamPatterns.createConstant("p", true, maxRepeats, faultRatio, Main.SEED);
         long t1End = System.nanoTime();
         System.out.println("Formula: " + FormulaFactory.createTypeC(Integer.MAX_VALUE, 100, 10).toString());
@@ -342,7 +343,7 @@ public class Experiments {
         ProgressorFactory pf = new ProgressorFactory();
         pf.setMaxNodes(maxNodes);
         pf.setMaxTTL(ttl);
-        Progressor progressor = pf.create(FormulaFactory.createTypeD(10000, 4000), ProgressionStrategy.LEAKY);
+        Progressor progressor = pf.create(FormulaFactory.createTypeD(10000, 4000), new UniformDistribution(FormulaFactory.createTypeD(10000, 4000).getAtoms()), ProgressionStrategy.LEAKY);
         List<StreamGenerator> generatorList = new LinkedList<>();
         generatorList.add(StreamPatterns.createConstant("p", false, maxRepeats, faultRatio, Main.SEED));
         generatorList.add(StreamPatterns.createAlteratingTrueFalse("q", 399, 1, maxRepeats, 0.0));
@@ -374,7 +375,7 @@ public class Experiments {
         pf.setMaxNodes(maxNodes);
         pf.setMaxTTL(ttl);
         Formula f = FormulaFactory.createType2Chi(Integer.MAX_VALUE, 5, 10);
-        Progressor progressor = pf.create(f, strategy);
+        Progressor progressor = pf.create(f, new UniformDistribution(f.getAtoms()), strategy);
 //        StreamGenerator generator = new UnknownGenerator(f.getAtoms(), gamma);
 
 //        Map<String, Boolean> constants = new HashMap<>();

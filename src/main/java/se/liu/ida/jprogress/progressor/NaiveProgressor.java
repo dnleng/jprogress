@@ -1,6 +1,7 @@
 package se.liu.ida.jprogress.progressor;
 
 import se.liu.ida.jprogress.Interpretation;
+import se.liu.ida.jprogress.distribution.IDistribution;
 import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.reasoning.InconsistentStateException;
 import se.liu.ida.jprogress.util.Histogram;

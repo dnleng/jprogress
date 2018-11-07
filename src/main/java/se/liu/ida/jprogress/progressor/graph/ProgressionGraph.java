@@ -2,6 +2,8 @@ package se.liu.ida.jprogress.progressor.graph;
 
 import se.liu.ida.jprogress.Interpretation;
 import se.liu.ida.jprogress.Main;
+import se.liu.ida.jprogress.distribution.IDistribution;
+import se.liu.ida.jprogress.distribution.UniformDistribution;
 import se.liu.ida.jprogress.formula.Formula;
 import se.liu.ida.jprogress.formula.TruthValue;
 import se.liu.ida.jprogress.progressor.ProgressionStatus;
@@ -21,6 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ProgressionGraph implements Progressor {
     private ProgressionStrategy strategy;
+    private IDistribution distribution;
     private int maxTTL;
     private int maxNodes;
     private List<Node> nodeList;
@@ -29,12 +32,12 @@ public class ProgressionGraph implements Progressor {
     private long[] prevPerformance;
     private double prevQuality;
 
-    public ProgressionGraph(ProgressionStrategy strategy) {
-        reset(strategy);
+    public ProgressionGraph(ProgressionStrategy strategy, IDistribution distribution) {
+        reset(strategy, distribution);
     }
 
-    public ProgressionGraph(ProgressionStrategy strategy, Formula formula) {
-        reset(strategy);
+    public ProgressionGraph(ProgressionStrategy strategy, IDistribution distribution, Formula formula) {
+        reset(strategy, distribution);
         set(formula);
     }
 
@@ -166,17 +169,24 @@ public class ProgressionGraph implements Progressor {
                         }
                     }
 
+                    double massDivider = 0.0;
                     List<Node> destinations = new LinkedList<>();
+                    Map<Node, Double> stateProb = new HashMap<>();
                     for (Transition t : id.transitions) {
                         if (redSet.contains(t.interpretation)) {
-                            destinations.add(t.destNode);
+                            if(!destinations.contains(t.destNode)) {
+                                destinations.add(t.destNode);
+                            }
+                            stateProb.put( t.destNode, stateProb.getOrDefault(t.destNode, 0.0) + this.distribution.getProbability(t.interpretation));
+                            massDivider += this.distribution.getProbability(t.interpretation);
                         }
                     }
 
-                    double massChunk = id.mass / (double) destinations.size();
                     for (Node dest : destinations) {
                         synchronized (massMapLock) {
-                            nextMassMap.put(dest, nextMassMap.getOrDefault(dest, 0.0) + massChunk);
+                            nextMassMap.put(dest, nextMassMap.getOrDefault(dest, 0.0) + id.mass * (stateProb.get(dest) / massDivider));
+//                            System.out.println(id.mass + "*" + "(" + stateProb.get(dest) + "/" + massDivider + ")");
+//                            nextMassMap.put(dest, nextMassMap.getOrDefault(dest, 0.0) + id.mass * (1.0 / destinations.size()));
                         }
                         dest.age = 0;
                     }
@@ -228,7 +238,7 @@ public class ProgressionGraph implements Progressor {
 
     @Override
     public void set(Formula input) {
-        reset();
+        reset(input);
         switch (this.strategy) {
             case OFFLINE:
                 init(input);
@@ -240,13 +250,14 @@ public class ProgressionGraph implements Progressor {
         }
     }
 
-    public void reset() {
-        reset(this.strategy);
+    public void reset(Formula input) {
+        reset(this.strategy, this.distribution.rebuild(input.getAtoms()));
     }
 
-    public void reset(ProgressionStrategy strategy) {
+    public void reset(ProgressionStrategy strategy, IDistribution distribution) {
         this.nodeList = new LinkedList<>();
         this.strategy = strategy;
+        this.distribution = distribution;
         this.maxTTL = Integer.MAX_VALUE;
         this.maxNodes = Integer.MAX_VALUE;
     }

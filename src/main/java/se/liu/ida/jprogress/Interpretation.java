@@ -183,6 +183,12 @@ public class Interpretation {
         return sb.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        Interpretation that = (Interpretation)o;
+        return this.compress() == that.compress();
+    }
+
     public void setClosureStrategy(IClosure closureStrategy) {
         this.closureStrategy = closureStrategy;
     }

@@ -1,5 +1,6 @@
 package se.liu.ida.jprogress.progressor;
 
+import se.liu.ida.jprogress.distribution.IDistribution;
 import se.liu.ida.jprogress.formula.Formula;
 
 /**
@@ -20,14 +21,14 @@ public class ProgressorFactory {
         this.maxNodes = maxNodes;
     }
 
-    public Progressor create(Formula formula, ProgressionStrategy strategy) {
+    public Progressor create(Formula formula, IDistribution distribution, ProgressionStrategy strategy) {
         switch (strategy) {
             case OFFLINE:
-                return new OfflineProgressor(formula);
+                return new OfflineProgressor(formula, distribution);
             case ONLINE:
-                return new OnlineProgressor(formula, this.maxTTL);
+                return new OnlineProgressor(formula, distribution, this.maxTTL);
             case LEAKY:
-                return new LeakyProgressor(formula, this.maxTTL, this.maxNodes);
+                return new LeakyProgressor(formula, distribution, this.maxTTL, this.maxNodes);
             case NAIVE:
                 return new NaiveProgressor(formula);
             case DEFAULT:
