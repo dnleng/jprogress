@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
+Class-Path: antlr4-runtime-4.5.1.jar
 Main-Class: se.liu.ida.jprogress.Main
 

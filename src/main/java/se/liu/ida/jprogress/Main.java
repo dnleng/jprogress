@@ -5,13 +5,17 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import se.liu.ida.jprogress.distribution.BernoulliDistribution;
 import se.liu.ida.jprogress.distribution.IDistribution;
+import se.liu.ida.jprogress.distribution.UniformDistribution;
 import se.liu.ida.jprogress.formula.*;
 import se.liu.ida.jprogress.progressor.ProgressionStrategy;
 import se.liu.ida.jprogress.progressor.Progressor;
 import se.liu.ida.jprogress.progressor.ProgressorFactory;
+import se.liu.ida.jprogress.stream.FaultyRepeatingGenerator;
 import se.liu.ida.jprogress.stream.StreamGenerator;
 import se.liu.ida.jprogress.stream.UnknownGenerator;
 import se.liu.ida.jprogress.parser.*;
+
+import java.util.Collections;
 
 
 public class Main {
@@ -42,8 +46,8 @@ public class Main {
             MTLParser parser = new MTLParser(new CommonTokenStream(lexer));
             ParseTree tree = parser.start();
             Formula answer = new MTLVisitorImpl().visit(tree);
-//            IDistribution distribution = new UniformDistribution(answer.getAtoms());
-            IDistribution distribution = new BernoulliDistribution(0.0001);
+            IDistribution distribution = new UniformDistribution(answer.getAtoms());
+//            IDistribution distribution = new BernoulliDistribution(0.0001);
 
             // Run progression
             long t1Start = System.nanoTime();
@@ -51,7 +55,11 @@ public class Main {
             pf.setMaxNodes(maxNodes);
             pf.setMaxTTL(maxTTL);
             Progressor progressor = pf.create(answer, distribution, precompute ? ProgressionStrategy.OFFLINE : ProgressionStrategy.LEAKY);
-            StreamGenerator generator = new UnknownGenerator(answer.getAtoms());
+//            StreamGenerator generator = new UnknownGenerator(answer.getAtoms());
+
+            Interpretation interpretation = new Interpretation();
+            interpretation.setTruthValue("p", TruthValue.TRUE);
+            StreamGenerator generator = new FaultyRepeatingGenerator(Collections.singletonList(interpretation), Integer.MAX_VALUE, faultRatio, SEED);
             long t1End = System.nanoTime();
             System.out.println("Formula: " + answer.toString());
             System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
