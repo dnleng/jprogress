@@ -63,7 +63,7 @@ public class Main {
             long t1End = System.nanoTime();
             System.out.println("Formula: " + answer.toString());
             System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
-            Executor executor = new Executor(progressor, generator, 0.9995, path, false);
+            Executor executor = new Executor(progressor, generator, 0.99, path, false);
             executor.start();
 
             try {
