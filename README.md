@@ -1,7 +1,8 @@
 # The *jprogress* progression engine
 The Java progression engine, called *jprogress*, implements support for the progression of MTL formulas with partial-state information.
 It does so by keeping track of all the formulas progression could have reached, given the observed partial-state stream.
-For more details, we refer to the extended abstract on *jprogress*:
+For more details, we refer to the following material discussing *jprogress*:
+- de Leng, D., and Heintz., F. 2019. Approximate Stream Reasoning with Metric Temporal Logic under Uncertainty. To appear in Proceedings of the 33rd AAAI Conference on Artificial Intelligence.
 - de Leng, D., and Heintz., F. 2018. Partial-State Progression for Stream Reasoning with Metric Temporal Logic. In Proceedings of the 16th International Conference on Principles of Knowledge Representation and Reasoning.
 
 
@@ -10,7 +11,7 @@ The software has been prepared as a Maven project in the IntelliJ IDEA IDE.
 We recommend cloning the repository and opening the provided project files in IntelliJ IDEA.
 To run a quick example, one can build a JAR artifact and progress the MTL formula `always ( not p -> (eventually [0,100] ( always [0,10] p ) ) )` with a `MAX_NODES` value of 180 as follows:
 ```console
-$ java -Xms50g -Xmx50g -jar jprogressor.jar "output.csv" "180"
+$ java -Xms50g -Xmx50g -jar jprogressor.jar "output.csv" "false" "1" "180" "20" "always ( ( p ) or (eventually [0,100] ( always [0,10] p ) ) )"
 ```
 This will generate log data in the `output.csv` file.
 
@@ -33,14 +34,29 @@ pf.setMaxNodes(maxNodes);
 pf.setMaxTTL(ttl);
 ```
 This sets the `MAX_NODES` and `MAX_TTL` values to `maxNodes` and `ttl`.
-Using the `ProgressorFactory` we can then construct an MTL formula and pass it on to a `Progressor`:
+Using the `ProgressorFactory` we can then construct an MTL formula and pass it on to a `Progressor` in one of two ways.
+
+By explicit construction:
 ```java
 // Build an MTL formula and feed it to a progressor
 Atom p = new Atom("p");
-Formula f = new Always(Integer.MAX_VALUE, new Disjunction(p, new Eventually(100, new Always(10, p))));
-Progressor progressor = pf.create(f, ProgressionStrategy.LEAKY);
+Formula formula = new Always(Integer.MAX_VALUE, new Disjunction(p, new Eventually(100, new Always(10, p))));
+Progressor progressor = pf.create(formula, new UniformDistribution(formula.getAtoms()), ProgressionStrategy.LEAKY);
 ```
+
+By implicit construction using a `String` representation:
+```java
+// Build an MTL formula and feed it to a progressor
+String formulaStr = "always ( ( p ) or (eventually [0,100] ( always [0,10] p ) ) )";
+MTLLexer lexer = new MTLLexer(new ANTLRInputStream(formulaStr));
+MTLParser parser = new MTLParser(new CommonTokenStream(lexer));
+ParseTree tree = parser.start();
+Formula formula = new MTLVisitorImpl().visit(tree);
+Progressor progressor = pf.create(formula, new UniformDistribution(formula.getAtoms()), ProgressionStrategy.LEAKY);
+```
+
 The MTL formula corresponds to `always ( not p -> (eventually [0,100] ( always [0,10] p ) ) )`.
+Any partial states will be considered with a uniform probability in this example, but this behaviour can be customised.
 The progressor receives its parameters from the progressor factory that generates it.
 Note that the `Delta` parameter from Bacchus and Kabanza's classical progression procedure is fixed to 1 by default.
 Finally, we need a stream generator.
@@ -79,15 +95,18 @@ pf.setMaxNodes(maxNodes);
 pf.setMaxTTL(1);
 
 // Build an MTL formula and feed it to a progressor
-Atom p = new Atom("p");
-Formula f = new Always(Integer.MAX_VALUE, new Disjunction(p, new Eventually(100, new Always(10, p))));
-Progressor progressor = pf.create(f, ProgressionStrategy.LEAKY);
+String formulaStr = "always ( ( p ) or (eventually [0,100] ( always [0,10] p ) ) )";
+MTLLexer lexer = new MTLLexer(new ANTLRInputStream(formulaStr));
+MTLParser parser = new MTLParser(new CommonTokenStream(lexer));
+ParseTree tree = parser.start();
+Formula formula = new MTLVisitorImpl().visit(tree);
+Progressor progressor = pf.create(formula, new UniformDistribution(formula.getAtoms()), ProgressionStrategy.LEAKY);
 
 // Configure a stream generator with a stream pattern
 StreamGenerator generator = StreamPatterns.createConstant("p", true, Integer.MAX_VALUE, 0.2, Main.SEED);
 long t1End = System.nanoTime();
-System.out.println("Formula: " + f.toString());
-System.out.println("Setup time: " + Math.round(((double) t1End - (double) t1Start) / 1000.0 / 1000.0) + "ms\n");
+System.out.println("Formula: " + formula.toString());
+System.out.println("Setup time: " + Math.round(((double)t1End - (double)t1Start)/1000.0/1000.0) + "ms\n");
 
 // Run partial-state progression
 Executor executor = new Executor(progressor, generator, 0.99, path, false);
@@ -104,7 +123,7 @@ System.out.println("RESULT");
 System.out.println(progressor.getStatus());
 System.out.println(progressor.getProperties());
 System.out.println("Total iterations: " + executor.getIteration());
-System.out.println("Total runtime: " + Math.round(((double) tEnd - (double) t1Start) / 1000.0 / 1000.0) + "ms\n");
+System.out.println("Total runtime: " + Math.round(((double)tEnd - (double)t1Start)/1000.0/1000.0) + "ms\n");
 ```
 
 
