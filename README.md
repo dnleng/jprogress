@@ -2,7 +2,7 @@
 The Java progression engine, called *jprogress*, implements support for the progression of MTL formulas with partial-state information.
 It does so by keeping track of all the formulas progression could have reached, given the observed partial-state stream.
 For more details, we refer to the following material discussing *jprogress*:
-- de Leng, D., and Heintz., F. 2019. Approximate Stream Reasoning with Metric Temporal Logic under Uncertainty. To appear in Proceedings of the 33rd AAAI Conference on Artificial Intelligence.
+- de Leng, D., and Heintz., F. 2019. Approximate Stream Reasoning with Metric Temporal Logic under Uncertainty. In Proceedings of the 33rd AAAI Conference on Artificial Intelligence.
 - de Leng, D., and Heintz., F. 2018. Partial-State Progression for Stream Reasoning with Metric Temporal Logic. In Proceedings of the 16th International Conference on Principles of Knowledge Representation and Reasoning.
 
 
